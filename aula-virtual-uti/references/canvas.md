@@ -2,6 +2,8 @@
 
 Lee esta referencia al mapear sesiones y guías prácticas o al generar el `.imscc`. Para acompañar al docente usa `canvas/LEEME.md` de su aula; los comandos los ejecuta el asistente.
 
+La [Guía del profesor](../GUIA_DE_USO.md#8-importar-en-canvas-indoamérica) explica el acceso en `https://indoamerica.instructure.com/login/saml`, la importación manual del `.imscc` y la revisión posterior. El docente inicia sesión; no se presupone acceso automático. En `ESTADO.md` registra por separado paquete validado localmente, revisión docente, importación real y publicación, con destino y evidencia. No marques las últimas fases por haber generado el ZIP.
+
 ## Entradas y salidas
 
 - `canvas/silabo.json`: sílabo transcrito según [silabo.md](silabo.md).

@@ -2,6 +2,8 @@
 
 Para el recorrido completo desde los documentos hasta la entrega, consulta la [Guía de uso para docentes](../GUIA_DE_USO.md), incluida en la skill.
 
+La guía cubre Linux, macOS y Windows, instalación de los asistentes, carpeta de insumos, carga de la skill, mensajes de inicio/reanudación, Google/NotebookLM y Canvas Indoamérica. Inicia el asistente en la carpeta de trabajo que contiene `.claude/skills/` o `.agents/skills/`; genera el producto en una subcarpeta nueva `aula/`. Su `ESTADO.md` conserva el avance entre jornadas. Consulta también [continuidad](continuidad.md).
+
 La entrega es una carpeta `aula-virtual-uti/` con `SKILL.md`, `scripts/`, `references/` y `assets/`. Mantén la estructura completa: el generador necesita sus assets. El archivo `.skill` es un ZIP de distribución; también puede abrirse con un descompresor. No contiene cuentas ni credenciales.
 
 ## Instalación local en un proyecto

@@ -130,5 +130,10 @@ JS sin frameworks, cada archivo un IIFE sobre `window.Hub`, `'use strict'`, sin 
 
 ## 8. Protocolo de sesión
 
-**Al empezar:** lee `ESTADO.md` y comprueba que `python3 hub/build.py` y `node hub/tools/check.mjs` pasan.
-**Al terminar (siempre, aunque quede a medias):** compila y verifica; actualiza `ESTADO.md` (tablero, próximos pasos, preguntas pendientes para el docente y una entrada breve en la bitácora: fecha, agente, qué se hizo, cómo retomar). Dile al docente, en dos o tres frases, qué quedó listo, qué archivo abrir y qué necesitas de él.
+El desarrollo puede durar varios días y sesiones. `ESTADO.md` del aula es la fuente de continuidad común a Claude Code y Codex.
+
+**Al empezar:** lee `ESTADO.md`, `PLANIFICACION.md` y estas instrucciones; comprueba los archivos del último hito y retoma la fase y acción registradas. No recrees el aula ni repitas preguntas o decisiones resueltas. Ejecuta las verificaciones pertinentes a los cambios o dudas actuales; no declares una prueba realizada basándote solo en el historial.
+
+**Durante la sesión:** acuerda un objetivo acotado y guarda estado al completar una unidad/hito o cambiar de fase. Registra decisiones docentes con fecha y alcance. Antes de subir fuentes, generar videos o importar, registra destino y autorización; después, el resultado real. Revisa operaciones de estado incierto antes de repetirlas.
+
+**Al terminar (siempre, aunque quede a medias):** guarda `ESTADO.md` con trabajo terminado y parcial, archivos modificados, pruebas y evidencia, dudas, bloqueos y una próxima acción concreta (archivo, recurso y comprobación). Si una prueba no se ejecutó, indícalo. No marques como aprobada una fase pendiente de revisión. Resume qué quedó listo y qué archivo abrir. No dependas del historial de chat ni prometas seguir trabajando tras cerrar la sesión. Evita dos asistentes editando simultáneamente la misma aula.

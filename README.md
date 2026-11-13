@@ -27,6 +27,10 @@ Abre una nueva sesión y escribe:
 
 Consulta la [guía de uso para docentes](aula-virtual-uti/GUIA_DE_USO.md), la [guía de instalación](aula-virtual-uti/references/instalacion.md) y el [flujo de trabajo](aula-virtual-uti/SKILL.md). La skill pregunta por tu cuenta de NotebookLM y tu interés en videos opcionales; tú inicias sesión directamente y autorizas las fuentes que se subirán.
 
+La guía acompaña al profesor desde crear la carpeta y reunir el sílabo/documentos, instalar Claude Code o Codex en Linux/macOS/Windows y cargar la skill, hasta producir videos y realizar la importación en [Canvas Indoamérica](https://indoamerica.instructure.com/login/saml). Incluye mensajes listos para iniciar, cerrar una jornada y retomar al día siguiente.
+
+El desarrollo se organiza en fases. Cada aula mantiene `ESTADO.md` con fase actual, decisiones, evidencias, pendientes y próxima acción; permite continuar durante varios días y cambiar de asistente sin recrear el aula. Consulta el [protocolo de continuidad](aula-virtual-uti/references/continuidad.md).
+
 ## Probar localmente
 
 Python 3.10 o superior permite crear y compilar el aula. Node 22 o superior y Chrome/Chromium permiten comprobarla y producir PDF. Videos y extracción de PDF añaden dependencias opcionales, descritas por el diagnóstico:
