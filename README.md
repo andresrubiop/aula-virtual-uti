@@ -4,6 +4,12 @@ Skill para Claude y Codex que acompaña a docentes de la Universidad Tecnológic
 
 Autor: **Andrès Rubio Proaño** · [@andresrubiop](https://github.com/andresrubiop).
 
+## Empieza aquí
+
+**[Guía del profesor en PDF](GUIA_DE_USO.pdf)** · **[Leer la guía completa](GUIA_DE_USO.md)**
+
+Ambas están en la carpeta principal. El PDF incluye 15 páginas con mapa del proceso, instrucciones por sistema, mensajes listos para copiar y comprobaciones para avanzar por fases.
+
 ## Qué produce
 
 - Aula local sin conexión, con ediciones de estudiante y docente.
@@ -25,7 +31,7 @@ Abre una nueva sesión y escribe:
 
 > Usa aula-virtual-uti para crear el aula de mi proyecto formativo. Aquí están el sílabo vigente, mis presentaciones y las guías prácticas. Prepara el aula local ES/EN y el paquete Canvas.
 
-Consulta la [guía de uso para docentes](aula-virtual-uti/GUIA_DE_USO.md), la [guía de instalación](aula-virtual-uti/references/instalacion.md) y el [flujo de trabajo](aula-virtual-uti/SKILL.md). La skill pregunta por tu cuenta de NotebookLM y tu interés en videos opcionales; tú inicias sesión directamente y autorizas las fuentes que se subirán.
+Consulta la [guía de uso para docentes](GUIA_DE_USO.md), la [guía de instalación](aula-virtual-uti/references/instalacion.md) y el [flujo de trabajo](aula-virtual-uti/SKILL.md). La skill pregunta por tu cuenta de NotebookLM y tu interés en videos opcionales; tú inicias sesión directamente y autorizas las fuentes que se subirán.
 
 La guía acompaña al profesor desde crear la carpeta y reunir el sílabo/documentos, instalar Claude Code o Codex en Linux/macOS/Windows y cargar la skill, hasta producir videos y realizar la importación en [Canvas Indoamérica](https://indoamerica.instructure.com/login/saml). Incluye mensajes listos para iniciar, cerrar una jornada y retomar al día siguiente.
 

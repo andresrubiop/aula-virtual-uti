@@ -15,3 +15,5 @@ Validación de esta ampliación: skill válida; referencias Markdown locales exi
 Pendientes: tres defectos reproducidos en `KNOWN_ISSUES.md`; revisión docente y piloto con documentos reales; importación en Canvas y generación de videos autenticada; comparaciones independientes con/sin skill y otros sistemas operativos. Las escenas nuevas Three.js/anatomy tampoco están certificadas. El modelo educativo consultado contiene una contradicción sobre el umbral Crítico, documentada en las referencias.
 
 Siguiente paso técnico propuesto: corregir los problemas conocidos, añadir regresiones y reempaquetar. La plantilla demostrativa no constituye una asignatura completa.
+
+Guía del profesor disponible también en la raíz: `GUIA_DE_USO.md` completa y `GUIA_DE_USO.pdf` de 15 páginas. PDF con identidad UTI, índice navegable, pasos, ejemplos, comprobaciones y lista de revisión final. Generación reproducible en `tools/`; verificación de paginación, enlaces, ausencia de desbordes y revisión visual. La copia dentro de la skill se conserva para instalaciones autónomas.
