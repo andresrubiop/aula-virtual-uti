@@ -1,0 +1,10 @@
+{
+  "_comentario": "Configuración del aula en tiempo de compilación. Tras editar: python3 hub/build.py",
+  "videos_base": "../../videos/",
+  "_videos_base": "Ruta (relativa a index.html) o URL de la carpeta de videos; ?videos=RUTA en la URL la cambia.",
+  "materiales_base": "../../materiales/",
+  "_materiales_base": "Ruta (relativa a index.html) o URL de la carpeta materiales/ con los PDF de manuales, presentaciones y prácticas.",
+  "repo_estudiantes": "",
+  "_repo_estudiantes": "URL pública de un repositorio para estudiantes (vacío = sin botones de GitHub).",
+  "rama": "main"
+}

@@ -1,0 +1,28 @@
+{
+  "_comentario": "Datos del curso y de sus unidades. Fuente única del menú, la cabecera, las tarjetas de la portada y las herramientas. Tras editar: python3 hub/build.py",
+  "key": "uti-ejemplo",
+  "_key": "Clave corta y única del curso (minúsculas y guiones). Separa el progreso guardado en el navegador de cada aula.",
+  "archivo": "UTI-aula",
+  "_archivo": "Nombre del archivo único que se sube a Canvas (autonomo/<archivo>.html). Sin espacios.",
+  "code": "[COMPLETAR: código del curso en Canvas/SGA]",
+  "term": "[COMPLETAR: período, p. ej. B26]",
+  "title": {"es": "Nombre del proyecto formativo", "en": "Course name"},
+  "program": {"es": "Carrera", "en": "Degree programme"},
+  "faculty": {"es": "Facultad", "en": "School"},
+  "level": {"es": "N.º nivel", "en": "Nth semester"},
+  "instructor": "[COMPLETAR: nombre del docente]",
+  "practice": {"es": "Práctica", "en": "Practice"},
+  "_practice": "Cómo se llama en este curso el componente práctico-experimental: Práctica, Laboratorio, Taller, Caso clínico…",
+  "units": [
+    {
+      "id": "u1", "n": 1, "weeks": "1", "moment": 1, "sessions": [1], "lab": "PR1",
+      "dates": {"es": "", "en": ""},
+      "short": {"es": "Ejemplo", "en": "Example"},
+      "title": {"es": "Unidad de ejemplo: aprender con esta aula", "en": "Example unit: learning with this classroom"},
+      "anims": [
+        {"id": "A1.1", "es": "La curva del olvido y el repaso espaciado", "en": "The forgetting curve and spaced review"}
+      ]
+    }
+  ],
+  "deadlines": []
+}

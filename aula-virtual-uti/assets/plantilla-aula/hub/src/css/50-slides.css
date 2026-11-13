@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Presentaciones (componente Deck). Plantilla institucional UTI fija:
+   portada/cierre en morado UTI con logo blanco y acento naranja; internas en blanco con título morado
+   subrayado en naranja. Colores literales = los de identidad-uti/tokens.css (tema claro).
+   Las slides NO cambian con el tema: son material para proyectar.
+   ========================================================================== */
+.deck { display: flex; flex-direction: column; gap: .7rem; }
+.deck__viewport {
+  /* pan-y: los movimientos horizontales del dedo quedan para deslizar entre diapositivas (sin esto el navegador los toma
+     como desplazamiento, cancela el puntero y el gesto se pierde); los verticales siguen desplazando la página */
+  touch-action: pan-y pinch-zoom;
+  position: relative; width: 100%; aspect-ratio: 16 / 9; container-type: inline-size;
+  border-radius: var(--r-md); overflow: hidden; background: #FFFFFF;
+  box-shadow: var(--shadow-2); border: 1px solid var(--line);
+}
+.slide {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  padding: 4.2cqw 5cqw 6.2cqw; background: #FFFFFF; color: #1B1722;
+  font-family: var(--font-sans); font-size: 2.05cqw; line-height: 1.5;
+  opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility 0s linear .35s;
+}
+.slide.is-active { opacity: 1; visibility: visible; transition: opacity .35s ease; z-index: 1; }
+/* la que se va (se desvanece .35 s) no recibe el puntero: si no, al volver atrás tapa a la nueva y se lleva los trazos */
+.slide:not(.is-active) { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .slide, .slide.is-active { transition: none; } }
+.slide h2 { font-size: 3.5cqw; color: #3C235F; font-weight: 600; line-height: 1.15; letter-spacing: -.01em; margin-bottom: 2.2cqw; }
+.slide h2::after { content: ''; display: block; width: 5cqw; height: .42cqw; margin-top: .9cqw; border-radius: 99px; background: #EA600A; }
+.slide--cover h2::after, .slide--closing h2::after, .slide--section h2::after { display: none; }
+.slide h3 { font-size: 2.4cqw; color: #1B1722; font-weight: 600; margin: 1.2cqw 0 .6cqw; }
+.slide p, .slide li { color: #1B1722; }
+.slide p + p { margin-top: 1cqw; }
+.slide ul, .slide ol { padding-left: 1.2em; }
+.slide li + li { margin-top: .7cqw; }
+.slide strong { color: #3C235F; }
+.slide .kicker { font-size: 1.35cqw; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #7A7582; margin-bottom: .8cqw; }
+.slide .big { font-size: 2.6cqw; line-height: 1.4; }
+.slide .muted { color: #5D5866; }
+.slide .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3cqw; align-items: start; }
+/* El código puede ensanchar su columna, pero no más del 60 %: una línea muy larga ya no saca la columna de la
+   diapositiva (en pantalla se desplaza dentro de su bloque; en el PDF se parte, ver 90-print.css) */
+.slide .cols > * { max-width: 60cqw; }
+/* cols--even: mitades iguales (las dos columnas traen líneas largas) */
+.slide .cols.cols--even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.slide .cols--even > * { min-width: 0; }
+.slide .cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2cqw; }
+.slide .cols-3 :not(pre) > code { white-space: normal; overflow-wrap: anywhere; }   /* tarjetas estrechas: una ruta larga se parte */
+.slide .box { border: .15cqw solid #E2DDEA; border-radius: 1cqw; padding: 1.6cqw 1.8cqw; background: #FFFFFF; }
+.slide .box--soft { background: #F3EFF8; border-color: transparent; }
+.slide .box--morado { background: #3C235F; border-color: #3C235F; color: #FFFFFF; }
+.slide .box--morado * { color: #FFFFFF; }
+.slide .box--morado :not(pre) > code { background: #5E3A91; }
+.slide .box h3 { margin-top: 0; }
+.slide .formula { font-size: 2.4cqw; padding: 1.4cqw 0; text-align: center; }
+.slide .tag { display: inline-block; font-size: 1.3cqw; font-weight: 600; padding: .25cqw .9cqw; border-radius: 99px; background: #E6DDF3; color: #3C235F; }
+.slide :not(pre) > code { font-size: .9em; background: #E9E3F1; color: #1B1722; white-space: nowrap; }
+.slide pre code { white-space: pre; background: none; color: inherit; font-size: inherit; padding: 0; }
+.slide .katex { font-size: 1.05em; }
+.slide table { border-collapse: collapse; width: 100%; font-size: 1.7cqw; }
+.slide th, .slide td { border-bottom: .12cqw solid #E2DDEA; padding: .8cqw 1cqw; text-align: left; }
+.slide th { color: #3C235F; font-weight: 600; }
+.slide .anim-slot { margin-top: .6cqw; }
+
+/* Pie de cada slide interna */
+.slide__foot {
+  position: absolute; left: 5cqw; right: 5cqw; bottom: 2.2cqw; height: 2.8cqw;
+  display: flex; align-items: center; gap: 1.5cqw; border-top: .15cqw solid #3C235F; padding-top: 1cqw;
+  font-size: 1.15cqw; color: #7A7582;
+}
+.slide__foot img { height: 2.3cqw; width: auto; }
+.slide__foot .pg { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 600; color: #5D5866; }
+
+/* Portada, sección y cierre */
+.slide--cover, .slide--closing { background: #3C235F; color: #FFFFFF; justify-content: flex-end; padding-bottom: 7cqw; }
+.slide--cover *, .slide--closing * { color: #FFFFFF; }
+.slide--cover::before, .slide--closing::before {
+  content: ""; position: absolute; inset: 0; opacity: .16;
+  background-image: radial-gradient(#FFFFFF .16cqw, transparent .2cqw); background-size: 2.2cqw 2.2cqw;
+  -webkit-mask: linear-gradient(110deg, transparent 40%, #000 85%); mask: linear-gradient(110deg, transparent 40%, #000 85%);
+}
+.slide--cover .cover-logo, .slide--closing .cover-logo { position: absolute; top: 4cqw; left: 5cqw; height: 6.5cqw; width: auto; }
+.slide--cover h1, .slide--closing h1 { position: relative; font-size: 5.2cqw; line-height: 1.08; font-weight: 700; letter-spacing: -.015em; max-width: 80%; color: #FFFFFF; }
+.slide--cover h1::before, .slide--closing h1::before { content: ''; display: block; width: 7cqw; height: .6cqw; margin-bottom: 1.6cqw; border-radius: 99px; background: #EA600A; }
+.slide--cover .kicker, .slide--closing .kicker { position: relative; color: #E6DDF3; font-size: 1.5cqw; }
+.slide--cover .cover-meta, .slide--closing .cover-meta { position: relative; margin-top: 2cqw; display: flex; flex-wrap: wrap; gap: .8cqw 3cqw; font-size: 1.6cqw; color: #E6DDF3; }
+.slide--cover .slide__foot, .slide--closing .slide__foot { display: none; }
+.slide--section { background: #F3EFF8; justify-content: center; }
+.slide--section .kicker { color: #3C235F; }
+.slide--section h2 { font-size: 4.6cqw; margin-bottom: 1.2cqw; }
+
+/* Fragmentos (revelado progresivo con "siguiente") */
+.slide .fragment { opacity: .08; transform: translateY(.6cqw); transition: opacity .35s ease, transform .35s ease; }
+.slide .fragment.is-shown { opacity: 1; transform: none; }
+.slide .fragment.dim-after.is-past { opacity: .45; }
+
+/* Barra de control del deck */
+.deck__bar { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.deck__count { font: 600 var(--fs-sm)/1 var(--font-mono); color: var(--ink-2); min-width: 5.5ch; text-align: center; font-variant-numeric: tabular-nums; }
+.deck__progress { flex: 1 1 140px; height: 4px; border-radius: 4px; background: var(--surface-3); overflow: hidden; }
+.deck__progress span { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+.deck__jump { max-width: 220px; }
+.deck__notes {
+  border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2);
+  padding: .9rem 1.1rem; font-size: var(--fs-sm);
+}
+.deck__notes-t { font-weight: 600; color: var(--accent); font-size: var(--fs-xs); letter-spacing: .06em; text-transform: uppercase; margin-bottom: .3rem; }
+.slide aside.notes { display: none; }
+
+/* Pantalla completa */
+.deck:fullscreen { background: #121011; padding: 0; justify-content: center; align-items: center; gap: 0; }
+.deck:fullscreen .deck__viewport { width: min(100vw, calc(100vh * 16 / 9)); border-radius: 0; border: 0; box-shadow: none; }
+.deck:fullscreen .deck__bar { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(27, 23, 34, .85); padding: .35rem .6rem; border-radius: 999px; opacity: .15; transition: opacity .2s; }
+.deck:fullscreen .deck__bar:hover { opacity: 1; }
+.deck:fullscreen .deck__bar .deck__progress, .deck:fullscreen .deck__bar .deck__jump { display: none; }
+.deck:fullscreen .deck__count { color: #EDEAF2; }
+.deck:fullscreen .deck__notes { display: none; }
+
+/* Paleta clara fija dentro de las slides (también la leen las animaciones incrustadas vía Hub.colors) */
+.deck__viewport {
+  --bg: #F7F5FA; --surface: #FFFFFF; --surface-2: #F3EFF8; --surface-3: #E9E3F1;
+  --ink: #1B1722; --ink-2: #5D5866; --ink-3: #7A7582; --line: #E2DDEA; --line-strong: #C9C1D6;
+  --accent: #3C235F; --accent-fill: #3C235F; --accent-hover: #3C235F; --accent-ink: #FFFFFF; --accent-tint: #E6DDF3;
+  --accent-soft: rgba(60, 35, 95, .08); --focus: #3C235F;
+  --ok: #1E7B4A; --warn: #B26B00; --err: #C62828;
+  --c1: #5E3A91; --c2: #EA600A; --c3: #1F6F8B; --c4: #3A7D44; --c-neutral: #7A7582;
+  --plot-bg: #FFFFFF; --plot-grid: #EEEAF3; --plot-axis: #8A8B8E; --plot-text: #5D5866; --plot-ink: #1B1722;
+  color-scheme: light;
+}
+.slide .anim-slot { margin-top: .4cqw; }
+.slide .stage { border-radius: .8cqw; }
+.slide .stage__controls { padding: .5cqw 1cqw; }
+.slide .code { margin-top: .8cqw; }
+.slide .code pre { font-size: 1.45cqw; padding: 1.2cqw 1.4cqw; line-height: 1.55; }
+.slide .code__bar { font-size: 1.1cqw; padding: .5cqw 1cqw; }
+.slide .formula .katex { font-size: 1.1em; }
+.slide .steps { list-style: none; padding: 0; counter-reset: st; display: grid; gap: 1cqw; }
+.slide .steps li { counter-increment: st; display: grid; grid-template-columns: 3.2cqw 1fr; gap: 1cqw; align-items: start; margin: 0; }
+.slide .steps li::before { content: counter(st); width: 3.2cqw; height: 3.2cqw; border-radius: 50%; background: #3C235F; color: #FFFFFF; display: grid; place-items: center; font-weight: 600; font-size: 1.5cqw; }
+.slide--dense h2 { margin-bottom: 1.2cqw; font-size: 3cqw; }
+.slide--dense { font-size: 1.8cqw; }
+.slide--dense li + li { margin-top: .45cqw; }
+.slide--dense .code pre { font-size: 1.18cqw; line-height: 1.42; padding: 1cqw 1.4cqw; }
+
+/* Notas ampliadas (solo edición docente) dentro del panel de notas */
+.deck__notes .notes-extra { margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--line-strong); }
+.deck__notes .notes-extra::before { content: "Guion ampliado"; display: block; font-weight: 600; font-size: var(--fs-xs); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-bottom: .25rem; }
+.deck__notes .notes-extra > * + * { margin-top: .4rem; }

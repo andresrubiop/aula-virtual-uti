@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@@TITLE@@</title>
+<link rel="icon" type="image/png" href="@@FAVICON@@">
+<meta name="description" content="Aula interactiva bilingüe (español e inglés) · @@TITLE@@ · Universidad Tecnológica Indoamérica.">
+<script>(function(){var d=document.documentElement;try{var t=localStorage.getItem('@@KEY@@:theme');if(t==='dark'||t==='light')d.setAttribute('data-theme',t);}catch(e){}
+var L=['es','en'],l=null;try{l=new URLSearchParams(location.search).get('lang');}catch(e){}if(L.indexOf(l)<0){try{l=localStorage.getItem('@@KEY@@:lang');}catch(e){}}
+if(L.indexOf(l)>=0){d.lang=l;d.setAttribute('data-lang',l);}})();</script>
+<style>/*@@FONTS@@*/</style>
+<style>/*@@KATEX_CSS@@*/</style>
+<style>/*@@CSS@@*/</style>
+</head>
+<body>
+<a class="skip-link" href="#main"><span lang="es">Saltar al contenido</span><span lang="en">Skip to content</span></a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="#/inicio" data-i18n='{"aria-label": ["Inicio del curso", "Course home"]}'>
+      <img class="brand__logo brand__logo--light" src="@@LOGO_COLOR@@" alt="Universidad Tecnológica Indoamérica" width="151" height="36">
+      <img class="brand__logo brand__logo--dark" src="@@LOGO_BLANCO@@" alt="Universidad Tecnológica Indoamérica" width="151" height="36">
+    </a>
+    <span class="brand__rule" aria-hidden="true"></span>
+    <div class="brand__course">
+      <span class="brand__kicker"><!--@@BRAND_KICKER@@--></span>
+      <span class="brand__title"><!--@@BRAND_TITLE@@--></span>
+    </div>
+    <div class="site-header__tools">
+      <div class="global-progress" id="global-progress" data-i18n='{"title": ["Tu avance guardado en este navegador", "Your progress, saved in this browser"]}'>
+        <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="ring-track" cx="18" cy="18" r="15"/><circle class="ring-fill" cx="18" cy="18" r="15" pathLength="100" stroke-dasharray="0 100"/></svg>
+        <span class="global-progress__label"><strong data-progress-pct>0%</strong><span><span lang="es">tu avance</span><span lang="en">your progress</span></span></span>
+      </div>
+      <div class="lang-toggle" role="group" data-i18n='{"aria-label": ["Idioma del aula", "Language of the course"]}'>
+        <button type="button" data-set-lang="es" aria-pressed="true" title="Español">ES</button>
+        <button type="button" data-set-lang="en" aria-pressed="false" title="English">EN</button>
+      </div>
+      <button class="icon-btn" id="theme-toggle" type="button" data-i18n='{"aria-label": ["Cambiar entre tema claro y oscuro", "Switch between light and dark theme"], "title": ["Tema claro / oscuro", "Light / dark theme"]}'>
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="main-nav" data-i18n='{"aria-label": ["Unidades del curso", "Course units"]}'>
+    <div class="main-nav__inner">
+      <a href="#/inicio" data-nav="inicio"><span><span lang="es">Inicio</span><span lang="en">Home</span></span></a>
+<!--@@NAV@@-->
+      <a href="#/recursos" data-nav="recursos"><span><span lang="es">Recursos</span><span lang="en">Resources</span></span></a>
+    </div>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+<!--@@CONTENT@@-->
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <img class="site-footer__logo" src="@@LOGO_PIE@@" alt="Universidad Tecnológica Indoamérica" width="160" height="38">
+    <div class="site-footer__text">
+      <strong><!--@@FOOT_1@@--></strong>
+      <span><!--@@FOOT_2@@--></span>
+    </div>
+    <div class="site-footer__meta"><span lang="es">Aula v@@VERSION@@ · compilada @@BUILD@@<br>Tu progreso se guarda solo en este navegador.</span><span lang="en">Course hub v@@VERSION@@ · built @@BUILD@@<br>Your progress is saved only in this browser.</span></div>
+  </div>
+</footer>
+
+<script>window.HUB_CONFIG = /*@@CONFIG@@*/;</script>
+<script>/*@@VENDOR_JS@@*/</script>
+<script>/*@@JS@@*/</script>
+</body>
+</html>

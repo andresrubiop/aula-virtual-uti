@@ -1,0 +1,168 @@
+/* ==========================================================================
+   Identidad visual UTI — tokens de diseño (fuente única de verdad)
+   Oficiales: extraídos de los logos oficiales de ../Logos (LOGO-UTI-1…6.png).
+   Derivados: calculados para cumplir contraste WCAG AA (relación indicada con blanco,
+   o con el fondo oscuro #141118 en el tema oscuro). No agregar colores fuera de esta
+   lista; si hace falta uno nuevo, se deriva aquí y se documenta.
+   ========================================================================== */
+:root {
+  /* --- Oficiales (logos) --- */
+  --uti-morado: #3C235F;         /* símbolo y letras del logo · 13.1:1 con blanco */
+  --uti-naranja: #EA600A;        /* hoja superior del símbolo · 3.4:1 → solo gráficos y texto ≥ 24 px */
+  --uti-blanco: #FFFFFF;
+
+  /* --- Derivados de marca --- */
+  --uti-morado-oscuro: #2E1A4A;  /* hover/activo sobre morado · 15.4:1 */
+  --uti-morado-medio: #5E3A91;   /* rellenos de datos y degradados · 8.4:1 */
+  --uti-naranja-texto: #B34A07;  /* naranja para texto pequeño · 5.4:1 */
+
+  /* --- Superficies y texto (tema claro) --- */
+  --bg: #F7F5FA;                 /* fondo de página: neutro con sesgo al morado */
+  --surface: #FFFFFF;
+  --surface-2: #F3EFF8;          /* morado muy suave: callouts, zonas destacadas */
+  --surface-3: #E9E3F1;          /* pistas de sliders, chips neutros */
+  --ink: #1B1722;                /* texto principal · 17.6:1 */
+  --ink-2: #5D5866;              /* texto secundario pequeño · 6.9:1 */
+  --ink-3: #7A7582;              /* solo texto grande o decorativo · 4.5:1 */
+  --line: #E2DDEA;
+  --line-strong: #C9C1D6;
+
+  /* --- Acento institucional --- */
+  --accent: #3C235F;             /* texto, enlaces y bordes */
+  --accent-fill: #3C235F;        /* rellenos con texto blanco encima */
+  --accent-hover: #2E1A4A;
+  --accent-ink: #FFFFFF;
+  --accent-tint: #E6DDF3;        /* insignias claras */
+  --accent-soft: rgba(60, 35, 95, .08);
+  --accent-2: #B34A07;           /* segundo acento (naranja) para texto */
+  --accent-2-fill: #EA600A;      /* segundo acento para rellenos grandes, subrayados y detalles */
+  --accent-2-soft: rgba(234, 96, 10, .10);
+  --focus: #EA600A;
+
+  /* --- Semánticos (siempre con ícono + texto) --- */
+  --ok: #1E7B4A;   --ok-soft: rgba(30, 123, 74, .10);
+  --warn: #8F5A00; --warn-soft: rgba(178, 107, 0, .10);
+  --err: #C62828;  --err-soft: rgba(198, 40, 40, .10);
+
+  /* --- Series de gráficos y animaciones --- */
+  --c1: #5E3A91;   /* serie principal (morado de datos) */
+  --c2: #EA600A;   /* serie 2 (naranja UTI) */
+  --c3: #1F6F8B;   /* azul petróleo */
+  --c4: #3A7D44;   /* verde */
+  --c-neutral: #7A7582;
+  --plot-bg: #FFFFFF;
+  --plot-grid: #EEEAF3;
+  --plot-axis: #8A8593;
+  --plot-text: #5D5866;
+  --plot-ink: #1B1722;
+
+  /* --- Tipografía --- */
+  --font-sans: 'Poppins', Arial, 'Helvetica Neue', sans-serif;
+  --font-doc: Arial, 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --fs-xs: .75rem;  --fs-sm: .875rem;  --fs-md: 1rem;  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem; --fs-2xl: 1.75rem; --fs-3xl: clamp(1.9rem, 1.35rem + 2.2vw, 2.75rem);
+
+  /* --- Espaciado, radios, sombras --- */
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem; --sp-7: 3rem;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+  --shadow-1: 0 1px 2px rgba(27, 23, 34, .06), 0 1px 1px rgba(27, 23, 34, .04);
+  --shadow-2: 0 6px 24px rgba(27, 23, 34, .08), 0 2px 6px rgba(27, 23, 34, .05);
+  --header-h: 64px;
+
+  color-scheme: light;
+}
+
+/* --- Terminal local de los laboratorios (xterm.js) ---
+   El estudiante elige la paleta en la ventana de la terminal (🎨): data-term-tema en <html> (y en cada muestra del
+   menú). No depende del tema claro/oscuro del aula. Contraste de cada color de texto sobre su fondo (WCAG):
+     uti        fondo #1B1722: texto 14,8 · rojo 6,1 · verde 8,0 · amarillo 8,1 · azul 7,4 · magenta 7,8 · cian 8,9 · gris 5,3
+     ubuntu     fondo berenjena #300A24 (el de la terminal de Ubuntu) con la paleta de GNOME: texto 17,6 · rojo 5,6 ·
+                verde 12,7 · amarillo 13,6 · azul 6,5 · magenta 7,3 · cian 8,6 · gris 6,2 · cursor naranja Ubuntu 4,8
+     claro      fondo blanco: texto 17,6 · rojo 6,5 · verde 5,3 · amarillo 5,8 · azul 6,4 · magenta 7,2 · cian 5,6 ·
+                «blanco» (gris) 6,7 · gris 5,6
+     contraste  fondo negro: todos ≥ 8,3:1 */
+:root, [data-term-tema="uti"] {
+  --term-bg: #1B1722;            /* = --ink claro */
+  --term-fg: #EDEAF2;
+  --term-cursor: #EA600A;        /* naranja UTI */
+  --term-selection: rgba(197, 181, 230, .30);
+  --term-black: #1B1722;  --term-red: #F07070;    --term-green: #5CC28A; --term-yellow: #E0A54A;
+  --term-blue: #5FB3CE;   --term-magenta: #B7A3DD; --term-cyan: #6FC7C0; --term-white: #EDEAF2;
+  --term-bright-black: #8F8A99;  /* grises (prompt, comentarios); antes #7A7582 = 3,9:1 */
+  --term-bright-red: var(--term-red); --term-bright-green: var(--term-green); --term-bright-yellow: var(--term-yellow);
+  --term-bright-blue: var(--term-blue); --term-bright-magenta: var(--term-magenta); --term-bright-cyan: var(--term-cyan);
+  --term-bright-white: var(--term-white);
+}
+[data-term-tema="ubuntu"] {
+  --term-bg: #300A24; --term-fg: #FFFFFF; --term-cursor: #E95420; --term-selection: rgba(255, 255, 255, .25);
+  --term-black: #241F31;  --term-red: #F66151;    --term-green: #8FF0A4; --term-yellow: #F8E45C;
+  --term-blue: #62A0EA;   --term-magenta: #DC8ADD; --term-cyan: #5BC8AF; --term-white: #DEDDDA;
+  --term-bright-black: #9A9996;
+  --term-bright-red: #FF7B63; --term-bright-green: #B5F5C3; --term-bright-yellow: #F9F06B;
+  --term-bright-blue: #99C1F1; --term-bright-magenta: #E5A5E6; --term-bright-cyan: #7FD8C4; --term-bright-white: #FFFFFF;
+}
+[data-term-tema="claro"] {
+  --term-bg: #FFFFFF; --term-fg: #1B1722; --term-cursor: #EA600A; --term-selection: rgba(60, 35, 95, .18);
+  --term-black: #1B1722;  --term-red: #B3261E;    --term-green: #1E7B34; --term-yellow: #8F5A00;
+  --term-blue: #1F5FA8;   --term-magenta: #6E3FA3; --term-cyan: #0E7470; --term-white: #5E5A66;
+  --term-bright-black: #6B6672;
+  --term-bright-red: var(--term-red); --term-bright-green: var(--term-green); --term-bright-yellow: var(--term-yellow);
+  --term-bright-blue: var(--term-blue); --term-bright-magenta: var(--term-magenta); --term-bright-cyan: var(--term-cyan);
+  --term-bright-white: var(--term-fg);
+}
+[data-term-tema="contraste"] {
+  --term-bg: #000000; --term-fg: #FFFFFF; --term-cursor: #FFE45C; --term-selection: rgba(255, 255, 255, .35);
+  --term-black: #000000;  --term-red: #FF7A7A;    --term-green: #5CFF7A; --term-yellow: #FFE45C;
+  --term-blue: #7CC0FF;   --term-magenta: #FF9CFF; --term-cyan: #5CFFFF; --term-white: #FFFFFF;
+  --term-bright-black: #B8B8B8;
+  --term-bright-red: var(--term-red); --term-bright-green: var(--term-green); --term-bright-yellow: var(--term-yellow);
+  --term-bright-blue: var(--term-blue); --term-bright-magenta: var(--term-magenta); --term-bright-cyan: var(--term-cyan);
+  --term-bright-white: var(--term-white);
+}
+
+/* --- Tema oscuro: sistema (sin elección explícita) --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141118; --surface: #1C1822; --surface-2: #241F2D; --surface-3: #2E2839;
+    --ink: #EDEAF2; --ink-2: #C4C0CC; --ink-3: #A39EAD;
+    --line: #342E3F; --line-strong: #4A4257;
+    --accent: #C5B5E6; --accent-fill: #5E3A91; --accent-hover: #6E48A6;
+    --accent-ink: #FFFFFF; --accent-tint: #2F2445; --accent-soft: rgba(197, 181, 230, .10);
+    --accent-2: #F59E62; --accent-2-fill: #EA600A; --accent-2-soft: rgba(245, 158, 98, .12); --focus: #F59E62;
+    --ok: #5CC28A; --ok-soft: rgba(92, 194, 138, .12);
+    --warn: #E0A54A; --warn-soft: rgba(224, 165, 74, .12);
+    --err: #F07070; --err-soft: rgba(240, 112, 112, .12);
+    --c1: #B7A3DD; --c2: #F2894A; --c3: #5FB3CE; --c4: #6DBE77; --c-neutral: #A39EAD;
+    --plot-bg: #1C1822; --plot-grid: #2B2535; --plot-axis: #8E8899; --plot-text: #C4C0CC; --plot-ink: #EDEAF2;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .4); --shadow-2: 0 8px 28px rgba(0, 0, 0, .45);
+    color-scheme: dark;
+  }
+}
+
+/* --- Tema oscuro: elección explícita (gana en ambas direcciones) --- */
+:root[data-theme="dark"] {
+  --bg: #141118; --surface: #1C1822; --surface-2: #241F2D; --surface-3: #2E2839;
+  --ink: #EDEAF2; --ink-2: #C4C0CC; --ink-3: #A39EAD;
+  --line: #342E3F; --line-strong: #4A4257;
+  --accent: #C5B5E6; --accent-fill: #5E3A91; --accent-hover: #6E48A6;
+  --accent-ink: #FFFFFF; --accent-tint: #2F2445; --accent-soft: rgba(197, 181, 230, .10);
+  --accent-2: #F59E62; --accent-2-fill: #EA600A; --accent-2-soft: rgba(245, 158, 98, .12); --focus: #F59E62;
+  --ok: #5CC28A; --ok-soft: rgba(92, 194, 138, .12);
+  --warn: #E0A54A; --warn-soft: rgba(224, 165, 74, .12);
+  --err: #F07070; --err-soft: rgba(240, 112, 112, .12);
+  --c1: #B7A3DD; --c2: #F2894A; --c3: #5FB3CE; --c4: #6DBE77; --c-neutral: #A39EAD;
+  --plot-bg: #1C1822; --plot-grid: #2B2535; --plot-axis: #8E8899; --plot-text: #C4C0CC; --plot-ink: #EDEAF2;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .4); --shadow-2: 0 8px 28px rgba(0, 0, 0, .45);
+  color-scheme: dark;
+}
+
+/* --- Resaltado de código ---
+   Los bloques de código son oscuros en los dos temas (fondo #1B1722 = --ink del tema claro). Contraste con ese fondo:
+   palabra clave #C5B5E6 (9.3:1, = --accent del tema oscuro) · cadena #9BD1A6 (10.1:1) · comentario #8F8A8C (5.2:1)
+   · número #E2B33C (9.0:1) · función #7CC3DB (9.0:1).
+   En papel (90-print.css) el fondo es #F3EFF8 y se usan tokens del tema claro: --uti-morado (11.6:1), --ok #1E7B4A
+   (4.7:1), --ink-2 #5D5866 (6.1:1), --warn #8F5A00 (5.1:1) y --c3 #1F6F8B (5.0:1). */
+:root {
+  --code-k: #C5B5E6; --code-s: #9BD1A6; --code-c: #8F8A8C; --code-n: #E2B33C; --code-f: #7CC3DB;
+}

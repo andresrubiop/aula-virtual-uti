@@ -1,0 +1,62 @@
+<section class="view" data-view="inicio" aria-labelledby="inicio-titulo">
+  <!-- PORTADA. El agente reescribe los textos con los datos del sílabo (course.json da las cifras y las tarjetas).
+       Opcional: una ilustración viva del tema central del curso (ver hub/src/js/components/60-hero.js). -->
+  <div class="home-hero">
+    <div class="home-hero__inner">
+      <div>
+        <span class="eyebrow"><span lang="es">Facultad · Carrera · Nivel</span><span lang="en">School · Programme · Semester</span></span>
+        <h1 id="inicio-titulo"><span lang="es">Nombre del <span>proyecto formativo</span></span><span lang="en">Name of the <span>course</span></span></h1>
+        <p class="home-hero__lead"><span lang="es">[COMPLETAR: dos frases que digan qué problema del contexto aborda el proyecto formativo y qué será capaz de hacer el estudiante al terminar.]</span><span lang="en">[COMPLETAR: two sentences stating which real-world problem the course tackles and what the student will be able to do at the end.]</span></p>
+        <div class="home-hero__actions">
+          <a class="btn btn--primary" href="#/u1"><span lang="es">Empezar la unidad 1</span><span lang="en">Start unit 1</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn" href="#/inicio/como-funciona"><span lang="es">Cómo funciona el curso</span><span lang="en">How the course works</span></a>
+        </div>
+        <div class="home-hero__facts"><!--@@FACTS@@--></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home">
+    <section class="home-top" data-i18n='{"aria-label": ["Calendario y forma de trabajo", "Calendar and way of working"]}'>
+      <div class="next-card" data-countdown></div>
+      <div class="card" id="como-funciona">
+        <span class="eyebrow"><span lang="es">Clase invertida · aprender resolviendo</span><span lang="en">Flipped classroom · learning by solving</span></span>
+        <h2 style="font-size:1.35rem;margin-top:.3rem"><span lang="es">Cómo funciona cada unidad</span><span lang="en">How every unit works</span></h2>
+        <ol class="flow flow--steps" style="margin-top:1rem">
+          <li><strong><span lang="es">Prepárate</span><span lang="en">Prepare</span></strong><span><span lang="es">Videos cortos y el manual de la unidad, antes de clase.</span><span lang="en">Short videos and the unit manual, before class.</span></span></li>
+          <li><strong><span lang="es">Clase</span><span lang="en">Class</span></strong><span><span lang="es">La presentación con animaciones en vivo: el docente cambia parámetros y ustedes predicen.</span><span lang="en">The slides with live animations: the instructor changes parameters and you predict.</span></span></li>
+          <li><strong><span lang="es">Practica</span><span lang="en">Practise</span></strong><span><span lang="es">La actividad práctico-experimental de la unidad, ligada al reto del proyecto.</span><span lang="en">The hands-on activity of the unit, tied to the project challenge.</span></span></li>
+          <li><strong><span lang="es">Desafío con IA</span><span lang="en">AI challenge</span></strong><span><span lang="es">Una extensión que resuelves con IA generativa, verificando y declarando su uso.</span><span lang="en">An extension you solve with generative AI, checking and declaring its use.</span></span></li>
+          <li><strong><span lang="es">Autoevalúate</span><span lang="en">Self-check</span></strong><span><span lang="es">Cuestionario con retroalimentación inmediata para mejorar antes de entregar.</span><span lang="en">Quiz with immediate feedback so you can improve before handing in.</span></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="h-unidades">
+      <h2 id="h-unidades"><span lang="es">Las unidades</span><span lang="en">The units</span></h2>
+      <p class="lead"><span lang="es">Cada unidad tiene su ruta, presentación, animaciones, manual, práctica y cuestionario. Tu avance se guarda en este navegador.</span><span lang="en">Every unit has its path, slides, animations, manual, practice and quiz. Your progress is saved in this browser.</span></p>
+      <div class="week-cards">
+<!--@@UNIT_CARDS@@-->
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="h-reto">
+      <h2 id="h-reto"><span lang="es">El reto del proyecto formativo</span><span lang="en">The course challenge</span></h2>
+      <div class="grid grid--3">
+        <div class="card">
+          <h3><span lang="es">Problema del contexto</span><span lang="en">Real-world problem</span></h3>
+          <p><span lang="es">[COMPLETAR: problema, necesidad u oportunidad del territorio, tal como está en el sílabo.]</span><span lang="en">[COMPLETAR: problem, need or opportunity of the territory, as stated in the syllabus.]</span></p>
+        </div>
+        <div class="card">
+          <h3><span lang="es">Producto que vas a construir</span><span lang="en">The product you will build</span></h3>
+          <p><span lang="es">[COMPLETAR: producto final del proyecto formativo y evidencias de cada momento.]</span><span lang="en">[COMPLETAR: final product of the course and the evidence of each moment.]</span></p>
+        </div>
+        <div class="card">
+          <h3><span lang="es">IA permitida y declarada</span><span lang="en">AI allowed and declared</span></h3>
+          <p><span lang="es">Puedes usar IA generativa en las actividades que lo indican. Declara la herramienta y los prompts, y verifica todo lo que te proponga: lo que se evalúa es que puedas explicar y comprobar cada decisión.</span><span lang="en">You may use generative AI in the activities that say so. Declare the tool and the prompts, and check everything it proposes: what is assessed is that you can explain and verify every decision.</span></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

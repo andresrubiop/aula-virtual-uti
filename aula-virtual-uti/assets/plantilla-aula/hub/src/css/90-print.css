@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Impresión / PDF (manuales, presentaciones y laboratorios). Se exportan todos con hub/tools/pdfs.sh, o uno con:
+     node hub/tools/check.mjs --routes "#/u1/manual" --pdf materiales/unidad-1/M1_manual.pdf --titulo "M1 · …"
+     node hub/tools/check.mjs --routes "#/u1/presentacion" --deck --pdf materiales/unidad-1/P1_presentacion.pdf
+   ========================================================================== */
+@media print {
+  :root, :root[data-theme="dark"] {
+    --bg: #FFFFFF; --surface: #FFFFFF; --surface-2: #F3EFF8; --surface-3: #E9E3F1;
+    --ink: #1B1722; --ink-2: #5D5866; --ink-3: #7A7582; --line: #E2DDEA; --line-strong: #C9C1D6;
+    --accent: #3C235F; --accent-fill: #3C235F; --accent-ink: #FFFFFF; --accent-tint: #E6DDF3;
+    --c1: #5E3A91; --c2: #EA600A; --c3: #1F6F8B; --c4: #3A7D44; --c-neutral: #7A7582;
+    color-scheme: light;
+  }
+  body { background: #FFFFFF; font-size: 10.5pt; }
+  .site-header, .main-nav, .week-nav, .site-footer, .pager, .skip-link, .week-hero__art,
+  .stage__controls, .stage__paused, .deck__bar, .deck__notes, .check, .anim-index, .res-card__actions, .l10n-note { display: none !important; }
+  .week { display: block; padding: 0; max-width: none; }
+  .week-hero { border: 0; background: #FFFFFF; }
+  .week-hero__inner { padding: 0 0 10pt; display: block; max-width: none; }
+  .view { animation: none; }
+  a { color: inherit; text-decoration: none; }
+  .prose { max-width: none; font-size: 10.5pt; line-height: 1.55; }
+  .prose h2 { margin-top: 18pt; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  .callout, .practice-link, .katex-display, pre, .code, table, .card, .level, .q, details { break-inside: avoid; }
+  details.fold > .fold__body { display: block; }
+  .code { background: #F3EFF8; color: #1B1722; border: 1px solid #E2DDEA; }
+  .code__bar { background: #E9E3F1; color: #5D5866; }
+  .code__copy { display: none; }
+  .code--long, .code--long pre { break-inside: auto; }
+  .code__bar { break-after: avoid; }
+  .tok-k { color: #3C235F; } .tok-s { color: #1E7B4A; } .tok-c { color: #5D5866; } .tok-n { color: #8F5A00; } .tok-f { color: #1F6F8B; }
+  .toc { break-inside: avoid; }
+  /* Laboratorios: cada ejercicio es más alto que una página; que fluya (el código y las salidas siguen sin partirse) */
+  .lab-ex, .lab-ex details { break-inside: auto; }
+  .lab-ex > h3, .lab-ex .res-card__top { break-after: avoid; }
+  /* Manuales: las líneas largas de código y salidas se parten (en pantalla hay barra de desplazamiento). */
+  html:not(.print-deck) pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+}
+@page { size: A4; margin: 18mm 15mm 18mm; }
+
+/* Modo presentación impresa: una diapositiva 16:9 por página (lo activa el exportador con html.print-deck) */
+@media print {
+  html.print-deck main > .view:not([hidden]) > .week-hero,
+  html.print-deck .sub:not([data-sub="presentacion"]),
+  html.print-deck .sub-head, html.print-deck .sub > .pending { display: none !important; }
+  html.print-deck .deck__viewport { aspect-ratio: auto; border: 0; box-shadow: none; border-radius: 0; overflow: visible; }
+  html.print-deck .slide {
+    position: relative; inset: auto; opacity: 1; visibility: visible; transition: none;
+    width: 100%; aspect-ratio: 16 / 9; break-after: page; break-inside: avoid; overflow: hidden;
+  }
+  html.print-deck .slide .fragment { opacity: 1; transform: none; }
+  /* En papel no hay barra de desplazamiento: las líneas largas de las salidas se parten en lugar de cortarse
+     (el código conserva sus líneas para que su columna siga reclamando el ancho que necesita) */
+  html.print-deck .slide .code--out pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+}

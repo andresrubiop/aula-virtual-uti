@@ -1,0 +1,36 @@
+{
+  "skill_name": "aula-virtual-uti",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Crea un aula UTI de demostración ES/EN y comprueba presentaciones, animación, PDF y versión portátil. Usa solo datos ficticios.",
+      "expected_output": "Aula y PDF con identidad UTI, rutas ES/EN válidas y archivos portátiles.",
+      "files": [],
+      "assertions": [
+        "20 rutas ES/EN sin errores",
+        "21 comprobaciones de animaciones",
+        "Seis PDF y presentaciones sin desbordes"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Recibe PDF, DOCX, PPTX y XLSX sintéticos y guías prácticas; inventaría sin leer privado ni sobrescribir originales.",
+      "expected_output": "Inventario verificable, celdas XLSX extraídas y contenido privado excluido.",
+      "files": [],
+      "assertions": [
+        "Cuatro regresiones de scripts",
+        "Extracción de documentos"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Genera un paquete Canvas con el sílabo ficticio y prueba la integración bilingüe y el rechazo de traducciones ausentes u obsoletas. No uses cuentas externas.",
+      "expected_output": "Paquete base válido y comprobaciones de cobertura/hash; no afirmar traducción humana ni importación real.",
+      "files": [],
+      "assertions": [
+        "Cuatro regresiones Canvas",
+        "Cuatro regresiones de traducción"
+      ]
+    }
+  ]
+}

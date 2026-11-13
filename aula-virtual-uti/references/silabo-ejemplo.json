@@ -1,0 +1,153 @@
+{
+  "_fuente": {
+    "tipo": "Ejemplo ficticio para probar la plantilla; no es un sílabo aprobado.",
+    "documentos": []
+  },
+  "curso": {
+    "nombre": "Demostración: aprender con esta aula",
+    "periodo": "DEMO",
+    "inicio": "16/11/2026",
+    "fin": "22/11/2026",
+    "canvas_id": "12345",
+    "bienvenida": "Demostración ficticia del aula interactiva: diseña y justifica un plan de repaso.",
+    "horas": {
+      "docente": 2,
+      "practico": 2,
+      "autonomo": 2
+    }
+  },
+  "docente": {
+    "nombre": "Docente de demostración",
+    "email": "docente@example.org",
+    "grado": "Perfil de demostración",
+    "posgrado": []
+  },
+  "competencia_perfil": "Organizar el aprendizaje autónomo con evidencias y reflexión (dato ficticio).",
+  "competencia_pf": "Diseñar un plan de repaso y justificar sus decisiones (dato ficticio).",
+  "metacompetencia": "Metacognición estratégica y proyecto ético de vida",
+  "habilidades": [
+    "Planificación",
+    "Reflexión sobre el propio aprendizaje"
+  ],
+  "ejes": [
+    [
+      "Uso responsable de la IA",
+      "Declarar la ayuda recibida y verificar cada propuesta."
+    ]
+  ],
+  "ra": [
+    [
+      "RA1",
+      "Justifica un plan de repaso con un modelo ilustrativo y sus límites.",
+      "Plan de repaso anotado y reflexión."
+    ]
+  ],
+  "contribucion": "El ejemplo permite explorar la planificación del aprendizaje.",
+  "problema": "Un grupo ficticio concentra todo su estudio la víspera y necesita distribuir el repaso.",
+  "reto": "Proponer un plan de repaso razonado que pueda revisarse con evidencia.",
+  "producto_final": "Plan de repaso anotado con justificación y límites del modelo.",
+  "pis": "Demostración ficticia de aprendizaje colaborativo",
+  "aporte_pis": "Compartir planes de repaso y contrastar sus decisiones (dato ficticio).",
+  "metodologias": [
+    "Aprendizaje basado en problemas",
+    "Trabajo colaborativo"
+  ],
+  "rubrica_final": [
+    [
+      "Justificación del plan de repaso",
+      "Identifica fechas con ayuda.",
+      "Organiza fechas siguiendo el ejemplo.",
+      "Justifica intervalos con el modelo ilustrativo.",
+      "Contrasta limitaciones del modelo y ajusta el plan.",
+      "Construye y revisa una propuesta compartida con criterios explícitos."
+    ]
+  ],
+  "bibliografia": [
+    [
+      "Brown, P. C., Roediger, H. L., y McDaniel, M. A. (2014). Make it stick: The science of successful learning. Harvard University Press.",
+      ""
+    ]
+  ],
+  "momentos": [
+    {
+      "n": 1,
+      "titulo": "Diseñar y justificar el repaso",
+      "fechas": "16/11/2026 al 22/11/2026",
+      "ra": [
+        "RA1"
+      ],
+      "evidencia": "Plan de repaso anotado y reflexión.",
+      "recursos": [
+        "Manual M1",
+        "Animación A1.1",
+        "Práctica PR1"
+      ],
+      "ia": "Se permite proponer alternativas con IA si se declara su uso y se verifica cada decisión.",
+      "rubrica": [
+        [
+          "Justificación del plan de repaso",
+          "Identifica fechas con ayuda.",
+          "Organiza fechas siguiendo el ejemplo.",
+          "Justifica intervalos con el modelo ilustrativo.",
+          "Contrasta limitaciones del modelo y ajusta el plan.",
+          "Construye y revisa una propuesta compartida con criterios explícitos."
+        ]
+      ],
+      "sesiones": [
+        {
+          "n": 1,
+          "desde": "16/11/2026",
+          "hasta": "22/11/2026",
+          "tema": "Repaso espaciado",
+          "docente": [
+            "Explorar el modelo ilustrativo con el grupo."
+          ],
+          "practico": [
+            "Construir y comparar dos planes de repaso."
+          ],
+          "autonomo": [
+            "Justificar el plan y explicar sus límites."
+          ],
+          "contenidos": [
+            "Curva del olvido ilustrativa",
+            "Recuperación y repaso espaciado"
+          ],
+          "horas": {
+            "docente": 2,
+            "practico": 2,
+            "autonomo": 2
+          },
+          "aula": {
+            "unidad": 1,
+            "manual": "M1 completo",
+            "anims": [
+              "A1.1"
+            ],
+            "videos": []
+          }
+        }
+      ]
+    }
+  ],
+  "practicas": [
+    {
+      "id": "PR1",
+      "titulo": "Tu plan de repaso",
+      "momento": 1,
+      "sesion": 1,
+      "unidad": 1,
+      "ra": [
+        "RA1"
+      ],
+      "proposito": "Comparar planes y fundamentar una elección.",
+      "entregable": [
+        "Plan de repaso anotado.",
+        "Justificación del modelo y sus límites.",
+        "Declaración de uso de IA, si se utilizó."
+      ],
+      "evaluacion": "Se aplica la rúbrica de la evidencia del momento.",
+      "puntos": 0
+    }
+  ],
+  "no_publicar": []
+}

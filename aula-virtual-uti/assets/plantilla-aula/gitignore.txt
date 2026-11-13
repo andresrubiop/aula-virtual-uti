@@ -1,0 +1,14 @@
+# Lo que no se versiona ni se comparte
+fuentes/privado/
+hub/dist/
+hub/tools/shots/
+autonomo/
+canvas/salida/
+canvas/exportado/
+videos/bruto/
+videos/**/*.mp4
+videos/**/*.mov
+videos/**/*.webm
+__pycache__/
+*.pyc
+.DS_Store

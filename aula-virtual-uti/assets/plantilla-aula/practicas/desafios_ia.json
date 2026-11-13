@@ -1,0 +1,14 @@
+{
+  "PR1": {
+    "titulo": {"es": "Un plan de repaso a tu medida", "en": "A review plan made for you"},
+    "objetivo": {"es": "Usar IA generativa para proponer un calendario de repaso de esta unidad y comprobarlo con el modelo de la práctica.", "en": "Use generative AI to propose a review calendar for this unit and check it with the model from the practice."},
+    "prompt": {
+      "es": "Tengo una evaluación en 30 días. Propón un calendario de 4 repasos espaciados y explica por qué eliges cada día. Después indícame cómo comprobar tu propuesta con el modelo R = exp(-t/S), donde S se multiplica por 2,5 en cada repaso y empieza en 2 días.",
+      "en": "I have an assessment in 30 days. Propose a calendar of 4 spaced reviews and explain why you choose each day. Then tell me how to check your proposal with the model R = exp(-t/S), where S is multiplied by 2.5 at each review and starts at 2 days."
+    },
+    "verifica": {
+      "es": ["Calcula con repaso.py la retención del día 30 para el calendario propuesto.", "Compárala con el plan «espaciado (1, 3, 7, 14)» de la práctica.", "Anota qué afirmaciones de la IA pudiste comprobar y cuáles no."],
+      "en": ["Use repaso.py to compute the day-30 retention for the proposed calendar.", "Compare it with the “spaced (1, 3, 7, 14)” plan from the practice.", "Write down which of the AI's claims you could check and which you could not."]
+    }
+  }
+}
