@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "144986c773e335a7b2205c9749c627b6373e12b1a7f408617bb3420c605337c0",
-  "bytes": 9732599,
+  "sha256": "fb0ad5f5bb9775450b3d26f0c63b2aef731ab9f9048799265d326c2a5365c80e",
+  "bytes": 9732631,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -46,5 +46,10 @@
   "syllabus_sheet_real_syllabus_local": "PASS (privado, no publicado)",
   "syllabus_sheet_review_not_inferred": "PASS",
   "syllabus_sheet_change_invalidates_review": "PASS",
-  "syllabus_sheet_reports_not_evidence": "PASS"
+  "syllabus_sheet_reports_not_evidence": "PASS",
+  "syllabus_sheet_focused_recheck": {
+    "passed": 12,
+    "failed": 0,
+    "scope": "Relevo: misma lógica; corrección de documentación y ayuda"
+  }
 }

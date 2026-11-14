@@ -85,7 +85,7 @@ Con la revisión vigente, los datos breves presentes en su página cuentan como 
 
 ## Prueba con un sílabo real
 
-Se probó en local con el sílabo vigente de Fundamentos de los Sistemas Operativos (PDF de 11 páginas) y su transcripción a JSON. `completar` propuso página para 320 de 328 datos; 103 aparecían en varias páginas. Los 8 restantes fueron:
+Se probó en local con el sílabo vigente de Fundamentos de los Sistemas Operativos (PDF de 11 páginas) y su transcripción a JSON. `completar` propuso página para 304 de 328 datos; 87 aparecían en varias páginas. Otros 16 eran temas vacíos marcados COMPLETAR. Los 8 datos por ubicar a mano fueron:
 
 - celdas de rúbrica partidas entre páginas;
 - reformulaciones, como «4.º nivel» frente a «4TO NIVEL»;

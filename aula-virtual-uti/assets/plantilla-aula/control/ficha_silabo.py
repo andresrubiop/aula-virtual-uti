@@ -2,7 +2,7 @@
 """Ficha de extracción y revisión del sílabo: cada dato de canvas/silabo.json con su documento y página.
 
 python3 control/ficha_silabo.py iniciar --documento fuentes/silabo/vigente.pdf
-python3 control/ficha_silabo.py completar      # propone páginas solo donde el texto coincide sin ambigüedad
+python3 control/ficha_silabo.py completar      # propone páginas; anota alternativas cuando hay varias coincidencias
 python3 control/ficha_silabo.py verificar [--json]
 En aulas anteriores: python3 <skill>/assets/plantilla-aula/control/ficha_silabo.py --aula <aula> verificar
 
