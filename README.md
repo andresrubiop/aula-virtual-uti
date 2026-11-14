@@ -37,6 +37,8 @@ La guía acompaña al profesor desde crear la carpeta y reunir el sílabo/docume
 
 El desarrollo se organiza en fases. Cada aula mantiene `ESTADO.md` con fase actual, decisiones, evidencias, pendientes y próxima acción; permite continuar durante varios días y cambiar de asistente sin recrear el aula. Consulta el [protocolo de continuidad](aula-virtual-uti/references/continuidad.md).
 
+La mejora 2 añade `control/estado.py`: contrasta fases, entregables y evidencias con los archivos actuales. Las huellas se guardan en `ESTADO.md`; el resultado legible queda en `control/VERIFICACION_ESTADO.md`. Detecta cambios y faltantes sin aprobar fases ni alterar decisiones. [Uso y límites de la verificación](aula-virtual-uti/references/estado-verificable.md).
+
 ## Probar localmente
 
 Python 3.10 o superior permite crear y compilar el aula. Node 22 o superior y Chrome/Chromium permiten comprobarla y producir PDF. Videos y extracción de PDF añaden dependencias opcionales, descritas por el diagnóstico:
@@ -51,6 +53,6 @@ Abre `/tmp/aula-demo/hub/dist/index.html`. Es una unidad demostrativa con marcas
 
 ## Estado y límites
 
-Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; 15 pruebas locales pasan. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
+Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 35 pruebas locales aprobadas, incluidas las del estado verificable. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
 
 La identidad gráfica UTI y las dependencias de terceros conservan sus respectivos derechos. La publicación del código no otorga derechos sobre las marcas institucionales.

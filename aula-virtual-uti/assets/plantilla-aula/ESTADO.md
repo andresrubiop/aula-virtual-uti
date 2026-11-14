@@ -3,7 +3,7 @@
 > **Última actualización:** [fecha] · [agente] · proyecto recién creado desde la plantilla (clave `{{CLAVE}}`, período {{PERIODO}}).
 > Reglas en `AGENTS.md`. Qué se construye en `PLANIFICACION.md`.
 
-Leyenda: ✅ listo · 🟡 borrador o parcial · ⬜ pendiente · ⛔ espera al docente
+Leyenda: ✅ listo · 🟡 borrador o parcial · ⬜ pendiente · ⛔ espera al docente · ⏭ videos omitidos por decisión docente (anotar motivo)
 
 ## Punto de reanudación
 
@@ -76,3 +76,16 @@ Sin credenciales ni datos privados. Para videos consultar también `videos/estad
 - Cambios de sílabo/insumos y entregables afectados: [rutas y observaciones].
 - Copia de seguridad de la jornada: [ubicación, si se realizó].
 - Mensaje para continuar: «Lee ESTADO.md, AGENTS.md y PLANIFICACION.md; verifica el último hito y continúa desde Punto de reanudación».
+
+## 10. Evidencias verificables
+
+El asistente registra aquí las huellas de entregables, fuentes e informes tras revisarlos. Ejecuta `python3 control/estado.py verificar` al retomar y antes de cerrar; el informe está en `control/VERIFICACION_ESTADO.md`. El bloque no aprueba fases ni sustituye decisiones docentes.
+
+<!-- evidencias-aula:inicio -->
+```json
+{
+  "version": 1,
+  "registros": {}
+}
+```
+<!-- evidencias-aula:fin -->

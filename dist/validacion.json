@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "c811ba57bf6123f1aa3dbe3098012694393ec40326dd1ebef71f588a1ba25e02",
-  "bytes": 9687298,
+  "sha256": "117abeb9d25bef687c3387036500b4549f0c30fc2a2b14ae1f91bf87bf405415",
+  "bytes": 9698759,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 15,
+    "passed": 35,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,6 +18,13 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejora 1 únicamente",
-  "source_matches_package": "PASS"
+  "scope": "Mejoras 1 y 2; entrega actual: estado verificable",
+  "source_matches_package": "PASS",
+  "state_verifier_new_and_existing_classroom": "PASS",
+  "state_decisions_preserved": "PASS",
+  "stale_evidence_detected": "PASS",
+  "independent_state_scenarios": {
+    "passed": 19,
+    "total": 19
+  }
 }

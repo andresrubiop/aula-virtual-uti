@@ -38,3 +38,7 @@ Actualiza el estado al terminar cada unidad o hito, al cambiar de fase, antes de
 Ejecuta las comprobaciones pertinentes a lo cambiado, anota sus límites y guarda los archivos. Deja un punto de reanudación que otro asistente pueda ejecutar sin leer la conversación. Indica al docente qué abrir, qué se completó y qué queda pendiente. No prometas continuar en segundo plano después de cerrar la sesión.
 
 Si cambia de equipo, debe trasladar la carpeta completa y conservar rutas relativas. Si cambia de asistente, primero guarda el estado y evita ediciones simultáneas del mismo aula. La copia de seguridad de cada jornada debe conservar también los archivos fuente, no solo `hub/dist/`.
+
+## Comprobación automatizada del estado
+
+Usa `python3 control/estado.py verificar` al retomar y cerrar; registra huellas tras comprobaciones reales con `registrar`. La evidencia permanece dentro de ESTADO.md; el informe derivado es `control/VERIFICACION_ESTADO.md`. Consulta [Estado verificable](estado-verificable.md) para comandos, fases, migración de aulas anteriores y límites. No conviertas el código 0 en una afirmación de curso terminado.

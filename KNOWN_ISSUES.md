@@ -8,4 +8,4 @@ Actualizado el 2026-11-13. La mejora 1 corrige los tres defectos reproducidos en
 
 Las regresiones comprueban estos casos con documentos ficticios. El cambio de nombre interno de las guías puede hacer que Canvas cree archivos nuevos al importar una actualización; prueba primero en un curso de ensayo. No se garantiza una reimportación sin duplicados.
 
-Continúan pendientes la importación real en Canvas, la generación autenticada de videos, la revisión pedagógica y las pruebas completas en Windows/macOS. Las mejoras 2–12 se abordarán por separado; no forman parte de esta entrega.
+Continúan pendientes la importación real en Canvas, la generación autenticada de videos, la revisión pedagógica y las pruebas completas en Windows/macOS. La mejora 2 incorpora verificación de estado. Las mejoras 3–12 se abordarán por separado. El verificador necesita la tabla de fases del molde y evidencia explícita: no determina por sí mismo si el contenido está completo ni autentica decisiones docentes o pruebas remotas. Consulte `aula-virtual-uti/references/estado-verificable.md`.

@@ -144,13 +144,15 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 
 **`aula/ESTADO.md` es el registro principal.** El asistente lo actualiza al completar un hito, antes de una operación externa y antes de cerrar o agotar la sesión. Guarda fase actual, trabajo terminado con evidencia, unidad en curso, decisiones aprobadas, archivos modificados, dudas, pruebas y siguiente acción exacta. `PLANIFICACION.md` guarda el diseño académico; `ESTADO.md` guarda el avance real.
 
+El asistente comprueba archivos y evidencias con la herramienta de estado. Si falta una entrega o cambió desde la última prueba, te indica qué revisar primero. Puedes leer el resultado en `aula/control/VERIFICACION_ESTADO.md`; no modifica tus decisiones ni aprueba fases.
+
 Antes de cerrar escribe:
 
 > Guarda el avance en aula/ESTADO.md: qué completaste, qué falta, decisiones, pruebas realizadas, trabajo en curso y el primer paso concreto para continuar mañana. No marques como terminado lo que todavía no revisamos.
 
 Al día siguiente, abre de nuevo **MiAula-B26**, ejecuta `claude` o `codex` y escribe:
 
-> Retoma el aula existente. Lee aula/ESTADO.md, aula/AGENTS.md y aula/PLANIFICACION.md. Comprueba los archivos del último hito y continúa desde el punto de reanudación. Conserva los avances y no recrees el aula ni repitas decisiones ya resueltas.
+> Retoma el aula existente. Lee aula/ESTADO.md, aula/AGENTS.md y aula/PLANIFICACION.md. Ejecuta la verificación del estado, revisa sus incidencias y continúa desde el punto de reanudación. Conserva los avances y no recrees el aula ni repitas decisiones ya resueltas.
 
 No ejecutes dos asistentes modificando el mismo aula a la vez. Para cambiar de Claude a Codex, pide guardar el estado, cierra la sesión y abre el otro en la misma carpeta. Haz una copia de seguridad de `MiAula-B26` al terminar cada jornada. Si se interrumpió inesperadamente, pide contrastar los archivos con el último estado antes de continuar. El cierre del chat no deja al asistente trabajando por sí solo.
 

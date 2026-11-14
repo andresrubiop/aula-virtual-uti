@@ -23,6 +23,7 @@ Aprovecha la información y autorizaciones existentes. Si hay un aula en curso, 
 |---|---|
 | Al iniciar o explicar el uso al docente | [Guía de uso](GUIA_DE_USO.md) |
 | Al iniciar, pausar, cambiar de día o de asistente | [Fases y continuidad](references/continuidad.md) |
+| Al contrastar el estado o registrar evidencias | [Estado verificable](references/estado-verificable.md) |
 | Antes de planificar | [Modelo educativo](references/modelo-educativo.md) |
 | Al convertir el sílabo y las guías | [Esquema del sílabo](references/silabo.md) y [ejemplo ficticio](references/silabo-ejemplo.json) |
 | Al crear contenidos o animaciones | `AGENTS.md` del aula y [animaciones](references/animaciones.md) |
@@ -37,7 +38,7 @@ Las rutas `scripts/`, `references/` y `assets/` se resuelven respecto a esta ski
 
 El desarrollo puede ocupar varios días. Sigue [continuidad](references/continuidad.md): acuerda un objetivo por sesión y mantén el estado del aula en Markdown desde el primer contacto. Si aún no creaste el aula, usa un estado provisional en la carpeta de trabajo y transfiérelo al crearla, dejando un enlace al estado principal.
 
-1. Si existe `ESTADO.md` del aula, léelo junto con `AGENTS.md`, `PLANIFICACION.md` y `hub/src/course.json`. Comprueba los archivos antes de dar por hecho lo que declara el estado.
+1. Si existe `ESTADO.md` del aula, léelo junto con `AGENTS.md`, `PLANIFICACION.md` y `hub/src/course.json`. Comprueba los archivos antes de dar por hecho lo que declara el estado. Ejecuta `python3 control/estado.py verificar`; en aulas anteriores usa la herramienta desde la skill con `--aula <carpeta>`. Sigue [estado verificable](references/estado-verificable.md): conserva decisiones y corrige discrepancias antes de continuar el hito afectado.
 2. Para un aula nueva, averigua solo lo que falte: nombre del proyecto formativo, período, carpeta de destino y sílabo vigente. El nombre y el período se pueden extraer del documento.
    Pregunta también, si no está resuelto: «¿Tienes una cuenta de NotebookLM y quieres usarla para los videos? Puedes usar tu cuenta institucional con acceso, otra cuenta propia o continuar sin videos por ahora». Registra disponibilidad y preferencia; no pidas contraseña, código de acceso, cookies ni tokens, ni exijas el correo para crear el aula. Si acepta, acompaña al docente para iniciar sesión directamente en el servicio cuando se prepare la generación. Tener una cuenta o sesión abierta no autoriza todavía a subir fuentes.
 3. Ejecuta `python3 <skill>/scripts/entorno.py`. Python construye el aula; Node y un navegador permiten comprobarla y producir PDF. Los videos son opcionales. Si falta una dependencia, explica el efecto y prepara lo que sí sea posible; no declares verificada una parte que no se ejecutó.
@@ -129,5 +130,7 @@ Las tareas quedan para revisión de fechas, puntajes y publicación por el docen
 Actualiza `ESTADO.md` en cada hito y antes de detenerte, incluso por límite de contexto. Es común a Astra, Fable, Claude y Codex: usa rutas relativas, archivos concretos, decisiones confirmadas, pruebas con resultado y siguiente acción. No dependas de memorias privadas de un modelo.
 
 Mantén fase actual, objetivo de sesión, trabajo parcial, decisiones con fecha/alcance, verificaciones realizadas y un punto de reanudación con archivo y acción concretos. En el próximo día, contrasta ese estado con archivos existentes y continúa sin recrear el aula ni repetir preguntas resueltas. Registra operaciones externas pendientes antes de ejecutarlas y sus resultados después; comprueba trabajos inciertos antes de reintentarlos. Distingue paquete generado, revisado, importado y publicado. Sigue el [protocolo de continuidad](references/continuidad.md) y conserva pendientes aunque cambie el asistente.
+
+Después de cada comprobación real, registra sus entregables, fuentes e informes con `control/estado.py registrar`; las huellas quedan en ESTADO.md. No reemplaces evidencia obsoleta sin revisar de nuevo. Antes de cerrar ejecuta `verificar`, lee `control/VERIFICACION_ESTADO.md` y conserva una próxima acción concreta. Registrar archivos no aprueba fases ni acredita por sí solo una importación o decisión docente.
 
 Entrega al docente los enlaces al aula estudiantil, su edición privada, carpeta portátil y paquete Canvas, junto con `canvas/LEEME.md`. Explica en pocas frases qué está listo, qué abrir y qué queda pendiente de revisión. No declares curso completo si quedan marcas de relleno, traducciones faltantes, fuentes ambiguas o pruebas necesarias sin ejecutar.
