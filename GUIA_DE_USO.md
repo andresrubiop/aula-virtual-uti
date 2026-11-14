@@ -144,7 +144,7 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 
 **Antes de aprobar la planificación, revisa la [ficha del sílabo](aula-virtual-uti/references/ficha-silabo.md)** (`aula/control/FICHA_SILABO.html`): cada dato transcrito con su página. Coteja lo marcado ▲ o ✖ y confirma o indica qué corregir.
 
-**`aula/ESTADO.md` es el registro principal.** El asistente lo actualiza al completar un hito, antes de una operación externa y antes de cerrar o agotar la sesión. Guarda fase actual, trabajo terminado con evidencia, unidad en curso, decisiones aprobadas, archivos modificados, dudas, pruebas y siguiente acción exacta. `PLANIFICACION.md` guarda el diseño académico; `ESTADO.md` guarda el avance real.
+**`aula/ESTADO.md` es el registro principal.** El asistente lo actualiza al completar un hito, antes de una operación externa y antes de cerrar o agotar la sesión. Guarda fase actual, trabajo terminado con evidencia, unidad en curso, decisiones aprobadas, archivos modificados, dudas, pruebas y siguiente acción exacta. `PLANIFICACION.md` guarda el diseño académico; `ESTADO.md` guarda el avance real. Para verlo de un vistazo, pide «actualiza el panel» y abre `aula/PANEL.html` ([panel de avance](aula-virtual-uti/references/panel.md)): fases, unidades, lo que espera tu decisión y botones al aula, los PDF y la entrega.
 
 Si cambias un material, pide: «Analiza el impacto y actualiza solo lo necesario; conserva mis correcciones». El asistente revisa las relaciones registradas, prepara `aula/control/IMPACTO.md` y actualiza en orden lo afectado. Comprueba después `aula/control/VERIFICACION_ESTADO.md`. Una fuente sin relación necesita revisión; estos informes no aprueban fases.
 

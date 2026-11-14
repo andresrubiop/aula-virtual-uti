@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "fb0ad5f5bb9775450b3d26f0c63b2aef731ab9f9048799265d326c2a5365c80e",
-  "bytes": 9732631,
+  "sha256": "8fc3203bffc6d73bfdb34a9a2bfb505723a64a61a6548b08f4d6c43625935122",
+  "bytes": 9745870,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 90,
+    "passed": 102,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,7 +18,7 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejoras 1–5; entrega actual: ficha de extracción y revisión del sílabo",
+  "scope": "Mejoras 1–6; entrega actual: panel local de avance para el profesor",
   "source_matches_package": "PASS",
   "state_verifier_new_and_existing_classroom": "PASS",
   "state_decisions_preserved": "PASS",
@@ -47,9 +47,10 @@
   "syllabus_sheet_review_not_inferred": "PASS",
   "syllabus_sheet_change_invalidates_review": "PASS",
   "syllabus_sheet_reports_not_evidence": "PASS",
-  "syllabus_sheet_focused_recheck": {
-    "passed": 12,
-    "failed": 0,
-    "scope": "Relevo: misma lógica; corrección de documentación y ayuda"
-  }
+  "progress_panel_new_and_existing_classroom": "PASS",
+  "progress_panel_read_only": "PASS (solo escribe PANEL.html)",
+  "progress_panel_links_existing_files_only": "PASS",
+  "progress_panel_not_in_delivery": "PASS",
+  "progress_panel_not_evidence": "PASS",
+  "progress_panel_real_syllabus_local": "PASS (privado, no publicado)"
 }

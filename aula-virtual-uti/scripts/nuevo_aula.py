@@ -86,6 +86,11 @@ def main() -> int:
             print('  La primera compilación falló: revisa el mensaje anterior.')
             return 1
         print(f'  Ábrela con doble clic: {dst / "hub" / "dist" / "index.html"}')
+    panel = dst / 'control' / 'panel.py'
+    if panel.exists():
+        r = subprocess.run([sys.executable, str(panel)], capture_output=True, text=True)
+        if r.returncode == 0:
+            print(f'  Panel de avance: {dst / "PANEL.html"}')
     return 0
 
 

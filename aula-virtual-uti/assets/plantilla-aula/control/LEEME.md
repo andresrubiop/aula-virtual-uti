@@ -26,6 +26,12 @@ Pide: «Muéstrame qué RA, temas y prácticas del sílabo tienen recursos revis
 
 El asistente prepara los vínculos y el profesor revisa su alcance. No fabriques aprobaciones, no registres este informe como prueba y no lo distribuyas como contenido estudiantil. Guía completa: `references/cobertura.md` de la skill instalada.
 
+## Panel de avance
+
+Pide: «Actualiza el panel del aula y ábremelo». El asistente ejecuta `python3 control/panel.py` y escribe `PANEL.html` en la carpeta del aula. Se abre con doble clic y muestra dónde vamos, lo que espera tu decisión, fases, unidades, comprobaciones y botones para abrir el aula, la ficha, los PDF y la entrega.
+
+El panel se deriva de ESTADO.md y de las comprobaciones de esta carpeta; no las modifica ni es otro registro. Si algo no coincide, se corrige ESTADO.md y se vuelve a generar. No se actualiza solo: la fecha y la huella de ESTADO.md figuran al pie. Código 0: panel escrito; 2: no se pudo leer ESTADO.md. No es evidencia ni material del estudiante. Guía completa: `references/panel.md` de la skill instalada.
+
 ## Ficha del sílabo
 
 Pide: «Prepara la ficha del sílabo y ábremela para revisarla». El asistente ejecuta `python3 control/ficha_silabo.py iniciar --documento fuentes/silabo/<sílabo vigente>`, después `completar` y `verificar`. Abre `control/FICHA_SILABO.html` con doble clic: cada dato transcrito aparece con su página y una marca (✔ localizado, ◐ cotejar a la vista, ▲ o ✖ por revisar).

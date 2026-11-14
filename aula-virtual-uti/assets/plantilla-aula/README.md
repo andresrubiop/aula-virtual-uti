@@ -6,6 +6,7 @@
 - **Llevarla a clase o enviarla:** carpeta `autonomo/` (un solo archivo, o la carpeta `paquete/` con PDF y videos).
 - **Subirla a Canvas:** archivo `canvas/salida/…-canvas.imscc` y la guía `canvas/LEEME.md`.
 - **Tus documentos** van en `fuentes/` (cada carpeta tiene un `LEEME.txt` que dice qué poner). Lo de `fuentes/privado/` nunca se usa.
+- **Ver el avance:** abre `PANEL.html` con doble clic: fases, unidades, lo que espera tu decisión y botones para abrir el aula, los PDF y la entrega. Pide «actualiza el panel» para regenerarlo.
 - **Para seguir trabajando** con Claude o Codex: abre esta carpeta y escribe «continuemos con el aula». El asistente lee `ESTADO.md` y sabe dónde quedó.
 
 ## Para el asistente

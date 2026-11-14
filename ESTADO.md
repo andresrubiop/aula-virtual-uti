@@ -14,7 +14,7 @@ Validación de esta ampliación: skill válida; referencias Markdown locales exi
 
 Pendientes: revisión docente y piloto con documentos reales; importación en Canvas y generación de videos autenticada; comparaciones independientes con/sin skill y otros sistemas operativos. Las escenas nuevas Three.js/anatomy tampoco están certificadas. El modelo educativo consultado contiene una contradicción sobre el umbral Crítico, documentada en las referencias.
 
-Mejora 5 publicada (2026-11-14): ficha de extracción y revisión del sílabo; detalle al final. Las mejoras 6–12 requieren una nueva indicación del usuario. La plantilla demostrativa no constituye una asignatura completa.
+Mejoras 5 y 6 publicadas (2026-11-14): ficha de extracción y revisión del sílabo, y panel local de avance para el profesor; detalle al final. Las mejoras 7–12 requieren una nueva indicación del usuario. La plantilla demostrativa no constituye una asignatura completa.
 
 Guía del profesor disponible también en la raíz: `GUIA_DE_USO.md` completa y `GUIA_DE_USO.pdf` de 15 páginas. PDF con identidad UTI, índice navegable, pasos, ejemplos, comprobaciones y lista de revisión final. Generación reproducible en `tools/`; verificación de paginación, enlaces, ausencia de desbordes y revisión visual. La copia dentro de la skill se conserva para instalaciones autónomas.
 
@@ -39,3 +39,10 @@ Mejora 5 (2026-11-14): `control/ficha_silabo.py` (iniciar, completar, verificar)
 Validación de la mejora 5: 90/90 regresiones PASS (12 nuevas en `tests/test_ficha.py`, con documento ficticio). Paquete extraído: crea un aula nueva, inicia, completa y verifica la ficha, registra y luego invalida una revisión simulada, y funciona con `--aula` en un aula creada con la versión anterior sin modificar su ESTADO.md. Prueba local con un sílabo real de 11 páginas (no publicado): 328 datos: página propuesta para 304, 16 temas vacíos marcados COMPLETAR y 8 por ubicar a mano (celdas partidas, reformulaciones y una palabra ausente del documento oficial). No hace OCR ni reconstruye tablas; no autentica la revisión. Hash vigente en `dist/validacion.json`.
 
 Revisión de relevo (Codex, 2026-11-14): 12/12 pruebas de la ficha repetidas y aprobadas. Corregidas las cifras documentadas para coincidir con el resultado de integración guardado (304 con página y 87 con alternativas); la ayuda aclara que se proponen páginas también ante coincidencias múltiples. No cambia la lógica del programa. Distribución reempaquetada y contrastada con la fuente; guía PDF conservada.
+
+## Mejora 6 · panel local de avance (2026-11-14)
+
+`control/panel.py` genera `PANEL.html` en la carpeta del aula: fase actual y próxima acción, lo que espera la decisión del profesor (preguntas, bloqueos, fases ⛔, ficha sin revisar), fases, unidades, comprobaciones de estado, impacto, ficha y cobertura, y botones para abrir el aula, cada unidad, la ficha, la planificación, los PDF, el aula portátil y el paquete de Canvas. Se deriva de `ESTADO.md` en modo lectura y solo escribe `PANEL.html`; no es evidencia ni forma parte de la entrega. `nuevo_aula.py` lo genera al crear el aula; las aulas anteriores lo usan con `--aula`. Avisa cuando un archivo es anterior a lo que lo origina (por fechas de modificación) y si su evidencia registrada sigue vigente.
+
+Validación: 102/102 regresiones (12 nuevas del panel con aulas ficticias), `quick_validate` y enlaces Markdown locales correctos. Desde el paquete extraído se comprobaron un aula nueva, un flujo completo ficticio y un aula de la versión anterior. También se probó en local, sin publicarla, una copia de un aula con un sílabo real. Guía PDF de 15 páginas, 33 enlaces y sin desbordes. No hay pruebas en Windows o macOS ni revisión de profesores reales.
+
