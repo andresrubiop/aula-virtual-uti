@@ -27,7 +27,21 @@ class Canvas(unittest.TestCase):
         r=self.generate();self.assertEqual(r.returncode,0,r.stdout+r.stderr)
         import zipfile
         with zipfile.ZipFile(self.aula/'canvas/salida/CP-aula-canvas.imscc') as z:
-            for i in (1,2):self.assertIn(f'web_resources/Aula y materiales/guias/PR{i}-guia.txt',z.namelist())
+            for i in (1,2):
+                names=[n for n in z.namelist() if f'/guias/PR{i}-' in n and n.endswith('-guia.txt')]
+                self.assertEqual(len(names),1);self.assertEqual(z.read(names[0]).decode(),f'Guía {i}')
+    def test_normalized_ids_preserve_both_guides(self):
+        for i in (1,2):
+            p=self.aula/f'fuentes/guias-practicas/g{i}/guia.txt';p.parent.mkdir(parents=True);p.write_text(f'Contenido {i}')
+        g=self.data['practicas'][0];g.update(id='PR 1',archivo='fuentes/guias-practicas/g1/guia.txt')
+        self.data['practicas'].append(dict(g,id='PR-1',archivo='fuentes/guias-practicas/g2/guia.txt'))
+        r=self.generate();self.assertEqual(r.returncode,0,r.stdout+r.stderr)
+        import zipfile
+        with zipfile.ZipFile(self.aula/'canvas/salida/CP-aula-canvas.imscc') as z:
+            names=[n for n in z.namelist() if '/guias/' in n and n.endswith('guia.txt')]
+            self.assertEqual(len(names),2)
+            self.assertEqual({z.read(n).decode() for n in names},{'Contenido 1','Contenido 2'})
+
     def test_private_guide_rejected(self):
         p=self.aula/'fuentes/privado/secret.txt';p.parent.mkdir(parents=True,exist_ok=True);p.write_text('private')
         self.data['practicas'][0]['archivo']='fuentes/privado/secret.txt'

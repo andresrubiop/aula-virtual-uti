@@ -143,7 +143,7 @@ def pdfs(n, ext=''):
 
 def guia_nombre(g):
     slug = re.sub(r'[^a-zA-Z0-9_-]+', '-', g['id'])
-    return slug + '-' + Path(g['archivo']).name
+    return slug[:60] + '-' + hashlib.sha256(g['id'].encode()).hexdigest()[:16] + '-' + Path(g['archivo']).name
 
 
 def video_files(v):
@@ -977,7 +977,13 @@ def main() -> int:
                 files.append((f'{CARPETA}/guias/{guia_nombre(g)}', f))
             else:
                 aviso(f'Práctica {g["id"]}: no existe el archivo {g["archivo"]}')
-    for rel, origen in dict(files).items():
+    destinos = {}
+    for rel, origen in files:
+        key = rel.casefold()
+        if key in destinos and destinos[key] != (rel, origen):
+            sys.exit(f'Colisión de archivos de distribución: {rel}. No se sobrescribió la guía.')
+        destinos[key] = (rel, origen)
+    for rel, origen in destinos.values():
         dst = WR / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(origen, dst)

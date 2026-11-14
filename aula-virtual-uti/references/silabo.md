@@ -67,7 +67,7 @@ Cada sesión contiene:
 | `archivo` | Ruta relativa desde la raíz del aula a la guía original autorizada, por ejemplo `fuentes/guias-practicas/GP1.pdf`. Se adjunta al paquete y será pública. Omítela si la guía está integrada en el sílabo. |
 | `puntos` | Número positivo si consta en el sílabo; omitido o 0 genera una práctica sin calificación. No inventes un puntaje. |
 
-Si la guía está dentro del sílabo, registra sus páginas en la trazabilidad y produce el recurso del aula sin inventar un archivo original separado. Conserva propósito, procedimiento, materiales, evidencia y rúbrica de la guía, y registra cualquier complemento propuesto. Dos archivos de guías diferentes no deben tener el mismo nombre base: el empaquetado los coloca juntos en `Aula y materiales/guias/`.
+Si la guía está dentro del sílabo, registra sus páginas en la trazabilidad y produce el recurso del aula sin inventar un archivo original separado. Conserva propósito, procedimiento, materiales, evidencia y rúbrica de la guía, y registra cualquier complemento propuesto. Las guías pueden compartir nombre base: el empaquetado antepone el ID y una huella estable del ID original. Los IDs de práctica deben ser únicos; si dos destinos todavía coinciden, se detiene la generación en lugar de sobrescribir archivos.
 
 ## Límites de la comprobación
 

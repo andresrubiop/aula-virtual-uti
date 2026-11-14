@@ -1,12 +1,23 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "17463329df4efd7ffb3ec89563387ee0c5dbe9d727356b1c27c94fd1f5451a6e",
-  "bytes": 9686320,
+  "sha256": "c811ba57bf6123f1aa3dbe3098012694393ec40326dd1ebef71f588a1ba25e02",
+  "bytes": 9687298,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
   "usage_guide_included": "PASS",
   "phase_state_template": "PASS",
   "existing_classroom_state_preserved": "PASS",
-  "local_markdown_links": "PASS"
+  "local_markdown_links": "PASS",
+  "regression_tests": {
+    "passed": 15,
+    "failed": 0
+  },
+  "known_defects_fixed": [
+    "stale_source_cache",
+    "pptx_order_and_notes",
+    "guide_name_collision"
+  ],
+  "scope": "Mejora 1 únicamente",
+  "source_matches_package": "PASS"
 }
