@@ -8,9 +8,10 @@ El usuario confirmó el 2026-11-13 que el formato/template del sílabo de FSO es
 
 1. Conserva los documentos originales en `fuentes/`. Ejecuta el inventario y contrasta el texto extraído con el PDF o las diapositivas, especialmente tablas y rúbricas.
 2. Identifica versión, período, aprobación y páginas del sílabo vigente. Usa presentaciones y sílabos antiguos para contenido complementario; documenta discrepancias sin sustituir silenciosamente el vigente.
-3. Registra en `_fuente` las rutas relativas, páginas y SHA-256 de los documentos consultados. Puede ser un objeto: el motor no lo publica. No incluyas datos personales innecesarios.
+3. Registra en `_fuente` las rutas relativas y la versión de los documentos consultados. Puede ser un objeto: el motor no lo publica. No incluyas datos personales innecesarios.
 4. Completa el JSON y `PLANIFICACION.md`. Registra las dudas con `[COMPLETAR: motivo]`; no inventes fechas, horas, competencias, rúbricas ni bibliografía para pasar la validación.
-5. Comprueba manualmente la correspondencia sílabo → momentos/sesiones → unidades → guías → evidencias. Ejecuta después `python3 canvas/validar_silabo.py` desde la carpeta del aula. Un resultado sin errores no acredita fidelidad al documento.
+5. Comprueba la correspondencia sílabo → momentos/sesiones → unidades → guías → evidencias. Ejecuta `python3 canvas/validar_silabo.py` desde la carpeta del aula. Un resultado sin errores no acredita fidelidad al documento.
+6. Prepara la [ficha del sílabo](ficha-silabo.md): ubica cada dato en su documento y página, revisa lo no localizado y pide al profesor que la coteje. Su revisión se registra en ESTADO.md; la ficha reemplaza la trazabilidad manual en `fuentes/TRAZABILIDAD.md`.
 
 ## Estructura exacta
 
@@ -67,7 +68,7 @@ Cada sesión contiene:
 | `archivo` | Ruta relativa desde la raíz del aula a la guía original autorizada, por ejemplo `fuentes/guias-practicas/GP1.pdf`. Se adjunta al paquete y será pública. Omítela si la guía está integrada en el sílabo. |
 | `puntos` | Número positivo si consta en el sílabo; omitido o 0 genera una práctica sin calificación. No inventes un puntaje. |
 
-Si la guía está dentro del sílabo, registra sus páginas en la trazabilidad y produce el recurso del aula sin inventar un archivo original separado. Conserva propósito, procedimiento, materiales, evidencia y rúbrica de la guía, y registra cualquier complemento propuesto. Las guías pueden compartir nombre base: el empaquetado antepone el ID y una huella estable del ID original. Los IDs de práctica deben ser únicos; si dos destinos todavía coinciden, se detiene la generación en lugar de sobrescribir archivos.
+Si la guía está dentro del sílabo, sus datos se ubican en esas páginas en la ficha y produce el recurso del aula sin inventar un archivo original separado. Conserva propósito, procedimiento, materiales, evidencia y rúbrica de la guía, y registra cualquier complemento propuesto. Las guías pueden compartir nombre base: el empaquetado antepone el ID y una huella estable del ID original. Los IDs de práctica deben ser únicos; si dos destinos todavía coinciden, se detiene la generación en lugar de sobrescribir archivos.
 
 ## Límites de la comprobación
 

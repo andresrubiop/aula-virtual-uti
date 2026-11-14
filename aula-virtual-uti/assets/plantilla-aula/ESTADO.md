@@ -24,7 +24,7 @@ Actualizar este bloque en cada hito y antes de cerrar. Al retomar, leer este arc
 |---|---|---|
 | 0 · Entorno y carpeta | 🟡 | Proyecto creado; registrar el resultado real de compilación y diagnóstico |
 | 1 · Insumos del docente (`fuentes/`) | ⬜ | Falta el sílabo vigente |
-| 2 · Sílabo en datos (`canvas/silabo.json`) | ⬜ | |
+| 2 · Sílabo en datos (`canvas/silabo.json`) y ficha revisada por el docente (`control/FICHA_SILABO.html`) | ⬜ | |
 | 3 · Planificación (`PLANIFICACION.md`) aprobada por el docente | ⬜ | |
 | 4 · Unidad piloto completa y aprobada | ⬜ | |
 | 5 · Resto de unidades | ⬜ | |

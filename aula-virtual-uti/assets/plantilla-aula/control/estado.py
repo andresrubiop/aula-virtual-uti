@@ -119,7 +119,8 @@ def hashes(root, paths):
     for value in paths:
         p = ruta(root, value)
         rel = p.relative_to(root).as_posix()
-        if rel in ('ESTADO.md', 'control/VERIFICACION_ESTADO.md', 'control/IMPACTO.md', 'control/COBERTURA.md'):
+        if rel in ('ESTADO.md', 'control/VERIFICACION_ESTADO.md', 'control/IMPACTO.md', 'control/COBERTURA.md',
+                   'control/FICHA_SILABO.md', 'control/FICHA_SILABO.html'):
             raise ValueError('No registres el propio estado ni el informe derivado como evidencia.')
         if rel in result:
             raise ValueError(f'Archivo repetido: {rel}')

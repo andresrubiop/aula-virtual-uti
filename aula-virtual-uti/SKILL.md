@@ -28,6 +28,7 @@ Aprovecha la información y autorizaciones existentes. Si hay un aula en curso, 
 | Al planificar, revisar unidades o preparar la entrega | [Matriz de cobertura](references/cobertura.md) |
 | Antes de planificar | [Modelo educativo](references/modelo-educativo.md) |
 | Al convertir el sílabo y las guías | [Esquema del sílabo](references/silabo.md) y [ejemplo ficticio](references/silabo-ejemplo.json) |
+| Al cotejar la transcripción con el documento | [Ficha del sílabo](references/ficha-silabo.md) |
 | Al crear contenidos o animaciones | `AGENTS.md` del aula y [animaciones](references/animaciones.md) |
 | Al preparar videos | [Videos y cuentas educativas](references/videos.md) |
 | Antes de exportar a Canvas | [Canvas](references/canvas.md) y `canvas/LEEME.md` del aula |
@@ -66,9 +67,11 @@ Identifica explícitamente:
 
 Crea `canvas/silabo.json` siguiendo la referencia. `silabo.ejemplo.json` es solo una muestra ficticia: nunca lo hagas pasar por información oficial. Conserva los RA, momentos, sesiones, horas, fechas, evidencias, rúbricas y bibliografía del documento vigente.
 
-Registra la trazabilidad en `fuentes/TRAZABILIDAD.md`: campo/recurso, archivo, página o diapositiva y observación. Las traducciones acompañan el texto oficial; no cambian su sentido. Si falta un dato, anota `[COMPLETAR: dato y fuente necesaria]` y la pregunta concreta en el estado. No fabriques fechas, requisitos, bibliografía o ponderaciones para que pase un validador.
+Si falta un dato, anota `[COMPLETAR: dato y fuente necesaria]` y la pregunta concreta en el estado. No fabriques fechas, requisitos, bibliografía o ponderaciones para que pase un validador. Las traducciones acompañan el texto oficial; no cambian su sentido.
 
-Ejecuta `python3 canvas/validar_silabo.py`. Resuelve errores reales; explica los avisos y conserva los que dependan del docente. Un validador correcto no certifica fidelidad pedagógica: coteja especialmente las tablas y las guías prácticas.
+Ejecuta `python3 canvas/validar_silabo.py`. Resuelve errores reales; explica los avisos y conserva los que dependan del docente. Un validador correcto no certifica fidelidad.
+
+Prepara después la [ficha del sílabo](references/ficha-silabo.md): `control/ficha_silabo.py iniciar --documento <sílabo vigente>`, `completar` y `verificar`. Ubica a mano lo que no encuentre, corrige el JSON cuando el dato no coincida con el documento y declara en una nota solo los cotejos visuales que hiciste de verdad (celdas partidas, siglas). Abre al docente `control/FICHA_SILABO.html` y pídele que la revise, empezando por lo marcado ▲ o ✖, fechas, horas, RA, evidencias, rúbricas y guías prácticas. Registra su confirmación con `control/estado.py registrar` como revisión docente; nunca la infieras. No planifiques sobre datos sin cotejar sin dejarlo anotado en el estado.
 
 ## 3. Proponer la planificación
 
@@ -125,7 +128,7 @@ Usa modo guiado cuando no esté disponible la herramienta automática. Si no hay
 
 Sigue la referencia Canvas. Usa preferentemente un export del curso de destino; la plantilla incluida sirve de base y no garantiza que la importación evite duplicados. No modifiques el curso remoto durante la preparación local.
 
-Valida el sílabo, genera el aula autónoma, genera el paquete y verifica sus archivos. Completa también la traducción de las páginas y tareas Canvas siguiendo la guía: el generador base redacta su estructura en español; incluir PDF bilingües no traduce esas páginas. Revisa `control/COBERTURA.md` antes de llamar completa a la entrega; comprueba además la traducción de las páginas y tareas exportadas, que la matriz de HTML local no certifica.
+Valida el sílabo, comprueba que la ficha del sílabo siga vigente, genera el aula autónoma, genera el paquete y verifica sus archivos. Completa también la traducción de las páginas y tareas Canvas siguiendo la guía: el generador base redacta su estructura en español; incluir PDF bilingües no traduce esas páginas. Revisa `control/COBERTURA.md` antes de llamar completa a la entrega; comprueba además la traducción de las páginas y tareas exportadas, que la matriz de HTML local no certifica.
 
 Las tareas quedan para revisión de fechas, puntajes y publicación por el docente. Las rúbricas HTML no equivalen a rúbricas nativas del libro de calificaciones. Prueba la importación en un curso de ensayo cuando el docente disponga de él y lo autorice. La comprobación local del ZIP no sustituye esa revisión.
 

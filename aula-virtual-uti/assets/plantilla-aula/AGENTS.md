@@ -117,6 +117,7 @@ python3 hub/tools/pdfs.py [N …]            # PDF de manual, presentación y pr
 python3 hub/tools/deck_overflow.py materiales/unidad-*/P*_presentacion*.pdf
 python3 hub/tools/autonomo.py              # aula de un solo archivo y carpeta para llevar → autonomo/
 python3 canvas/validar_silabo.py           # el sílabo en datos: errores y avisos
+python3 control/ficha_silabo.py verificar  # cada dato del sílabo con su página → control/FICHA_SILABO.html para el docente
 python3 canvas/generar_canvas.py           # paquete de Canvas → canvas/salida/   (--sin-videos · --solo-es)
 python3 canvas/verificar_paquete.py        # el paquete, antes de subirlo
 node hub/tools/check.mjs --routes "#/u2/animaciones" --shots     # captura en hub/tools/shots/ para mirar el resultado
@@ -141,5 +142,7 @@ El desarrollo puede durar varios días y sesiones. `ESTADO.md` del aula es la fu
 **Comprobar el estado:** ejecuta `python3 control/estado.py verificar` al iniciar y cerrar. Registra evidencia con `registrar` después de ejecutar la prueba correspondiente; no inventes informes ni aprobaciones. Las huellas se guardan en ESTADO.md; `control/VERIFICACION_ESTADO.md` es un informe derivado. Consulta `control/LEEME.md`. Corrige discrepancias y deja el punto de reanudación, sin alterar automáticamente las fases ni perder decisiones.
 
 **Cuando cambian materiales:** ejecuta `python3 control/estado.py impacto` y revisa `control/IMPACTO.md`. Las fuentes que son entregables de otro registro forman dependencias; declara todas las entradas relevantes. Revisa fuentes sin relación, conserva ediciones actuales y decisiones aprobadas, actualiza en orden solo lo afectado, comprueba y registra de nuevo. Repite el análisis tras cada revisión para evitar regenerar derivados cuya entrada no cambió. El compilador sigue produciendo un HTML conjunto FSO; el plan no ejecuta generadores ni operaciones remotas. Consulta la referencia de actualización por cambios de la skill.
+
+**Ficha del sílabo:** tras transcribir o corregir `canvas/silabo.json` y antes de planificar o exportar, ejecuta `python3 control/ficha_silabo.py verificar` (la primera vez `iniciar --documento <sílabo vigente>` y `completar`). Corrige el JSON cuando un dato no coincide con el documento; declara en la nota solo cotejos visuales reales. Abre al docente `control/FICHA_SILABO.html` y registra su confirmación con `control/estado.py registrar` (tipo docente). No la infieras ni sobrescribas referencias existentes.
 
 **Cobertura curricular:** al planificar, terminar una unidad y antes de entregar, ejecuta `python3 control/cobertura.py verificar`. Si falta el mapa, créalo una vez con `iniciar`; no sobrescribas relaciones existentes. Revisa `control/COBERTURA.md`, vincula requisitos a secciones HTML ES/EN y a revisiones reales guardadas en ESTADO.md. Conserva pendientes y decisiones. No marques cobertura por encontrar un archivo ni inventes revisiones; consulta la referencia de cobertura de la skill.

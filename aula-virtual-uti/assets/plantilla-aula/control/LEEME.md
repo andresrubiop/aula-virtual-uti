@@ -25,3 +25,9 @@ Pide: «Muéstrame qué RA, temas y prácticas del sílabo tienen recursos revis
 `control/cobertura.json` contiene las relaciones con secciones HTML ES/EN y registros de revisión en ESTADO.md. No es otro tablero de estado. Un HTML existente o una compilación correcta no acreditan pertinencia académica. Los cambios en contenido, sílabo, mapa o revisión dejan evidencia pendiente. Código 0: sin faltantes detectados en las declaraciones; 1: pendientes; 2: no se pudo comprobar.
 
 El asistente prepara los vínculos y el profesor revisa su alcance. No fabriques aprobaciones, no registres este informe como prueba y no lo distribuyas como contenido estudiantil. Guía completa: `references/cobertura.md` de la skill instalada.
+
+## Ficha del sílabo
+
+Pide: «Prepara la ficha del sílabo y ábremela para revisarla». El asistente ejecuta `python3 control/ficha_silabo.py iniciar --documento fuentes/silabo/<sílabo vigente>`, después `completar` y `verificar`. Abre `control/FICHA_SILABO.html` con doble clic: cada dato transcrito aparece con su página y una marca (✔ localizado, ◐ cotejar a la vista, ▲ o ✖ por revisar).
+
+`control/ficha_silabo.json` guarda las páginas y las huellas del documento y de cada dato; si cambian, la ficha lo indica. `completar` no cambia referencias existentes. Tu confirmación se registra en ESTADO.md como revisión docente; la ficha no la deduce. Código 0: todo localizado o declarado y revisión vigente; 1: pendientes; 2: no se pudo comprobar. Necesita el texto extraído por `scripts/fuentes.py` de la skill. Guía completa: `references/ficha-silabo.md` de la skill instalada.

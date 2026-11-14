@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "342f56c11af25d6e3a04e7a5f40e3df72b47daa8566dfe22901393c8c9a56a38",
-  "bytes": 9717516,
+  "sha256": "144986c773e335a7b2205c9749c627b6373e12b1a7f408617bb3420c605337c0",
+  "bytes": 9732599,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 78,
+    "passed": 90,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,7 +18,7 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejoras 1–4; entrega actual: matriz de cobertura del sílabo",
+  "scope": "Mejoras 1–5; entrega actual: ficha de extracción y revisión del sílabo",
   "source_matches_package": "PASS",
   "state_verifier_new_and_existing_classroom": "PASS",
   "state_decisions_preserved": "PASS",
@@ -41,5 +41,10 @@
   "independent_coverage_scenarios": {
     "passed": 14,
     "total": 14
-  }
+  },
+  "syllabus_sheet_new_and_existing_classroom": "PASS",
+  "syllabus_sheet_real_syllabus_local": "PASS (privado, no publicado)",
+  "syllabus_sheet_review_not_inferred": "PASS",
+  "syllabus_sheet_change_invalidates_review": "PASS",
+  "syllabus_sheet_reports_not_evidence": "PASS"
 }

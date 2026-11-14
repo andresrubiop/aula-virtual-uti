@@ -133,7 +133,7 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 |---|---|---|
 | 0. Entorno y carpeta | Comprueba herramientas y crea `aula/`. | Materia, período y ubicación. |
 | 1. Insumos | Inventario, versiones, guías incluidas y faltantes. | Documento vigente y dudas. |
-| 2. Sílabo | Transcripción trazable, RA, sesiones y evaluación. | Fidelidad al documento. |
+| 2. Sílabo | Transcripción y ficha con la página de cada dato. | Ficha del sílabo. |
 | 3. Planificación | Mapa de unidades y matriz de cobertura del sílabo. | RA, temas y prácticas previstos. |
 | 4. Piloto | Una unidad completa HTML ES/EN. | Diseño, contenido y práctica. |
 | 5. Desarrollo | Completa las unidades con el patrón aprobado. | Avances por unidad. |
@@ -141,6 +141,8 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 | 7. Videos opcionales | Fuentes, guiones, generación y montaje. | Fuentes a enviar y resultado. |
 | 8. Canvas | Paquete final bilingüe y comprobaciones locales. | Entregable y curso de destino. |
 | 9. Importación | Acompaña la prueba y registra lo observado. | Curso de ensayo y vista estudiante. |
+
+**Antes de aprobar la planificación, revisa la [ficha del sílabo](aula-virtual-uti/references/ficha-silabo.md)** (`aula/control/FICHA_SILABO.html`): cada dato transcrito con su página. Coteja lo marcado ▲ o ✖ y confirma o indica qué corregir.
 
 **`aula/ESTADO.md` es el registro principal.** El asistente lo actualiza al completar un hito, antes de una operación externa y antes de cerrar o agotar la sesión. Guarda fase actual, trabajo terminado con evidencia, unidad en curso, decisiones aprobadas, archivos modificados, dudas, pruebas y siguiente acción exacta. `PLANIFICACION.md` guarda el diseño académico; `ESTADO.md` guarda el avance real.
 

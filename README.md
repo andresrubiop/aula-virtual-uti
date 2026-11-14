@@ -43,6 +43,8 @@ La mejora 3 añade un plan de actualización por cambios: `control/estado.py imp
 
 La mejora 4 incorpora la [matriz de cobertura del sílabo](aula-virtual-uti/references/cobertura.md): RA, sesiones, contenidos, prácticas y evaluaciones relacionados con secciones HTML ES/EN. Señala faltantes y revisiones pendientes en `control/COBERTURA.md`. Encontrar un archivo no acredita cobertura; se contrasta con las evidencias de revisión en `ESTADO.md`.
 
+La mejora 5 añade la [ficha de extracción y revisión del sílabo](aula-virtual-uti/references/ficha-silabo.md): `control/ficha_silabo.py` ubica cada dato de `canvas/silabo.json` en su documento y página, comprueba que su texto aparezca allí, detecta cambios del documento o del dato y genera `control/FICHA_SILABO.html` para que el profesor la coteje. La revisión docente se registra en `ESTADO.md`; nunca se deduce.
+
 ## Probar localmente
 
 Python 3.10 o superior permite crear y compilar el aula. Node 22 o superior y Chrome/Chromium permiten comprobarla y producir PDF. Videos y extracción de PDF añaden dependencias opcionales, descritas por el diagnóstico:
@@ -57,6 +59,6 @@ Abre `/tmp/aula-demo/hub/dist/index.html`. Es una unidad demostrativa con marcas
 
 ## Estado y límites
 
-Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 78 pruebas locales aprobadas, incluidas las del estado, análisis de impacto y cobertura. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
+Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 90 pruebas locales aprobadas, incluidas las del estado, análisis de impacto, cobertura y ficha del sílabo. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
 
 La identidad gráfica UTI y las dependencias de terceros conservan sus respectivos derechos. La publicación del código no otorga derechos sobre las marcas institucionales.
