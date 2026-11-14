@@ -14,7 +14,7 @@ Validación de esta ampliación: skill válida; referencias Markdown locales exi
 
 Pendientes: revisión docente y piloto con documentos reales; importación en Canvas y generación de videos autenticada; comparaciones independientes con/sin skill y otros sistemas operativos. Las escenas nuevas Three.js/anatomy tampoco están certificadas. El modelo educativo consultado contiene una contradicción sobre el umbral Crítico, documentada en las referencias.
 
-Siguiente mejora propuesta: analizar cambios y entregables afectados (mejora 3), en una entrega separada a petición del usuario. La plantilla demostrativa no constituye una asignatura completa.
+Siguiente mejora propuesta: matriz de cobertura del sílabo (mejora 4), en una entrega separada a petición del usuario. La plantilla demostrativa no constituye una asignatura completa.
 
 Guía del profesor disponible también en la raíz: `GUIA_DE_USO.md` completa y `GUIA_DE_USO.pdf` de 15 páginas. PDF con identidad UTI, índice navegable, pasos, ejemplos, comprobaciones y lista de revisión final. Generación reproducible en `tools/`; verificación de paginación, enlaces, ausencia de desbordes y revisión visual. La copia dentro de la skill se conserva para instalaciones autónomas.
 
@@ -22,4 +22,8 @@ Mejora 1: reparadas la caché que conservaba textos retirados, la lectura de ord
 
 Mejora 2: herramienta `control/estado.py` para registrar evidencia en el propio ESTADO.md y contrastar archivos, fuentes, informes de pruebas, fases declaradas listas y punto de reanudación. Escritura atómica del registro y protección ante registros simultáneos; verificación sin cambiar decisiones. El informe se invalida si falla la lectura del estado. Tipos local/docente/remota son declaraciones, no acceso a servicios ni autenticación de aprobaciones.
 
-Validación vigente: 35/35 regresiones PASS, 19/19 escenarios de revisión independiente PASS; paquete extraído crea/compila y verifica aulas nuevas y anteriores; preservación de decisiones y detección de evidencia modificada comprobadas. Guía Markdown/PDF actualizada: 15 páginas, sin desbordes, página de continuidad revisada visualmente. `dist/validacion.json` contiene el hash vigente. La herramienta exige el formato de fases 0–9 del molde y verifica solo las evidencias registradas. No incluye propagación de dependencias, matriz de sílabo, panel o respaldos (mejoras 3–12).
+Validación de la mejora 2: 35/35 regresiones PASS, 19/19 escenarios de revisión independiente PASS; paquete extraído crea/compila y verifica aulas nuevas y anteriores; preservación de decisiones y detección de evidencia modificada comprobadas. Guía Markdown/PDF actualizada: 15 páginas, sin desbordes, página de continuidad revisada visualmente. `dist/validacion.json` contiene el hash vigente. La herramienta exige el formato de fases 0–9 del molde y verifica solo las evidencias registradas. Aquella entrega no incluyó las mejoras 3–12.
+
+Mejora 3: relaciones entre entregables del registro existente, propagación de vigencia y `control/estado.py impacto`. Informe `control/IMPACTO.md` con causas, orden de actualización, ediciones que conservar y fuentes sin relación. La skill guía la actualización selectiva y vuelve a analizar después de revisar cada origen. Un derivado no puede registrarse como pasado con origen obsoleto; los ciclos se rechazan sin alterar ESTADO.md. No cambia el stack FSO ni ejecuta operaciones remotas.
+
+Validación vigente: 52/52 regresiones PASS y 13/13 comprobaciones independientes de impacto PASS. Comparación con versión anterior en escenarios ficticios; no mide calidad pedagógica. Guía Markdown/PDF actualizada y paquete extraído comprobado. Sin matriz de cobertura, ficha de sílabo, panel ni respaldos automáticos; mejoras 4–12 pendientes por separado.

@@ -142,7 +142,7 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 
 **`aula/ESTADO.md` es el registro principal.** El asistente lo actualiza al completar un hito, antes de una operación externa y antes de cerrar o agotar la sesión. Guarda fase actual, trabajo terminado con evidencia, unidad en curso, decisiones aprobadas, archivos modificados, dudas, pruebas y siguiente acción exacta. `PLANIFICACION.md` guarda el diseño académico; `ESTADO.md` guarda el avance real.
 
-El asistente comprueba archivos y evidencias con la herramienta de estado. Si falta una entrega o cambió desde la última prueba, te indica qué revisar primero. Puedes leer el resultado en `aula/control/VERIFICACION_ESTADO.md`; no modifica tus decisiones ni aprueba fases.
+Si cambias un material, pide: «Analiza el impacto y actualiza solo lo necesario; conserva mis correcciones». El asistente revisa las relaciones registradas, prepara `aula/control/IMPACTO.md` y actualiza en orden lo afectado. Comprueba después `aula/control/VERIFICACION_ESTADO.md`. Una fuente sin relación necesita revisión; estos informes no aprueban fases.
 
 Antes de cerrar escribe:
 

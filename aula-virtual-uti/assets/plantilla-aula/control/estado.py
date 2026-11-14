@@ -4,6 +4,7 @@
 python control/estado.py registrar ID --fase 2 --entregable canvas/silabo.json \
     --fuente fuentes/silabo/vigente.pdf --prueba control/validacion.txt --resultado pasado
 python control/estado.py verificar
+python control/estado.py impacto
 
 En aulas anteriores: python <skill>/assets/plantilla-aula/control/estado.py --aula <aula> verificar
 """
@@ -91,7 +92,7 @@ def validar_registro(data):
             values = item[field]
             if not isinstance(values, dict) or any(not isinstance(p, str) or not isinstance(h, str) or not re.fullmatch(r'[a-f0-9]{64}', h) for p, h in values.items()):
                 raise ValueError(f'{ident}: rutas o hashes no válidos en {field}.')
-        all_paths = [p.replace('\\', '/') for field in ('entregables', 'fuentes', 'pruebas', 'aprobacion') for p in item[field]]
+        all_paths = [clave_ruta(p) for field in ('entregables', 'fuentes', 'pruebas', 'aprobacion') for p in item[field]]
         if len(all_paths) != len(set(all_paths)):
             raise ValueError(f'{ident}: un mismo archivo no puede cumplir dos papeles de evidencia.')
         if not item['entregables'] or not item['fuentes'] or (item['resultado'] != 'no_ejecutado' and not item['pruebas']):
@@ -118,7 +119,7 @@ def hashes(root, paths):
     for value in paths:
         p = ruta(root, value)
         rel = p.relative_to(root).as_posix()
-        if rel in ('ESTADO.md', 'control/VERIFICACION_ESTADO.md'):
+        if rel in ('ESTADO.md', 'control/VERIFICACION_ESTADO.md', 'control/IMPACTO.md'):
             raise ValueError('No registres el propio estado ni el informe derivado como evidencia.')
         if rel in result:
             raise ValueError(f'Archivo repetido: {rel}')
@@ -162,6 +163,10 @@ def registrar(root, args):
             raise ValueError('Entregables, fuentes, pruebas y aprobación deben ser archivos distintos.')
         data['registros'][args.id] = item
         validar_registro(data)
+        detalles, _ = analizar(root, data['registros'])
+        current = next(d for d in detalles if d['id'] == args.id)
+        if args.resultado == 'pasado' and current['bloqueado_por']:
+            raise ValueError('No se registra como pasado mientras sus fuentes dependan de evidencia pendiente: '+', '.join(current['bloqueado_por']))
         block = INICIO + '\n```json\n' + json.dumps(data, ensure_ascii=False, indent=2) + '\n```\n' + FIN
         if INICIO in text:
             updated = text[:text.index(INICIO)] + block + text[text.index(FIN)+len(FIN):]
@@ -204,24 +209,170 @@ def fases(text):
     return rows, visible
 
 
+def clave_ruta(value):
+    """Una misma ruta con ./ o separadores Windows forma la misma dependencia."""
+    return os.path.normcase(PurePosixPath(value.replace('\\', '/')).as_posix())
+
+
+def dependencias(registros):
+    productores = {}
+    for ident, item in registros.items():
+        for name in item['entregables']:
+            productores.setdefault(clave_ruta(name), set()).add(ident)
+    deps = {ident: {} for ident in registros}
+    for ident, item in registros.items():
+        for source in item['fuentes']:
+            for origin in sorted(productores.get(clave_ruta(source), ())):
+                if origin == ident:
+                    raise ValueError(f'{ident}: un entregable no puede ser fuente de sí mismo.')
+                deps[ident].setdefault(origin, []).append(source)
+    # Orden determinista; un ciclo impide proponer una actualización segura.
+    import heapq
+    followers = {ident: [] for ident in registros}
+    counts = {ident: len(origins) for ident, origins in deps.items()}
+    for ident, origins in deps.items():
+        for origin in origins:
+            followers[origin].append(ident)
+    ready = [ident for ident, count in counts.items() if count == 0]
+    heapq.heapify(ready); order = []
+    while ready:
+        ident = heapq.heappop(ready); order.append(ident)
+        for following in sorted(followers[ident]):
+            counts[following] -= 1
+            if counts[following] == 0:
+                heapq.heappush(ready, following)
+    if len(order) != len(registros):
+        blocked = ', '.join(sorted(ident for ident, count in counts.items() if count))
+        raise ValueError('Dependencias circulares o bloqueadas por un ciclo: '+blocked+'. Revisa las fuentes declaradas o agrupa la producción conjunta en un registro.')
+    return deps, order
+
+
+def analizar(root, registros, cambios=()):
+    deps, order = dependencias(registros)
+    proposed = {clave_ruta(p) for p in cambios}
+    details = {}
+    actual = {}
+    for ident in order:
+        item = registros[ident]
+        problems, changed = [], []
+        for group in ('entregables', 'fuentes', 'pruebas', 'aprobacion'):
+            for name, expected in item[group].items():
+                key = clave_ruta(name)
+                if key not in actual:
+                    try:
+                        actual[key] = digest(ruta(root, name))
+                    except (ValueError, OSError):
+                        actual[key] = None
+                kind = 'ausente_o_no_permitido' if actual[key] is None else 'modificado' if actual[key] != expected else None
+                if kind:
+                    changed.append({'grupo': group, 'ruta': name, 'cambio': kind})
+                    problems.append(f'{group}: {name} ({kind}); revisar la evidencia registrada')
+                if key in proposed:
+                    changed.append({'grupo': group, 'ruta': name, 'cambio': 'declarado'})
+                    problems.append(f'Cambio declarado para analizar: {group} {name}')
+        if item['resultado'] != 'pasado':
+            problems.append('Revisión '+item['resultado']+'; no respalda una entrega vigente')
+        if item['fase'] in (3, 4, 9) and not item['aprobacion']:
+            problems.append('Falta evidencia de decisión docente para esta fase')
+        if item['fase'] == 9 and item['tipo'] != 'remota':
+            problems.append('La fase 9 necesita evidencia remota observada; una prueba local no la sustituye')
+        direct = list(problems)
+        upstream = [origin for origin in sorted(deps[ident]) if not details[origin]['vigente']]
+        for origin in upstream:
+            problems.append('Depende de '+origin+' pendiente de revisión mediante '+', '.join(sorted(deps[ident][origin])))
+        details[ident] = {'id': ident, 'fase': item['fase'], 'vigente': not problems,
+                          'problemas': problems, 'problemas_directos': direct, 'cambios': changed,
+                          'depende_de': sorted(deps[ident]), 'bloqueado_por': upstream}
+    return [details[k] for k in order], deps
+
+
+def insumos_sin_relacion(root, registros):
+    """Solo enumera fuentes públicas locales; no lee contenidos ni inventa su relación."""
+    base = ruta(root, 'fuentes', existe=False)
+    if not base.exists():
+        return []
+    linked = {clave_ruta(p) for item in registros.values() for p in item['fuentes']}
+    result = []
+    for folder, dirs, files in os.walk(base, followlinks=False):
+        dirs[:] = sorted(d for d in dirs if not d.startswith('.') and d.casefold() not in RESERVADOS | {'_texto'}
+                         and not (Path(folder)/d).is_symlink() and not getattr(Path(folder)/d, 'is_junction', lambda: False)())
+        for name in sorted(files):
+            if name.startswith('.') or name in ('LEEME.txt', 'INVENTARIO.md', 'TRAZABILIDAD.md'):
+                continue
+            rel = (Path(folder)/name).relative_to(root).as_posix()
+            try:
+                p = ruta(root, rel, existe=False)
+                if not p.is_file():
+                    continue
+            except ValueError:
+                continue
+            if clave_ruta(rel) not in linked:
+                result.append(rel)
+    return sorted(result)
+
+
+def plan_impacto(root, cambios=()):
+    text, data = leer(root)
+    explicit = [ruta(root, p, existe=False).relative_to(root).as_posix() for p in cambios]
+    details, deps = analizar(root, data['registros'], explicit)
+    unknown = insumos_sin_relacion(root, data['registros'])
+    tracked = {clave_ruta(p) for item in data['registros'].values() for group in ('entregables', 'fuentes', 'pruebas', 'aprobacion') for p in item[group]}
+    unknown += [p for p in explicit if clave_ruta(p) not in tracked and p not in unknown]
+    affected = []
+    for detail in details:
+        if detail['vigente']:
+            continue
+        item = data['registros'][detail['id']]
+        edited = [c['ruta'] for c in detail['cambios'] if c['grupo'] == 'entregables' and c['cambio'] == 'modificado']
+        actions = []
+        if edited:
+            actions.append('Conservar las ediciones actuales de '+', '.join(edited)+'; revisarlas antes de regenerar.')
+        if detail['bloqueado_por']:
+            actions.append('Resolver primero '+', '.join(detail['bloqueado_por'])+' y volver a analizar antes de actualizar esta entrega.')
+        if any(c['grupo'] in ('fuentes', 'entregables') for c in detail['cambios']):
+            actions.append('Revisar los cambios académicos y actualizar solo los recursos afectados; no sustituir correcciones aprobadas por la plantilla.')
+        if not detail['bloqueado_por']:
+            actions.append('Ejecutar las comprobaciones pertinentes y registrar de nuevo solo después de revisarlas.')
+        if item['aprobacion'] or item['fase'] in (3,4,9):
+            actions.append('Comprobar que la decisión docente conserve su alcance; registrar una nueva revisión real cuando corresponda.')
+        if item['tipo'] == 'remota' or item['fase'] in (7,9):
+            actions.append('Mantener la operación remota pendiente de revisión; este plan no autoriza envío, generación o importación.')
+        affected.append({**detail, 'entregables': sorted(item['entregables']),
+                         'conservar_ediciones': edited, 'acciones': actions})
+    return {'fecha': datetime.now(timezone.utc).isoformat(), 'estado_sha256': hashlib.sha256(text.encode('utf-8')).hexdigest(),
+            'modo': 'incluye_cambios_declarados' if explicit else 'archivos_actuales',
+            'cambios_declarados': explicit, 'afectados': affected,
+            'orden_actualizacion': [d['id'] for d in affected],
+            'sin_impacto_detectado': [d['id'] for d in details if d['vigente']],
+            'sin_relacion_declarada': sorted(unknown),
+            'avisos': [] if details else ['Sin registros: no hay mapa de entregables que analizar.'],
+            'limite': 'Plan basado en fuentes y entregables registrados. No regenera archivos, no aprueba cambios ni realiza operaciones remotas. Las fuentes sin relación requieren revisión; no se puede deducir qué afectan.'}
+
+
+def informe_impacto(report):
+    safe = lambda s: str(s).replace('\r',' ').replace('\n',' ').replace('<','&lt;').replace('>','&gt;')
+    lines = ['# Plan de actualización por cambios', '', report['limite'], '',
+             '**Fecha:** '+report['fecha'], '', '**SHA256 de ESTADO.md:** '+report['estado_sha256'],
+             '', '**Modo:** '+report['modo'], '', '## Orden de revisión y actualización', '']
+    for n, item in enumerate(report['afectados'], 1):
+        lines += [f'{n}. **{safe(item["id"])}** · fase {item["fase"]}', '',
+                  '   Entregables: '+safe(', '.join(item['entregables'])), '',
+                  '   Motivos: '+safe('; '.join(item['problemas'])), '',
+                  '   Acción: '+safe(' '.join(item['acciones'])), '']
+    if not report['afectados']:
+        lines += ['No se detectó impacto entre los entregables registrados. Revisa también las fuentes sin relación.', '']
+    lines += ['## Sin impacto detectado en el mapa', ''] + ['- '+safe(x) for x in report['sin_impacto_detectado'] or ['Ninguno registrado.']]
+    lines += ['', '## Fuentes o cambios sin relación declarada', ''] + ['- '+safe(x) for x in report['sin_relacion_declarada'] or ['Ninguno detectado.']]
+    lines += ['', '## Avisos', ''] + ['- '+safe(x) for x in report['avisos'] or ['Vuelve a analizar tras cada actualización; una entrega puede conservarse si las fuentes que consume no cambiaron.']]
+    return '\n'.join(lines)+'\n'
+
+
 def verificar(root):
     text, data = leer(root)
     rows, visible = fases(text)
     errors, warnings, details = [], [], []
-    for ident, item in data['registros'].items():
-        problems = []
-        for group in ('entregables', 'fuentes', 'pruebas', 'aprobacion'):
-            for name, expected in item[group].items():
-                try:
-                    p = ruta(root, name)
-                    if digest(p) != expected:
-                        problems.append(f'{group}: cambió {name}; la comprobación registrada ya no corresponde a estos bytes')
-                except (ValueError, OSError):
-                    problems.append(f'{group}: archivo ausente, vacío o no permitido: {name}')
-        if item['resultado'] != 'pasado':
-            problems.append('Revisión ' + item['resultado'] + '; no respalda una fase terminada')
-        details.append({'id': ident, 'fase': item['fase'], 'vigente': not problems, 'problemas': problems})
-        errors.extend(ident + ': ' + p for p in problems)
+    details, _ = analizar(root, data['registros'])
+    errors.extend(d['id']+': '+p for d in details for p in d['problemas'])
     for phase, status in rows.items():
         if not status.startswith('✅'):
             continue
@@ -299,19 +450,28 @@ def main(argv=None):
     r.add_argument('--reemplazar', action='store_true')
     v = sub.add_parser('verificar', help='Contrastar ESTADO.md y escribir control/VERIFICACION_ESTADO.md')
     v.add_argument('--json', action='store_true')
+    i = sub.add_parser('impacto', help='Plan ordenado de actualización según dependencias declaradas')
+    i.add_argument('--json', action='store_true')
+    i.add_argument('--cambio', action='append', default=[], help='Analizar también un cambio propuesto; no modifica el archivo')
     args = ap.parse_args(argv); root = args.aula.expanduser().resolve()
     try:
         if args.cmd == 'registrar':
             result = registrar(root, args)
             print(json.dumps(result, ensure_ascii=False, indent=2)); return 0
+        if args.cmd == 'impacto':
+            report = plan_impacto(root, args.cambio)
+            escribir(ruta(root, 'control/IMPACTO.md', existe=False), informe_impacto(report))
+            print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else informe_impacto(report))
+            return int(bool(report['afectados'] or report['sin_relacion_declarada']))
         report = verificar(root)
         escribir(ruta(root, 'control/VERIFICACION_ESTADO.md', existe=False), informe(report))
         print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else informe(report))
         return int(bool(report['errores']))
     except (ValueError, OSError, UnicodeError) as ex:
-        if args.cmd == 'verificar':
+        if args.cmd in ('verificar', 'impacto'):
             try:
-                escribir(ruta(root, 'control/VERIFICACION_ESTADO.md', existe=False),
+                output = 'control/VERIFICACION_ESTADO.md' if args.cmd == 'verificar' else 'control/IMPACTO.md'
+                escribir(ruta(root, output, existe=False),
                          '# Verificación no completada\n\nEl estado o sus rutas no se pudieron comprobar. No se conserva un resultado anterior como vigente.\n\n' + str(ex).replace('<', '&lt;') + '\n')
             except (ValueError, OSError):
                 pass  # La salida tampoco es segura o escribible; el error se comunica por stderr.

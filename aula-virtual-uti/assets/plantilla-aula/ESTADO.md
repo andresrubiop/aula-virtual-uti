@@ -79,7 +79,7 @@ Sin credenciales ni datos privados. Para videos consultar también `videos/estad
 
 ## 10. Evidencias verificables
 
-El asistente registra aquí las huellas de entregables, fuentes e informes tras revisarlos. Ejecuta `python3 control/estado.py verificar` al retomar y antes de cerrar; el informe está en `control/VERIFICACION_ESTADO.md`. El bloque no aprueba fases ni sustituye decisiones docentes.
+El asistente registra aquí las huellas de entregables, fuentes e informes tras revisarlos. Ejecuta `python3 control/estado.py verificar` al retomar y antes de cerrar; el informe está en `control/VERIFICACION_ESTADO.md`. Ejecuta también `python3 control/estado.py impacto` y revisa `control/IMPACTO.md`: registra relaciones entre fuentes y entregables, actualiza en orden lo afectado y conserva las correcciones aprobadas. El bloque no aprueba fases ni sustituye decisiones docentes.
 
 <!-- evidencias-aula:inicio -->
 ```json

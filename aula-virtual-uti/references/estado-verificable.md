@@ -4,7 +4,7 @@
 
 `control/estado.py` contrasta el estado declarado con archivos reales. Detecta entregables ausentes o modificados, fuentes o informes de pruebas cambiados y fases marcadas ✅ sin respaldo vigente. El registro de evidencia vive en un bloque al final de **ESTADO.md**, junto a las decisiones y el punto de reanudación: no hay un segundo tablero.
 
-El asistente ejecuta los comandos. El profesor decide sobre lo académico y puede pedir: «Comprueba el estado y dime desde dónde continuar». Este control verifica las evidencias declaradas; no descubre todos los archivos del curso, no ejecuta comandos escritos en documentos ni certifica el contenido de un informe. La actualización de dependencias en cadena corresponde a una mejora posterior.
+El asistente ejecuta los comandos. El profesor decide sobre lo académico y puede pedir: «Comprueba el estado y dime desde dónde continuar». Este control verifica las evidencias declaradas; no descubre todos los archivos del curso, no ejecuta comandos escritos en documentos ni certifica el contenido de un informe. La [actualización por cambios](actualizacion-incremental.md) propaga la vigencia entre entregables y prepara un plan de revisión en orden.
 
 ## Al retomar o cerrar una sesión
 
@@ -62,4 +62,4 @@ No necesita que exista el bloque de evidencia para leer el estado. Al registrar 
 
 El registro se escribe de forma atómica. `.estado.lock` impide dos registros simultáneos; si queda tras una interrupción, comprueba que no haya otro proceso activo antes de retirarlo. Un cambio externo de ESTADO.md durante el registro provoca error para evitar perder notas. No trabajes con dos asistentes editando simultáneamente.
 
-Los informes y evidencias son material de trabajo del profesor; no se incorporan al HTML estudiantil ni al paquete Canvas. Trasladar el aula completa conserva sus rutas relativas. No hay regeneración automática, matriz del sílabo, panel ni respaldo en esta mejora.
+Los informes y evidencias son material de trabajo del profesor; no se incorporan al HTML estudiantil ni al paquete Canvas. Trasladar el aula completa conserva sus rutas relativas. El análisis de impacto no regenera contenido automáticamente. La skill guía su actualización selectiva; la matriz del sílabo, el panel y los respaldos quedan fuera de esta entrega.
