@@ -41,6 +41,8 @@ La mejora 2 añade `control/estado.py`: contrasta fases, entregables y evidencia
 
 La mejora 3 añade un plan de actualización por cambios: `control/estado.py impacto` relaciona las entradas y salidas registradas, señala los derivados afectados y propone un orden de revisión. Conserva las ediciones existentes y advierte sobre fuentes sin relación; el asistente actualiza solo lo necesario. [Uso y límites del análisis de impacto](aula-virtual-uti/references/actualizacion-incremental.md).
 
+La mejora 4 incorpora la [matriz de cobertura del sílabo](aula-virtual-uti/references/cobertura.md): RA, sesiones, contenidos, prácticas y evaluaciones relacionados con secciones HTML ES/EN. Señala faltantes y revisiones pendientes en `control/COBERTURA.md`. Encontrar un archivo no acredita cobertura; se contrasta con las evidencias de revisión en `ESTADO.md`.
+
 ## Probar localmente
 
 Python 3.10 o superior permite crear y compilar el aula. Node 22 o superior y Chrome/Chromium permiten comprobarla y producir PDF. Videos y extracción de PDF añaden dependencias opcionales, descritas por el diagnóstico:
@@ -55,6 +57,6 @@ Abre `/tmp/aula-demo/hub/dist/index.html`. Es una unidad demostrativa con marcas
 
 ## Estado y límites
 
-Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 52 pruebas locales aprobadas, incluidas las del estado y el análisis de impacto. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
+Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 78 pruebas locales aprobadas, incluidas las del estado, análisis de impacto y cobertura. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
 
 La identidad gráfica UTI y las dependencias de terceros conservan sus respectivos derechos. La publicación del código no otorga derechos sobre las marcas institucionales.

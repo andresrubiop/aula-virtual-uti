@@ -25,6 +25,7 @@ Aprovecha la información y autorizaciones existentes. Si hay un aula en curso, 
 | Al iniciar, pausar, cambiar de día o de asistente | [Fases y continuidad](references/continuidad.md) |
 | Al cambiar documentos, contenido o retomar entregas afectadas | [Actualización por cambios](references/actualizacion-incremental.md) |
 | Al contrastar el estado o registrar evidencias | [Estado verificable](references/estado-verificable.md) |
+| Al planificar, revisar unidades o preparar la entrega | [Matriz de cobertura](references/cobertura.md) |
 | Antes de planificar | [Modelo educativo](references/modelo-educativo.md) |
 | Al convertir el sílabo y las guías | [Esquema del sílabo](references/silabo.md) y [ejemplo ficticio](references/silabo-ejemplo.json) |
 | Al crear contenidos o animaciones | `AGENTS.md` del aula y [animaciones](references/animaciones.md) |
@@ -73,7 +74,7 @@ Ejecuta `python3 canvas/validar_silabo.py`. Resuelve errores reales; explica los
 
 Completa `PLANIFICACION.md`: problema del contexto → reto → producto/evidencia → RA → unidades y sesiones → actividades y rúbricas. Usa el modelo educativo documentado; no impongas notas mínimas o porcentajes que no consten en el sílabo.
 
-Incluye por unidad presentación, manual, práctica, autoevaluación, animaciones pertinentes y videos opcionales. Las sesiones de evaluación pueden enlazar repaso, sin inventar otra unidad. Cada guía práctica debe tener un destino en el aula y una tarea Canvas.
+Incluye por unidad presentación, manual, práctica, autoevaluación, animaciones pertinentes y videos opcionales. Las sesiones de evaluación pueden enlazar repaso, sin inventar otra unidad. Cada guía práctica debe tener un destino en el aula y una tarea Canvas. Sigue [cobertura](references/cobertura.md): inicia el mapa si falta y ejecuta `python3 control/cobertura.py verificar`. Muestra RA, sesiones, contenidos, prácticas y evaluaciones, con sus unidades y pendientes. Declara vínculos concretos a secciones HTML ES/EN; la existencia de archivos no acredita cobertura.
 
 Muestra al docente una propuesta concreta y pide validar lo académico que aún no haya autorizado. Mientras espera, prepara infraestructura y revisa fuentes independientes. Registra la aprobación o los cambios; no conviertas silencio en aprobación.
 
@@ -104,6 +105,8 @@ python3 hub/tools/deck_overflow.py materiales/unidad-*/P*_presentacion*.pdf
 python3 hub/tools/autonomo.py
 ```
 
+Tras cada unidad, regenera `control/COBERTURA.md` y resuelve los elementos sin vínculos o revisión vigente. Registra únicamente revisiones realmente realizadas, con alcance, entregables y fuentes; conserva las pendientes en ESTADO.md. No inventes aprobación docente ni sustituyas contenido por coincidencias de títulos.
+
 Inspecciona una captura representativa en ambos idiomas, el modo oscuro y un ancho móvil. Comprueba que la edición estudiantil no contenga los bloques privados. Distingue:
 
 - `hub/dist/`: aula dentro del proyecto; usa las carpetas locales para PDF y videos.
@@ -122,7 +125,7 @@ Usa modo guiado cuando no esté disponible la herramienta automática. Si no hay
 
 Sigue la referencia Canvas. Usa preferentemente un export del curso de destino; la plantilla incluida sirve de base y no garantiza que la importación evite duplicados. No modifiques el curso remoto durante la preparación local.
 
-Valida el sílabo, genera el aula autónoma, genera el paquete y verifica sus archivos. Completa también la traducción de las páginas y tareas Canvas siguiendo la guía: el generador base redacta su estructura en español; incluir PDF bilingües no traduce esas páginas. Revisa la cobertura antes de llamar bilingüe a la entrega.
+Valida el sílabo, genera el aula autónoma, genera el paquete y verifica sus archivos. Completa también la traducción de las páginas y tareas Canvas siguiendo la guía: el generador base redacta su estructura en español; incluir PDF bilingües no traduce esas páginas. Revisa `control/COBERTURA.md` antes de llamar completa a la entrega; comprueba además la traducción de las páginas y tareas exportadas, que la matriz de HTML local no certifica.
 
 Las tareas quedan para revisión de fechas, puntajes y publicación por el docente. Las rúbricas HTML no equivalen a rúbricas nativas del libro de calificaciones. Prueba la importación en un curso de ensayo cuando el docente disponga de él y lo autorice. La comprobación local del ZIP no sustituye esa revisión.
 

@@ -17,3 +17,11 @@ Pide: «Analiza el impacto del cambio y actualiza solo lo necesario, conservando
 `impacto --cambio fuentes/lecturas/u1.pdf` anticipa un cambio sin editarlo; ejecuta de nuevo sin `--cambio` para revisar el estado real. `--json` devuelve datos para herramientas. Código 1 indica recursos afectados o fuentes sin relación; 0 no certifica cobertura; 2 indica que no se pudo analizar.
 
 El análisis no regenera archivos, fusiona ediciones ni ejecuta operaciones remotas. Conserva el contenido actual antes de actualizar, comprueba y registra la evidencia real. Si una salida revisada no cambió, sus derivados pueden conservarse. Los ciclos se rechazan y un derivado con origen obsoleto no puede registrarse como pasado. Consulta `references/actualizacion-incremental.md` en la skill instalada.
+
+## Cobertura del sílabo
+
+Pide: «Muéstrame qué RA, temas y prácticas del sílabo tienen recursos revisados y qué falta». El asistente crea una vez `python3 control/cobertura.py iniciar` y ejecuta `python3 control/cobertura.py verificar`. El informe `control/COBERTURA.md` muestra todos los requisitos, incluso sin vínculos. `--json` permite leer datos estructurados.
+
+`control/cobertura.json` contiene las relaciones con secciones HTML ES/EN y registros de revisión en ESTADO.md. No es otro tablero de estado. Un HTML existente o una compilación correcta no acreditan pertinencia académica. Los cambios en contenido, sílabo, mapa o revisión dejan evidencia pendiente. Código 0: sin faltantes detectados en las declaraciones; 1: pendientes; 2: no se pudo comprobar.
+
+El asistente prepara los vínculos y el profesor revisa su alcance. No fabriques aprobaciones, no registres este informe como prueba y no lo distribuyas como contenido estudiantil. Guía completa: `references/cobertura.md` de la skill instalada.

@@ -63,4 +63,4 @@ No registres `control/IMPACTO.md`, `control/VERIFICACION_ESTADO.md` ni ESTADO.md
 
 ## Límites
 
-Se comparan archivos y relaciones declaradas, no el significado de un cambio. Una corrección de espacios también cambia la huella. Los archivos fuera de `fuentes/` no registrados requieren declararse explícitamente o revisarse por el asistente. Las dependencias omitidas no pueden detectarse; «sin impacto detectado» no certifica independencia académica. La matriz de cobertura del sílabo y la ficha de configuración pertenecen a mejoras posteriores.
+Se comparan archivos y relaciones declaradas, no el significado de un cambio. Una corrección de espacios también cambia la huella. Los archivos fuera de `fuentes/` no registrados requieren declararse explícitamente o revisarse por el asistente. Las dependencias omitidas no pueden detectarse; «sin impacto detectado» no certifica independencia académica. La [matriz de cobertura](cobertura.md) relaciona requisitos con recursos revisados. La ficha del sílabo pertenece a una mejora posterior.

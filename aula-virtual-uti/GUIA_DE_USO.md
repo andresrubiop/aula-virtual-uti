@@ -132,7 +132,7 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 | 0. Entorno y carpeta | Comprueba herramientas y crea `aula/`. | Materia, período y ubicación. |
 | 1. Insumos | Inventario, versiones, guías incluidas y faltantes. | Documento vigente y dudas. |
 | 2. Sílabo | Transcripción trazable, RA, sesiones y evaluación. | Fidelidad al documento. |
-| 3. Planificación | Mapa de unidades, actividades y evidencias. | Propuesta académica. |
+| 3. Planificación | Mapa de unidades y matriz de cobertura del sílabo. | RA, temas y prácticas previstos. |
 | 4. Piloto | Una unidad completa HTML ES/EN. | Diseño, contenido y práctica. |
 | 5. Desarrollo | Completa las unidades con el patrón aprobado. | Avances por unidad. |
 | 6. Verificación | Aula local, presentación, PDF y carpeta portátil. | Recorrido y materiales. |
@@ -178,7 +178,7 @@ El modo autenticado aún requiere validación real. Si falla, usa el camino guia
 
 ## 7. Revisar la entrega
 
-Pide al asistente enlaces a los archivos reales y un resumen de lo probado y pendiente.
+Pide enlaces a los archivos reales y un resumen de lo probado y pendiente. Añade: «Muéstrame la cobertura del sílabo y qué falta». En `aula/control/COBERTURA.md` revisa RA, temas, prácticas y evaluaciones, sus recursos ES/EN y revisiones vigentes. Un archivo existente no demuestra que el contenido esté cubierto.
 
 | Dentro de `aula/` | Para qué sirve |
 |---|---|

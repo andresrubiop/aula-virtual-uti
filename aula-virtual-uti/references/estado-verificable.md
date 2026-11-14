@@ -34,7 +34,7 @@ Sustituye las rutas por las existentes; el comando no crea el sílabo ni realiza
 - Los archivos deben ser distintos, no vacíos y estar dentro del aula. No se leen enlaces, carpetas privadas ni rutas externas.
 - Se guardan fecha UTC y SHA256 de cada archivo. Si cambia una fuente, salida o prueba registrada, la evidencia deja de estar vigente hasta revisarla y registrarla de nuevo.
 - Un ID existente exige `--reemplazar`. No lo uses solo para borrar una alerta: repite la comprobación afectada primero. La herramienta preserva el resto del Markdown, incluso notas añadidas después del bloque.
-- No registres `ESTADO.md` ni el informe derivado como prueba de sí mismos. Conserva informes específicos en otros archivos.
+- No registres `ESTADO.md`, `control/VERIFICACION_ESTADO.md`, `control/IMPACTO.md` ni `control/COBERTURA.md` como evidencias de sí mismos. Conserva informes específicos en otros archivos.
 
 Para fases que requieren decisión docente (3, 4 y 9), añade `--aprobacion control/revision-docente.md`, con la decisión real, fecha y alcance. La presencia y huella de ese archivo no autentican quién lo escribió: no fabriques aprobaciones para pasar el control.
 
@@ -62,4 +62,4 @@ No necesita que exista el bloque de evidencia para leer el estado. Al registrar 
 
 El registro se escribe de forma atómica. `.estado.lock` impide dos registros simultáneos; si queda tras una interrupción, comprueba que no haya otro proceso activo antes de retirarlo. Un cambio externo de ESTADO.md durante el registro provoca error para evitar perder notas. No trabajes con dos asistentes editando simultáneamente.
 
-Los informes y evidencias son material de trabajo del profesor; no se incorporan al HTML estudiantil ni al paquete Canvas. Trasladar el aula completa conserva sus rutas relativas. El análisis de impacto no regenera contenido automáticamente. La skill guía su actualización selectiva; la matriz del sílabo, el panel y los respaldos quedan fuera de esta entrega.
+Los informes y evidencias son material de trabajo del profesor; no se incorporan al HTML estudiantil ni al paquete Canvas. Trasladar el aula completa conserva sus rutas relativas. El análisis de impacto no regenera contenido automáticamente. La skill guía su actualización selectiva y la [matriz de cobertura](cobertura.md) usa los registros existentes para contrastar revisiones. El panel y los respaldos automáticos quedan fuera de esta entrega.
