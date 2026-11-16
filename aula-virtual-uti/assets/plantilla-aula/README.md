@@ -7,6 +7,7 @@
 - **Subirla a Canvas:** archivo `canvas/salida/…-canvas.imscc` y la guía `canvas/LEEME.md`.
 - **Tus documentos** van en `fuentes/` (cada carpeta tiene un `LEEME.txt` que dice qué poner). Lo de `fuentes/privado/` nunca se usa.
 - **Ver el avance:** abre `PANEL.html` con doble clic: fases, unidades, lo que espera tu decisión y botones para abrir el aula, los PDF y la entrega. Pide «actualiza el panel» para regenerarlo.
+- **Volver atrás:** pide «haz un respaldo» antes de un cambio grande, o «vuelve al último resultado aprobado de la unidad 2». El asistente te muestra qué cambiaría antes de hacerlo; tus documentos de `fuentes/` nunca se tocan. Los respaldos quedan en `respaldos/` (privado). Para protegerte de la pérdida del equipo, copia la carpeta completa del aula a otro disco.
 - **Para seguir trabajando** con Claude o Codex: abre esta carpeta y escribe «continuemos con el aula». El asistente lee `ESTADO.md` y sabe dónde quedó.
 
 ## Para el asistente

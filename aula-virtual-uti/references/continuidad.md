@@ -37,7 +37,7 @@ Actualiza el estado al terminar cada unidad o hito, al cambiar de fase, antes de
 
 Ejecuta las comprobaciones pertinentes a lo cambiado, anota sus límites y guarda los archivos. Deja un punto de reanudación que otro asistente pueda ejecutar sin leer la conversación. Indica al docente qué abrir, qué se completó y qué queda pendiente. No prometas continuar en segundo plano después de cerrar la sesión.
 
-Si cambia de equipo, debe trasladar la carpeta completa y conservar rutas relativas. Si cambia de asistente, primero guarda el estado y evita ediciones simultáneas del mismo aula. La copia de seguridad de cada jornada debe conservar también los archivos fuente, no solo `hub/dist/`.
+Si cambia de equipo, debe trasladar la carpeta completa y conservar rutas relativas. Si cambia de asistente, primero guarda el estado y evita ediciones simultáneas del mismo aula. Dentro del aula, `control/respaldo.py` guarda versiones recuperables antes de cambios amplios y después de cada aprobación ([respaldos](respaldos.md)); no protege contra la pérdida del equipo. La copia externa de cada jornada debe ser la carpeta completa del aula, con `fuentes/` y `respaldos/`, no solo `hub/dist/`.
 
 ## Comprobación automatizada del estado
 

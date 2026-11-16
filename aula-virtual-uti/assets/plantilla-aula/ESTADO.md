@@ -75,7 +75,7 @@ Sin credenciales ni datos privados. Para videos consultar también `videos/estad
 - Última sesión guardada: [fecha y agente].
 - Cambios de sílabo/insumos y entregables afectados: [rutas y observaciones].
 - Cobertura del sílabo: [filas pendientes de `control/COBERTURA.md`, revisión necesaria y siguiente acción; no deducir cobertura por existencia de archivos].
-- Copia de seguridad de la jornada: [ubicación, si se realizó].
+- Respaldos: último respaldo `antes`/`aprobado` y motivo (`python3 control/respaldo.py listar`); copia externa de la carpeta del aula, si se hizo: [ubicación].
 - Panel del docente: regenerar `PANEL.html` con `python3 control/panel.py` tras guardar este archivo (es derivado; no lo edites).
 - Mensaje para continuar: «Lee ESTADO.md, AGENTS.md y PLANIFICACION.md; verifica el último hito y continúa desde Punto de reanudación».
 

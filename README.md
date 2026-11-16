@@ -47,6 +47,8 @@ La mejora 5 añade la [ficha de extracción y revisión del sílabo](aula-virtua
 
 La mejora 6 añade el [panel local de avance](aula-virtual-uti/references/panel.md): `control/panel.py` genera `PANEL.html` en la carpeta del aula con la fase actual, la próxima acción, lo que espera la decisión del profesor, las fases, las unidades, las comprobaciones y botones para abrir el aula, cada unidad, la ficha, los PDF y la entrega. Se deriva de `ESTADO.md` en modo lectura, así que no crea un segundo registro.
 
+La mejora 7 añade [respaldos por hitos y recuperación](aula-virtual-uti/references/respaldos.md): `control/respaldo.py` guarda versiones recuperables en `respaldos/` antes de cambios amplios y después de cada aprobación, cada versión de archivo una sola vez. Permite comparar, ver una vista previa y restaurar todo el aula o una carpeta, o volver a lo registrado en una evidencia de `ESTADO.md`. Antes de aplicar guarda un respaldo de seguridad para deshacer. Los documentos originales de `fuentes/` nunca se sobrescriben y `ESTADO.md` no se reemplaza salvo pedido expreso.
+
 ## Probar localmente
 
 Python 3.10 o superior permite crear y compilar el aula. Node 22 o superior y Chrome/Chromium permiten comprobarla y producir PDF. Videos y extracción de PDF añaden dependencias opcionales, descritas por el diagnóstico:
@@ -61,6 +63,6 @@ Abre `/tmp/aula-demo/hub/dist/index.html`. Es una unidad demostrativa con marcas
 
 ## Estado y límites
 
-Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 102 pruebas locales aprobadas, incluidas las del estado, análisis de impacto, cobertura, ficha del sílabo y panel de avance. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
+Versión inicial para revisión docente. La mejora 1 corrige la caché de fuentes retiradas, el orden y las notas de PowerPoint y las colisiones de guías Canvas; La suite actual tiene 115 pruebas locales aprobadas, incluidas las del estado, análisis de impacto, cobertura, ficha del sílabo, panel de avance y respaldos. La compilación local y las regresiones están comprobadas. La importación real en Canvas y la generación autenticada de videos siguen pendientes; la validación del ZIP no certifica esas integraciones. Consulta [ESTADO.md](ESTADO.md) y los [problemas conocidos](KNOWN_ISSUES.md).
 
 La identidad gráfica UTI y las dependencias de terceros conservan sus respectivos derechos. La publicación del código no otorga derechos sobre las marcas institucionales.

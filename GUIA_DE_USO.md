@@ -156,7 +156,7 @@ Al día siguiente, abre de nuevo **MiAula-B26**, ejecuta `claude` o `codex` y es
 
 > Retoma el aula existente. Lee aula/ESTADO.md, aula/AGENTS.md y aula/PLANIFICACION.md. Ejecuta la verificación del estado, revisa sus incidencias y continúa desde el punto de reanudación. Conserva los avances y no recrees el aula ni repitas decisiones ya resueltas.
 
-No ejecutes dos asistentes modificando el mismo aula a la vez. Para cambiar de Claude a Codex, pide guardar el estado, cierra la sesión y abre el otro en la misma carpeta. Haz una copia de seguridad de `MiAula-B26` al terminar cada jornada. Si se interrumpió inesperadamente, pide contrastar los archivos con el último estado antes de continuar. El cierre del chat no deja al asistente trabajando por sí solo.
+No ejecutes dos asistentes modificando el mismo aula a la vez. Para cambiar de Claude a Codex, pide guardar el estado, cierra la sesión y abre el otro en la misma carpeta. Para volver atrás pide «vuelve al último resultado aprobado de la unidad 2» ([respaldos](aula-virtual-uti/references/respaldos.md)); tus documentos de `fuentes/` no se tocan. Al terminar cada jornada copia `MiAula-B26` a otro disco. Si se interrumpió inesperadamente, pide contrastar los archivos con el último estado antes de continuar. El cierre del chat no deja al asistente trabajando por sí solo.
 
 ## 6. Conectar Google y producir videos
 

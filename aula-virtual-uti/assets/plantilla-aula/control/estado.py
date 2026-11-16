@@ -24,6 +24,9 @@ FIN = '<!-- evidencias-aula:fin -->'
 RESERVADOS = {'privado', '.git', '.env', '.venv', '.claude', '.agents', 'node_modules', '__pycache__'}
 RESULTADOS = ('pasado', 'fallido', 'no_ejecutado')
 TIPOS = ('local', 'docente', 'remota')
+# Informes que se regeneran a partir del estado; nunca son evidencia ni se restauran.
+DERIVADOS = ('control/VERIFICACION_ESTADO.md', 'control/IMPACTO.md', 'control/COBERTURA.md',
+             'control/FICHA_SILABO.md', 'control/FICHA_SILABO.html', 'PANEL.html')
 REQUERIDOS = {0: ('hub/src/course.json', 'hub/dist/index.html'), 1: ('fuentes/INVENTARIO.md',),
               2: ('canvas/silabo.json',), 3: ('PLANIFICACION.md',)}
 
@@ -119,9 +122,10 @@ def hashes(root, paths):
     for value in paths:
         p = ruta(root, value)
         rel = p.relative_to(root).as_posix()
-        if rel in ('ESTADO.md', 'control/VERIFICACION_ESTADO.md', 'control/IMPACTO.md', 'control/COBERTURA.md',
-                   'control/FICHA_SILABO.md', 'control/FICHA_SILABO.html', 'PANEL.html'):
+        if rel == 'ESTADO.md' or rel in DERIVADOS:
             raise ValueError('No registres el propio estado ni el informe derivado como evidencia.')
+        if rel.casefold().startswith('respaldos/'):
+            raise ValueError('Los respaldos guardan versiones anteriores; registra el archivo del aula, no su copia.')
         if rel in result:
             raise ValueError(f'Archivo repetido: {rel}')
         result[rel] = digest(p)

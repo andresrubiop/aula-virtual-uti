@@ -253,6 +253,9 @@ def comprobaciones(root):
     else:
         out['cobertura'] = {'no_iniciada': True}
     out['videos'] = {'archivos': len(archivos(root, 'videos', '*.mp4'))}
+    import respaldo
+    rep, err = intento(lambda: respaldo.resumen(root))
+    out['respaldos'] = {'error': err} if err else rep
     return out
 
 
@@ -333,6 +336,15 @@ def tabla_html(cab, filas, clase=''):
     return f'<div class="scroll"><table class="{clase}"><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>'
 
 
+def fecha_corta(m):
+    """«16/11/2026 15:30 · motivo» para un respaldo del resumen."""
+    try:
+        f = datetime.fromisoformat(m['fecha']).strftime('%d/%m/%Y %H:%M')
+    except (TypeError, ValueError, KeyError):
+        f = str(m.get('fecha', ''))
+    return f + (f' · {m["unidad"]}' if m.get('unidad') else '') + f' · {m.get("motivo", "")}'
+
+
 def vista(d):
     e = escape
     c = d['comprobaciones']
@@ -364,7 +376,7 @@ def vista(d):
         mas = f'<li>… y {len(detalle) - 6} más (ver informe).</li>' if len(detalle) > 6 else ''
         return f'<div class="chk {clase}"><h3>{e(nombre)}</h3><p>{md(texto)}</p>{"<ul>" + det + mas + "</ul>" if det else ""}</div>'
 
-    es, im, fi, co = c['estado'], c['impacto'], c['ficha'], c['cobertura']
+    es, im, fi, co, rs = c['estado'], c['impacto'], c['ficha'], c['cobertura'], c.get('respaldos', {})
     checks = [chk('Estado y evidencias', es, es.get('resultado') == 'sin_incidencias',
                   'Sin discrepancias entre ESTADO.md y los archivos registrados.' if es.get('resultado') == 'sin_incidencias'
                   else f'{len(es.get("incidencias", []))} punto(s) por resolver.', es.get('incidencias', [])),
@@ -380,6 +392,13 @@ def vista(d):
                   'Aún no se inició.' if co.get('no_iniciada') else
                   f'{co.get("revision_declarada_vigente", 0)} de {co.get("elementos", 0)} RA, temas y prácticas con recursos revisados.',
                   co.get('hallazgos', [])),
+              chk('Respaldos', {'no_iniciada': True} if not rs.get('total') and not rs.get('error') else rs,
+                  not rs.get('aprobadas_sin_copia') and not rs.get('dañados'),
+                  'Aún no hay respaldos. Pide «haz un respaldo» antes de un cambio amplio.' if not rs.get('total') else
+                  f'{rs["total"]} respaldo(s). Último: {fecha_corta(rs["ultimo"])}. Último aprobado: '
+                  + (fecha_corta(rs['ultimo_aprobado']) if rs.get('ultimo_aprobado') else 'ninguno todavía') + '.',
+                  [f'Evidencia aprobada sin copia guardada: `{x}` (pide un respaldo «aprobado»).' for x in rs.get('aprobadas_sin_copia', [])]
+                  + ([f'{rs["dañados"]} respaldo(s) no se pudieron leer: pide «comprueba los respaldos».'] if rs.get('dañados') else [])),
               f'<div class="chk idle"><h3>Videos</h3><p>{c["videos"]["archivos"]} archivo(s) de video en videos/. Estado de generación: '
               'operaciones externas en ESTADO.md.</p></div>']
 

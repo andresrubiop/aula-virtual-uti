@@ -3,6 +3,7 @@ fuentes/privado/
 hub/dist/
 hub/tools/shots/
 autonomo/
+respaldos/
 canvas/salida/
 canvas/exportado/
 videos/bruto/

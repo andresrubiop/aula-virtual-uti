@@ -30,7 +30,7 @@ Códigos de salida: **0**, panel escrito; **2**, `ESTADO.md` no existe o no se p
 | Dónde vamos | «Punto de reanudación» de `ESTADO.md` (fase actual, próxima acción, objetivo) y la cuenta de fases marcadas ✅ |
 | Lo que necesita de ti | «Preguntas pendientes para el docente», «Bloqueos o respuestas necesarias», fases ⛔ y la ficha del sílabo sin revisión docente vigente |
 | Fases y Unidades | Tablas de `ESTADO.md`, con sus iconos y notas; se omiten las filas de ejemplo vacías de la plantilla |
-| Comprobaciones automáticas | `estado.py verificar` e `impacto`, `ficha_silabo.py` y `cobertura.py`, en modo lectura; número de archivos MP4 en `videos/` |
+| Comprobaciones automáticas | `estado.py verificar` e `impacto`, `ficha_silabo.py`, `cobertura.py` y el resumen de `respaldo.py` (último respaldo, último aprobado y evidencias aprobadas sin copia guardada), en modo lectura; número de archivos MP4 en `videos/` |
 | Accesos | Archivos que existen: `hub/dist/index.html` y `profesor.html`, una entrada por unidad de `hub/src/course.json` (`#/u1`…), ficha, planificación, cobertura, PDF de `materiales/`, `autonomo/`, `canvas/salida/*.imscc` y `canvas/LEEME.md` |
 | Próximos pasos, Decisiones, Operaciones externas | Secciones homónimas de `ESTADO.md` |
 

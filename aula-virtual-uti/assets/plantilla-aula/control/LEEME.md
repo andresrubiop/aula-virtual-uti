@@ -32,6 +32,12 @@ Pide: «Actualiza el panel del aula y ábremelo». El asistente ejecuta `python3
 
 El panel se deriva de ESTADO.md y de las comprobaciones de esta carpeta; no las modifica ni es otro registro. Si algo no coincide, se corrige ESTADO.md y se vuelve a generar. No se actualiza solo: la fecha y la huella de ESTADO.md figuran al pie. Código 0: panel escrito; 2: no se pudo leer ESTADO.md. No es evidencia ni material del estudiante. Guía completa: `references/panel.md` de la skill instalada.
 
+## Respaldos y volver atrás
+
+Pide: «Haz un respaldo antes de rehacer la unidad 2», «Guarda un respaldo: aprobé la unidad 2» o «Vuelve al último resultado aprobado de la unidad 2». El asistente ejecuta `python3 control/respaldo.py crear --tipo antes|aprobado --motivo "…"`, `listar`, `comparar` y `restaurar`. Sin `--aplicar`, `restaurar` solo muestra qué cambiaría; al aplicar guarda antes un respaldo de seguridad para poder deshacerlo. `restaurar --evidencia ID` devuelve los archivos a lo registrado en ESTADO.md.
+
+Los respaldos quedan en `respaldos/` (un manifiesto por hito y cada versión de archivo una sola vez). Los documentos de `fuentes/` no se copian ni se restauran: solo se anotan sus huellas y se avisa si cambiaron. ESTADO.md no se reemplaza salvo pedido expreso. `comprobar` revisa que las copias estén intactas; `extraer` reconstruye un respaldo en una carpeta nueva fuera del aula. Código 0: hecho o vista previa; 1: copias dañadas o ausentes; 2: no se pudo completar. Los respaldos protegen contra cambios no deseados, no contra la pérdida del equipo: para eso copia la carpeta completa del aula a otro disco. Guía completa: `references/respaldos.md` de la skill instalada.
+
 ## Ficha del sílabo
 
 Pide: «Prepara la ficha del sílabo y ábremela para revisarla». El asistente ejecuta `python3 control/ficha_silabo.py iniciar --documento fuentes/silabo/<sílabo vigente>`, después `completar` y `verificar`. Abre `control/FICHA_SILABO.html` con doble clic: cada dato transcrito aparece con su página y una marca (✔ localizado, ◐ cotejar a la vista, ▲ o ✖ por revisar).
