@@ -31,11 +31,18 @@ def title(text):
     m = re.search(r'<title>(.*?)</title>', text, re.S)
     return html.unescape(m[1]) if m else ''
 
-def body(text):
+AULA = re.compile(r'\s*<!--aula-inicio-->.*?<!--/aula-inicio-->\n?', re.S)
+
+def aula(text):
+    """Bloque del aula interactiva incrustada al comienzo de Inicio: es bilingüe por sí misma y no se traduce ni se duplica."""
+    m = AULA.match(body(text, False))
+    return m[0].strip() + '\n' if m else ''
+
+def body(text, sin_aula=True):
     m = re.search(r'<body\b[^>]*>(.*?)</body>', text, re.S | re.I)
     if not m:
         raise ValueError('HTML sin body')
-    return m[1]
+    return AULA.sub('', m[1], count=1) if sin_aula and AULA.match(m[1]) else m[1]
 
 def scan(data):
     result = {'pages': {}, 'assignments': {}, 'modules': {}}
@@ -122,7 +129,7 @@ def run(args):
             # El prefijo evita IDs duplicados dentro de una misma página bilingüe.
             english = re.sub(r'\bid=([\"\'])([^\"\']+)\1', lambda m: f'id={m[1]}en-{m[2]}{m[1]}', english)
             english = re.sub(r'href=([\"\'])#([^\"\']+)\1', lambda m: f'href={m[1]}#en-{m[2]}{m[1]}', english)
-            bilingual = '<section lang="es"><h2>Español</h2>' + source['source_html'] + '</section>\n<section lang="en"><h2>English</h2>' + english + '</section>'
+            bilingual = aula(text) + '<section lang="es"><h2>Español</h2>' + source['source_html'] + '</section>\n<section lang="en"><h2>English</h2>' + english + '</section>'
             text = re.sub(r'(<body\b[^>]*>).*?(</body>)', lambda m: m[1] + bilingual + m[2], text, flags=re.S | re.I)
             text = re.sub(r'<title>.*?</title>', lambda m: '<title>' + html.escape(joined) + '</title>', text, count=1, flags=re.S)
             data[source['path']] = text.encode()

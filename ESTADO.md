@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-18 · Canvas: la página Inicio lleva el aula interactiva incrustada a todo el ancho al comienzo (85 % de la pantalla, mínimo 640 px), con botones para abrirla, ver cómo usarla y descargarla; el contenido institucional de Inicio sigue intacto debajo. La traducción bilingüe no duplica el aula. Comprobado en un curso real de Canvas (el aula carga dentro de la página de inicio). 119/119 regresiones PASS.
+
 2026-11-13 · Versión pública de Andrès Rubio Proaño; ampliación de guía docente y continuidad por fases.
 
 Producto: skill, referencias, plantilla del aula y paquete `.skill`. Arquitectura FSO, presentaciones HTML embebidas, español/inglés, funcionamiento local, exportación Canvas y videos opcionales.

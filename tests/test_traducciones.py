@@ -53,6 +53,9 @@ class Translations(unittest.TestCase):
             t=z.read('wiki_content/aula-interactiva.html').decode()
             self.assertIn('lang="es"',t)
             self.assertIn('lang="en"',t)
+            inicio=next(z.read(n).decode() for n in z.namelist() if n.startswith('wiki_content/') and 'aula-interactiva-inicio' in z.read(n).decode())
+            self.assertEqual(inicio.count('id="aula-interactiva-inicio"'),1)   # el aula no se duplica en la sección inglesa
+            self.assertLess(inicio.index('aula-interactiva-inicio'),inicio.index('<section lang="es">'))
         self.assertEqual(original,self.pkg.read_bytes())
         r=subprocess.run([sys.executable,str(VERIFY),str(output)],capture_output=True,text=True)
         self.assertEqual(r.returncode,0,r.stdout)

@@ -42,6 +42,19 @@ class Canvas(unittest.TestCase):
             self.assertEqual(len(names),2)
             self.assertEqual({z.read(n).decode() for n in names},{'Contenido 1','Contenido 2'})
 
+    def test_inicio_lleva_el_aula_al_comienzo(self):
+        import re,zipfile
+        self.assertEqual(self.generate().returncode,0)
+        with zipfile.ZipFile(self.aula/'canvas/salida/CP-aula-canvas.imscc') as z, zipfile.ZipFile(self.aula/'canvas/plantilla/plantilla-uti.imscc') as tpl:
+            nombre=next(n for n in tpl.namelist() if n.startswith('wiki_content/') and re.search(r'<title>\s*Inicio\s*</title>',tpl.read(n).decode(),re.I))
+            antes,ahora=tpl.read(nombre).decode(),z.read(nombre).decode()
+        cuerpo=re.search(r'<body[^>]*>\s*(.*)',ahora,re.S)[1]
+        self.assertTrue(cuerpo.startswith('<!--aula-inicio--><div id="aula-interactiva-inicio"'))
+        self.assertEqual(cuerpo.count('<iframe'),antes.count('<iframe')+1)
+        self.assertRegex(cuerpo,r'<iframe[^>]*width: 100%[^>]*src="\$IMS-CC-FILEBASE\$/[^"]*-aula\.html\?canvas_download=1"')
+        self.assertEqual(re.sub(r'<!--aula-inicio-->.*?<!--/aula-inicio-->\n','',ahora,flags=re.S),antes)
+        pegar=(self.aula/'canvas/salida/pegar/inicio-SOLO-AL-COMIENZO.html').read_text()
+        self.assertIn('<iframe',pegar);self.assertNotIn('$IMS-CC-FILEBASE$',pegar)
     def test_private_guide_rejected(self):
         p=self.aula/'fuentes/privado/secret.txt';p.parent.mkdir(parents=True,exist_ok=True);p.write_text('private')
         self.data['practicas'][0]['archivo']='fuentes/privado/secret.txt'

@@ -29,7 +29,7 @@ Los videos que aún no se hayan producido aparecerán como pendientes. El cuesti
 
 ## Si necesitas conservar páginas existentes
 
-El asistente puede preparar fragmentos en `canvas/salida/pegar/`. Abre la página correspondiente en Canvas, pulsa **Editar**, cambia a la vista **HTML**, pega el fragmento indicado y guarda. Después comprueba su aspecto y sus enlaces. [Guía oficial de la vista HTML](https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor).
+El asistente puede preparar fragmentos en `canvas/salida/pegar/`. Abre la página correspondiente en Canvas, pulsa **Editar**, cambia a la vista **HTML**, pega el fragmento indicado y guarda. La página Inicio es la excepción: no se reemplaza; el fragmento `inicio-SOLO-AL-COMIENZO.html` (el aula incrustada) se pega al principio de su HTML, antes de lo que ya tiene. Después comprueba su aspecto y sus enlaces. [Guía oficial de la vista HTML](https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor).
 
 El asistente debe preparar primero los archivos, páginas y enlaces de tu curso: pegar un fragmento no crea esos recursos. No pegues el archivo completo del aula interactiva en el editor de páginas; se entrega como archivo descargable.
 

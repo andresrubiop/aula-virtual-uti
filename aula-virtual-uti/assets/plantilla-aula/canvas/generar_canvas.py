@@ -583,6 +583,24 @@ def recursos_page(M, s):
     return hero + (item_card('Material de estudio', mat) if mat else '') + (item_card('Recurso multimedia', multi) if multi else '')
 
 
+AULA_INICIO = ('<!--aula-inicio-->', '<!--/aula-inicio-->')
+
+
+def aula_inicio(texto):
+    """Pone el aula interactiva incrustada a todo el ancho al comienzo de Inicio; el contenido institucional sigue intacto debajo."""
+    f = f'{CARPETA}/{ARCHIVO}.html'
+    bloque = (f'{AULA_INICIO[0]}<div id="aula-interactiva-inicio" style="margin: 0 0 18px 0;">'
+              f'<iframe style="display: block; width: 100%; height: 85vh; min-height: 640px; border: 1px solid #cbd5e0; border-radius: 10px;" '
+              f'title="Aula interactiva de {e(NOMBRE)}" src="{file_ref(f, "abrir")}" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>'
+              f'<p style="margin: 10px 0 0 0; text-align: center;">'
+              f'{link(file_ref(f, "abrir"), "Abrir el aula en una pestaña nueva", blank=True)}'
+              f'{link(page_ref(PAGES["aula"]["id"]), "Cómo usar el aula", BTN2)}'
+              f'{link(file_ref(f, "bajar"), "Descargar el aula (sin conexión)", BTN2)}</p></div>{AULA_INICIO[1]}\n')
+    m = re.search(r'<body\b[^>]*>\s*', texto, re.I)
+    assert m and AULA_INICIO[0] not in texto, 'Inicio sin <body> o ya con el aula'
+    return texto[:m.end()] + bloque + texto[m.end():]
+
+
 def aula_page():
     f = f'{CARPETA}/{ARCHIVO}.html'
     na = len(ANIM)
@@ -920,7 +938,10 @@ def main() -> int:
     for k, fn in (('aula', aula_page), ('materiales', materiales_page), ('guia', guia_page)):
         P = PAGES[k]
         (W / f'{P["file"]}.html').write_text(wrap_page(P['title'], P['id'], fn(), home, P['pub']))
-    assert (W / f'{T["inicio_file"]}.html').read_bytes() == inicio_antes, 'La página Inicio no debe cambiar'
+    fi = W / f'{T["inicio_file"]}.html'
+    assert fi.read_bytes() == inicio_antes, 'La página Inicio no debe cambiar antes de incrustar el aula'
+    fi.write_text(aula_inicio(fi.read_text()))   # el aula, de lleno al comienzo; lo institucional queda igual debajo
+    assert re.sub(r'<!--aula-inicio-->.*?<!--/aula-inicio-->\n', '', fi.read_text(), flags=re.S).encode() == inicio_antes
 
     # Tareas: Actividad N (evidencia de cada momento), PIS y prácticas
     g_act = d['grupos'].get('actividades') or next(iter(d['grupos'].values()), gid('grupo'))
@@ -1083,6 +1104,8 @@ def main() -> int:
     for f in sorted(W.glob('*.html')):
         if f.stem not in d['viejas'] and f.stem != T['inicio_file']:
             (pg / f.name).write_text(pegar(f.read_text(), by_id))
+    ini = re.search(r'<!--aula-inicio-->.*?<!--/aula-inicio-->', (W / f'{T["inicio_file"]}.html').read_text(), re.S)[0]
+    (pg / 'inicio-SOLO-AL-COMIENZO.html').write_text(pegar(f'<html><body>{ini}</body></html>', by_id))   # Inicio conserva lo suyo: esto va arriba
     mb = pkg.stat().st_size / 1e6
     nf = len(dict(files))
     print(f'  plantilla: {src.name}')
