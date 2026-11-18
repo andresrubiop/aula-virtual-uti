@@ -164,8 +164,11 @@ def guardar_objeto(root, p):
             raise ValueError(f'{p.name} cambió mientras se respaldaba; repite el respaldo.')
         digest = h.hexdigest()
         final = objeto(root, digest)
-        if not final.exists():
+        # Una copia existente solo se reutiliza si está íntegra; si no, se repara con la recién leída del original.
+        if not final.exists() or final.is_symlink() or not verificar_objeto(root, digest):
             final.parent.mkdir(exist_ok=True)
+            if final.is_symlink():
+                final.unlink()
             os.chmod(temp, 0o600)
             os.replace(temp, final)
         return digest, before.st_size
@@ -173,12 +176,11 @@ def guardar_objeto(root, p):
         Path(temp).unlink(missing_ok=True)
 
 
-def leer_objeto(root, digest, destino):
-    """Descomprime en un temporal junto al destino y solo lo coloca si la huella coincide."""
+def preparar_copia(root, digest, destino):
+    """Descomprime en un temporal junto al destino y devuelve su ruta solo si la huella coincide."""
     src = objeto(root, digest)
     if not src.is_file() or src.is_symlink():
         raise ValueError(f'Falta la copia con huella {digest[:12]}… en respaldos/objetos.')
-    destino.parent.mkdir(parents=True, exist_ok=True)
     fd, temp = tempfile.mkstemp(prefix='.restaurar-', dir=destino.parent)
     try:
         h = hashlib.sha256()
@@ -188,6 +190,17 @@ def leer_objeto(root, digest, destino):
             out.flush(); os.fsync(out.fileno())
         if h.hexdigest() != digest:
             raise ValueError(f'La copia de {destino.name} está dañada (huella distinta); no se restauró.')
+    except BaseException:
+        Path(temp).unlink(missing_ok=True)
+        raise
+    return Path(temp)
+
+
+def leer_objeto(root, digest, destino):
+    """Coloca una copia verificada en destino (para extraer en una carpeta nueva)."""
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    temp = preparar_copia(root, digest, destino)
+    try:
         if destino.exists():
             os.chmod(temp, stat.S_IMODE(destino.stat().st_mode))
         else:
@@ -425,19 +438,90 @@ def aplicar_plan(root, escribir_rutas, retirar, motivo_seguridad):
         dañadas = [rel for rel, digest in escribir_rutas if not verificar_objeto(root, digest)]
         if dañadas:
             raise ValueError('Copias ausentes o dañadas; no se restauró nada: ' + ', '.join(dañadas) + '. Ejecuta «comprobar».')
+        conflictos = conflictos_destino(root, [rel for rel, _ in escribir_rutas])
+        if conflictos:
+            raise ValueError('No se restauró nada: ' + '; '.join(conflictos) + '. Resuélvelo y repite la vista previa.')
         seguridad = crear(root, 'seguridad', motivo_seguridad, _con_candado=False)
-        for rel, digest in escribir_rutas:
-            leer_objeto(root, digest, ruta(root, rel, existe=False))
-        for rel in retirar:
-            p = ruta(root, rel, existe=False)
-            if p.is_file():
-                p.unlink()
-                d = p.parent
-                while d != root and d.is_dir() and not any(d.iterdir()):
-                    d.rmdir(); d = d.parent
+        transaccion(root, escribir_rutas, retirar)
         return seguridad['respaldo']
     finally:
         lock.unlink(missing_ok=True)
+
+
+def conflictos_destino(root, rutas):
+    """Carpetas donde iría un archivo, o archivos donde haría falta una carpeta."""
+    result = []
+    for rel in rutas:
+        p = ruta(root, rel, existe=False)
+        if p.exists() and not p.is_file():
+            result.append(f'{rel} es ahora una carpeta')
+            continue
+        d = p.parent
+        while d != root:
+            if d.exists() and not d.is_dir():
+                result.append(f'{d.relative_to(root).as_posix()} es un archivo y {rel} necesita esa carpeta')
+                break
+            d = d.parent
+    return result
+
+
+def transaccion(root, escribir_rutas, retirar):
+    """Prepara todas las copias y después reemplaza; si algo falla, devuelve cada archivo a como estaba."""
+    creadas, preparados, hechos = [], [], []   # hechos: (destino, archivo anterior apartado o None)
+    try:
+        for rel, digest in escribir_rutas:
+            dest = ruta(root, rel, existe=False)
+            faltan, d = [], dest.parent
+            while not d.exists():
+                faltan.append(d); d = d.parent
+            for d in reversed(faltan):
+                d.mkdir(); creadas.append(d)
+            temp = preparar_copia(root, digest, dest)
+            preparados.append((temp, dest))
+            if dest.exists():
+                os.chmod(temp, stat.S_IMODE(dest.stat().st_mode))
+            else:
+                mascara = os.umask(0); os.umask(mascara)
+                os.chmod(temp, 0o666 & ~mascara)
+        for temp, dest in preparados:
+            apartado = None
+            if dest.exists():
+                apartado = apartar(dest)
+            hechos.append((dest, apartado))
+            os.replace(temp, dest)
+        for rel in retirar:
+            p = ruta(root, rel, existe=False)
+            if p.is_file():
+                hechos.append((p, apartar(p)))
+    except BaseException:
+        for dest, apartado in reversed(hechos):
+            if apartado is not None:
+                os.replace(apartado, dest)
+            else:
+                dest.unlink(missing_ok=True)
+        for temp, _ in preparados:
+            temp.unlink(missing_ok=True)
+        for d in reversed(creadas):
+            try:
+                d.rmdir()
+            except OSError:
+                pass
+        raise
+    for dest, apartado in hechos:
+        if apartado is not None:
+            apartado.unlink(missing_ok=True)
+    for rel in retirar:
+        d = ruta(root, rel, existe=False).parent
+        while d != root and d.is_dir() and not any(d.iterdir()):
+            d.rmdir(); d = d.parent
+
+
+def apartar(p):
+    """Mueve el archivo actual a un temporal oculto en la misma carpeta, para poder devolverlo."""
+    fd, nombre = tempfile.mkstemp(prefix='.anterior-', dir=p.parent)
+    os.close(fd)
+    os.replace(p, nombre)
+    return Path(nombre)
 
 
 def despues(root, restaurados):

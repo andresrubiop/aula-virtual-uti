@@ -75,7 +75,8 @@ Los respaldos viven dentro del aula. Protegen contra cambios no deseados, no con
   - **0:** operación hecha, o vista previa mostrada.
   - **1:** `comprobar` encontró problemas, o `restaurar --evidencia` no encontró alguna copia.
   - **2:** no se pudo completar; por ejemplo, el respaldo no existe, la ruta no está permitida o hay otro proceso en curso.
-- **Escritura segura:** cada archivo se descomprime en un temporal y solo reemplaza al actual si su huella coincide. Una copia dañada no se aplica.
+- **Escritura segura:** antes de cambiar nada se comprueban todas las copias y los destinos (por ejemplo, una carpeta que ocupa el lugar de un archivo). Cada archivo se descomprime en un temporal y se verifica su huella. Si una escritura falla a mitad de camino, los archivos ya reemplazados vuelven a su contenido anterior: no quedan restauraciones a medias.
+- **Reparación:** al crear un respaldo, una copia guardada que esté dañada se reemplaza por la del original íntegro, en lugar de reutilizarla.
 - **Bloqueo:** un candado (`respaldos/.respaldo.lock`) impide dos respaldos o restauraciones a la vez. No se opera mientras exista `.estado.lock`.
 - **Privacidad:** las carpetas de `respaldos/` y sus copias se crean solo para el usuario del equipo, donde el sistema lo permite. `respaldos/` está en `.gitignore`, no entra en `autonomo/` ni en el paquete de Canvas, y `estado.py` no lo acepta como evidencia.
 

@@ -1,6 +1,6 @@
 # Problemas conocidos y correcciones
 
-Actualizado el 2026-11-16. La mejora 1 corrige los tres defectos reproducidos en la revisión inicial:
+Actualizado el 2026-11-18. La mejora 1 corrige los tres defectos reproducidos en la revisión inicial:
 
 1. **Caché de extracción:** `scripts/fuentes.py` reconstruye `fuentes/_texto/` y el inventario. Retira textos de archivos borrados, movidos a privado o que ya no se pueden extraer. La caché es una salida regenerable; conserva las anotaciones en otro archivo. Los originales no se modifican.
 2. **Orden y notas de PowerPoint:** utiliza `ppt/presentation.xml` y sus relaciones para el orden; cada diapositiva resuelve sus notas mediante relaciones. Los archivos huérfanos no se presentan como diapositivas del curso. Una presentación sin relaciones válidas produce un aviso de extracción fallida, sin inventar su orden.
@@ -19,3 +19,5 @@ La ficha del sílabo compara palabras con el texto extraído por página. No hac
 El panel de avance refleja `ESTADO.md` en el momento en que se generó y no se actualiza solo. Sus avisos de archivos «anteriores» comparan fechas de modificación, que una copia o sincronización puede alterar; la vigencia la dan las evidencias registradas. Un botón indica que el archivo existe, no que esté revisado. [Guía del panel](aula-virtual-uti/references/panel.md).
 
 Los respaldos por hitos se guardan dentro de la carpeta del aula: protegen contra cambios no deseados, no contra la pérdida o avería del equipo, para lo cual hay que copiar la carpeta completa a otro disco. Restauran archivos completos, sin fusionar ediciones; las salidas generadas sin copia (aula compilada, aula portátil, paquete Canvas) se regeneran. No se borran respaldos antiguos automáticamente. El rótulo «aprobado» lo indica el asistente; la aprobación la acredita la evidencia registrada en `ESTADO.md`. No se probaron en Windows ni macOS, donde los permisos privados de la carpeta dependen del sistema. [Guía de respaldos](aula-virtual-uti/references/respaldos.md).
+
+Corregido el 2026-11-18 (detectado en una revisión independiente): un respaldo nuevo reutilizaba sin comprobarla una copia guardada dañada, y una restauración podía quedar aplicada a medias si un destino era una carpeta o fallaba una escritura. Ahora la copia dañada se repara desde el original íntegro, los conflictos de destino se detectan antes de cambiar nada y un fallo a mitad de camino devuelve cada archivo a su contenido anterior.

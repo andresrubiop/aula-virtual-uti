@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "26231e3c8b26634f9a8af7a7de84d57777bcf2b22ba42692edd0e9e9cc0ec900",
-  "bytes": 9762276,
+  "sha256": "a77cf61899499b046a4e76c629f51ed1426afc955c6ad1a2f5009b7b52c95aff",
+  "bytes": 9763145,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 115,
+    "passed": 118,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,7 +18,7 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejoras 1–7; entrega actual: respaldos por hitos y recuperación",
+  "scope": "Mejoras 1–7; corrección de respaldos (copia dañada reparada al crear; restauración sin escrituras parciales)",
   "source_matches_package": "PASS",
   "state_verifier_new_and_existing_classroom": "PASS",
   "state_decisions_preserved": "PASS",
@@ -63,5 +63,8 @@
   "backup_damaged_copy_no_partial_restore": "PASS",
   "backup_not_in_delivery": "PASS",
   "backup_not_evidence": "PASS",
-  "backup_real_syllabus_local": "PASS (privado, no publicado)"
+  "backup_real_syllabus_local": "PASS (privado, no publicado)",
+  "backup_damaged_copy_repaired_on_create": "PASS",
+  "backup_destination_conflict_no_changes": "PASS",
+  "backup_midway_failure_rolled_back": "PASS"
 }

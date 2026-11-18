@@ -206,6 +206,56 @@ class Respaldo(unittest.TestCase):
         self.respaldo('restaurar', r['respaldo'], '--aplicar', code=2)
         self.assertEqual(huellas(self.root), actual, 'ningún archivo se restaura si una copia está dañada')
 
+    def test_copia_dañada_se_repara_al_crear_otro_respaldo(self):
+        r = self.respaldo('crear', '--motivo', 'uno')
+        d = self.manifiesto(r['respaldo'])['archivos']['hub/src/content/u1/10-resumen.html']['sha256']
+        obj = self.root / 'respaldos/objetos' / d[:2] / (d + '.gz')
+        obj.write_bytes(gzip.compress(b'alterado'))
+        self.assertEqual(self.respaldo('comprobar', code=1)['resultado'], 'con_problemas')
+        self.respaldo('crear', '--motivo', 'dos')
+        self.assertEqual(self.respaldo('comprobar')['resultado'], 'sin_problemas', 'el original íntegro repara la copia')
+        self.write('hub/src/content/u1/10-resumen.html', '<article>otro</article>')
+        self.respaldo('restaurar', r['respaldo'], '--aplicar')
+        self.assertEqual((self.root / 'hub/src/content/u1/10-resumen.html').read_text(encoding='utf-8'), '<article>Resumen U1 aprobado</article>')
+
+    def test_conflicto_de_destino_no_aplica_nada(self):
+        r = self.respaldo('crear', '--motivo', 'antes')
+        self.write('hub/src/content/u1/10-resumen.html', '<article>editado</article>')
+        destino = self.root / 'hub/src/content/u2/10-resumen.html'
+        destino.unlink(); destino.mkdir(); (destino / 'dentro.txt').write_text('x', encoding='utf-8')
+        actual = huellas(self.root)
+        e = self.run_tool(RESPALDO, 'restaurar', r['respaldo'], '--aplicar', code=2)
+        self.assertIn('es ahora una carpeta', e.stderr)
+        self.assertEqual(huellas(self.root), actual)
+        self.assertEqual(len(self.respaldo('listar')['respaldos']), 1, 'sin cambios tampoco se crea respaldo de seguridad')
+
+    def test_fallo_a_mitad_devuelve_todo_como_estaba(self):
+        r = self.respaldo('crear', '--motivo', 'antes')
+        self.write('hub/src/content/u1/10-resumen.html', '<article>editado 1</article>')
+        self.write('hub/src/content/u2/10-resumen.html', '<article>editado 2</article>')
+        self.write('hub/src/content/u3/nuevo.html', '<article>nuevo</article>')
+        actual = huellas(self.root)
+        sys.path.insert(0, str(PLANTILLA / 'control'))
+        try:
+            import respaldo
+            original = respaldo.os.replace
+            def falla(src, dst):
+                if str(dst).endswith('u2/10-resumen.html') and '.restaurar-' in str(src):
+                    raise OSError('fallo simulado de escritura')
+                return original(src, dst)
+            respaldo.os.replace = falla
+            try:
+                with self.assertRaises(OSError):
+                    respaldo.restaurar(self.root.resolve(), r['respaldo'], aplicar=True)
+            finally:
+                respaldo.os.replace = original
+        finally:
+            sys.path.remove(str(PLANTILLA / 'control'))
+        self.assertEqual(huellas(self.root), actual, 'ningún archivo queda a medias')
+        restos = [p for p in self.root.rglob('.*') if p.name.startswith(('.restaurar-', '.anterior-'))]
+        self.assertEqual(restos, [])
+        self.assertFalse((self.root / 'respaldos/.respaldo.lock').exists())
+
     def test_manifiesto_alterado_no_se_usa(self):
         r = self.respaldo('crear', '--motivo', 'antes')
         p = self.root / 'respaldos/hitos' / (r['respaldo'] + '.json')
