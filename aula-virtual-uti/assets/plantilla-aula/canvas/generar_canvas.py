@@ -422,16 +422,23 @@ def presentacion(tpl: str) -> str:
         j = t.find('<details', t.find('Metodología activa'))
         if j > 0:
             t = t[:j] + eva + t[j:]
-    # Perfil docente (el teléfono no se publica: queda el marcador de la plantilla para que el docente decida)
+    # Perfil docente: sin teléfono salvo pedido expreso (docente.telefono) y sin el ORCID ajeno de la plantilla
     doc = D['docente']
     t = t.replace('Nombre del docente</strong>', f'{e(doc["nombre"])}</strong>')
     desc = '. '.join(e(x) for x in [doc.get('grado')] + list(doc.get('posgrado') or []) if x)
     t = re.sub(r'(<p[^>]*>)Descripción del docente(</p>)', lambda m: m.group(1) + desc + ('.' if desc else '') + m.group(2), t, count=1)
     if doc.get('email'):
         t = t.replace('<br>correo@indoamerica.edu.ec</p>', f'<br><a href="mailto:{doc["email"]}">{doc["email"]}</a></p>')
+    fila = lambda rotulo: re.compile(r'<p style="margin: 8px 0 0 0;[^"]*"><strong style="color: #3a1467;">' + rotulo + r'</strong><br>.*?</p>\s*', re.S)
     if doc.get('orcid'):
         t = re.sub(r'<a class="inline_disabled" href="https://orcid.org/[\d-]+" target="_blank">\s*</a>https://orcid.org/</p>',
                    f'<a class="inline_disabled" href="https://orcid.org/{doc["orcid"]}" target="_blank">https://orcid.org/{doc["orcid"]}</a></p>', t)
+    else:
+        t = fila('ORCID').sub('', t, count=1)       # el enlace de la plantilla es el ORCID de otra persona
+    if doc.get('telefono'):                          # solo si el docente pidió publicarlo
+        t = re.sub(r'(<strong style="color: #3a1467;">Teléfono</strong><br>)[^<]*', lambda m: m.group(1) + e(doc['telefono']), t, count=1)
+    else:
+        t = fila('Teléfono').sub('', t, count=1)
     # Sílabo del curso: la copia publicada (sin datos personales)
     if SILABO_PDF:
         t = re.sub(r'\$IMS-CC-FILEBASE\$/Multimedia%20cargada/S%C3%ADlabo\.pdf\?canvas_=1&amp;canvas_qs_wrap=1', lambda m: file_ref(f'{CARPETA}/{SILABO_PDF.name}'), t)
@@ -751,7 +758,8 @@ def practica_tarea(g, home):
 def pis_fill(t: str) -> str:
     ra = ''.join(f'<p style="margin: 0 0 6px 0;"><strong>{e(NOMBRE)} · {r[0]}:</strong> {e(r[1])}</p>' for r in DATA['ra'])
     t = t.replace('(Resultados de Aprendizaje oficiales de los Proyectos Formativos que aportan al PIS, señalando a qué asignatura pertenece cada uno)',
-                  ra + '<p style="margin: 0; color: #4a5568;">(Agregar los RA de los demás proyectos formativos del PIS.)</p>')
+                  ra + (''.join(f'<p style="margin: 0 0 6px 0;"><strong>{e(pf)} · RA:</strong> {e(txt)}</p>' for pf, txt in DATA['pis_ra'])
+                        if DATA.get('pis_ra') else '<p style="margin: 0; color: #4a5568;">(Agregar los RA de los demás proyectos formativos del PIS.)</p>'))
     prob = DATA['problema'] if isinstance(DATA['problema'], str) else DATA['problema'][0]
     t = t.replace('(Contextualiza la situación real que abordará el equipo: dónde ocurre, a quiénes afecta, qué datos o antecedentes existen, qué Proyectos Formativos intervienen y por qué importa para el territorio)',
                   f'<strong>{e(DATA["pis"])}.</strong> {e(prob)}<br><br><strong>Aporte de {e(NOMBRE)}:</strong> {e(DATA.get("aporte_pis") or "")}')

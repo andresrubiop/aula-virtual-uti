@@ -21,13 +21,14 @@ Los nombres son sensibles a mayúsculas y tildes. Las fechas son cadenas `dd/mm/
 |---|---|
 | `_fuente` | Metadatos libres de procedencia, sin publicación automática. |
 | `curso` | Objeto con `nombre`, `periodo`, `inicio`, `fin` obligatorios. `canvas_id`: número real de la URL del curso, como texto; necesario para enlaces de `salida/pegar/`, no para generar el paquete. `bienvenida`: texto o HTML mínimo revisado. `horas`: objeto numérico con `docente`, `practico`, `autonomo`. |
-| `docente` | `nombre` obligatorio; `email`, `grado`, `orcid` textos opcionales y `posgrado` lista de textos. Publica solo información autorizada. |
+| `docente` | `nombre` obligatorio; `email`, `grado`, `orcid` textos opcionales y `posgrado` lista de textos. `telefono` solo si el docente pide publicarlo. Sin `orcid` ni `telefono`, Canvas omite esas filas (la plantilla trae un ORCID ajeno). Sin `email` queda `correo@indoamerica.edu.ec`, que `canvas_api.py` señala como pendiente: usa el correo institucional del docente. Publica solo información autorizada. |
 | `competencia_perfil`, `competencia_pf`, `metacompetencia`, `contribucion`, `reto`, `producto_final` | Textos obligatorios, transcritos del sílabo. |
 | `problema` | Texto o lista de párrafos. Si es lista, no puede estar vacía. |
 | `habilidades` | Lista de textos; inclúyela siempre porque el generador accede al campo directamente, aunque el validador no lo exige. |
 | `ejes` | Lista de pares `[nombre, descripción]`; puede estar vacía si falta información. |
 | `ra` | Lista de filas `[id, texto del resultado, evidencia]`. ID estable, por ejemplo `RA1`. No usar diccionarios. |
 | `pis`, `aporte_pis` | Textos cuando el documento declare PIS. Si no aparece, omite o deja vacío y registra la consulta pendiente; no inventes un PIS para evitar un aviso. |
+| `pis_ra` | Opcional: lista de pares `[proyecto formativo, resultado de aprendizaje]` de los **demás** proyectos formativos que aportan al PIS, copiados del documento del PIS que entregue el docente. Completa las tareas PIS en Canvas; sin este campo queda la marca «Agregar los RA…», que `canvas_api.py` señala como pendiente visible. |
 | `metodologias` | Lista no vacía de textos: primero la metodología principal, luego las complementarias. |
 | `rubrica_final` | Lista de filas de seis textos: indicador, Receptivo, Resolutivo, Reflexivo, Crítico, Cocreativo. |
 | `bibliografia` | Lista de pares `[referencia APA, URL]`; URL puede ser `""`. Verifica la existencia y correspondencia de cada referencia. |

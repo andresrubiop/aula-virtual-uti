@@ -55,6 +55,29 @@ class Canvas(unittest.TestCase):
         self.assertEqual(re.sub(r'<!--aula-inicio-->.*?<!--/aula-inicio-->\n','',ahora,flags=re.S),antes)
         pegar=(self.aula/'canvas/salida/pegar/inicio-SOLO-AL-COMIENZO.html').read_text()
         self.assertIn('<iframe',pegar);self.assertNotIn('$IMS-CC-FILEBASE$',pegar)
+    def test_pis_ra_completa_las_tareas_pis(self):
+        import zipfile
+        self.data['pis_ra']=[['Proyecto ficticio B','Resultado ficticio del proyecto B.']]
+        self.assertEqual(self.generate().returncode,0)
+        with zipfile.ZipFile(self.aula/'canvas/salida/CP-aula-canvas.imscc') as z:
+            textos=[z.read(n).decode() for n in z.namelist() if n.endswith('.html') and 'Proyecto ficticio B' in z.read(n).decode()]
+            todo=''.join(z.read(n).decode() for n in z.namelist() if n.endswith('.html'))
+        self.assertTrue(textos)
+        self.assertNotIn('Agregar los RA',todo)
+        self.data['pis_ra']=[['solo un texto']]
+        self.assertNotEqual(self.generate().returncode,0)
+    def test_perfil_docente_sin_telefono_ni_orcid_ajeno(self):
+        import zipfile
+        self.data['docente'].pop('orcid',None); self.data['docente'].pop('telefono',None)
+        self.assertEqual(self.generate().returncode,0)
+        with zipfile.ZipFile(self.aula/'canvas/salida/CP-aula-canvas.imscc') as z:
+            p=next(z.read(n).decode() for n in z.namelist() if n.startswith('wiki_content/presentacion'))
+        self.assertNotIn('0009-0008-8392-8846',p); self.assertNotIn('>Teléfono<',p); self.assertNotIn('+593',p)
+        self.data['docente']['orcid']='0000-0002-1825-0097'
+        self.assertEqual(self.generate().returncode,0)
+        with zipfile.ZipFile(self.aula/'canvas/salida/CP-aula-canvas.imscc') as z:
+            p=next(z.read(n).decode() for n in z.namelist() if n.startswith('wiki_content/presentacion'))
+        self.assertIn('https://orcid.org/0000-0002-1825-0097</a>',p); self.assertNotIn('0009-0008-8392-8846',p)
     def test_private_guide_rejected(self):
         p=self.aula/'fuentes/privado/secret.txt';p.parent.mkdir(parents=True,exist_ok=True);p.write_text('private')
         self.data['practicas'][0]['archivo']='fuentes/privado/secret.txt'

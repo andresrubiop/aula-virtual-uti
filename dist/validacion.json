@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "47d8dfc7073bd6d5a7360ea931aa324b0786317542053b55c718347381b92483",
-  "bytes": 9765867,
+  "sha256": "8b56c4ebd2e0abc8c640538db3fb3dda00711d512b8f998a130e7109a0e3cbc5",
+  "bytes": 9779805,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 123,
+    "passed": 131,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,7 +18,7 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejoras 1–7; corrección de respaldos; aula interactiva incrustada a todo el ancho al comienzo de Inicio en Canvas (resto de Inicio intacto; traducción sin duplicarla); videos: por omisión un solo video en inglés con subtítulos en español (transcripción local y traducción del asistente)",
+  "scope": "Mejoras 1–7; corrección de respaldos; aula interactiva incrustada a todo el ancho al comienzo de Inicio en Canvas (resto de Inicio intacto; traducción sin duplicarla); videos: por omisión un solo video en inglés con subtítulos en español (transcripción local y traducción del asistente); mejora 8: actualización de Canvas por API (canvas_api.py: comprobar, plan, aplicar, verificar, inicio), pis_ra, perfil docente sin teléfono ni ORCID ajeno, transcripción local de subtítulos",
   "source_matches_package": "PASS",
   "state_verifier_new_and_existing_classroom": "PASS",
   "state_decisions_preserved": "PASS",
@@ -68,5 +68,7 @@
   "backup_destination_conflict_no_changes": "PASS",
   "backup_midway_failure_rolled_back": "PASS",
   "canvas_home_embeds_classroom": "PASS",
-  "videos_english_with_spanish_subtitles": "PASS"
+  "videos_english_with_spanish_subtitles": "PASS",
+  "canvas_api_fake_canvas_end_to_end": "PASS",
+  "canvas_api_real_course_read_only_plan_and_verify": "PASS (curso real de Indoamérica: 0 páginas por crear, 0 marcas pendientes, 1424 enlaces sin problemas)"
 }

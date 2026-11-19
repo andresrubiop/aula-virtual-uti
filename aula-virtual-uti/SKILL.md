@@ -130,7 +130,7 @@ Usa modo guiado cuando no esté disponible la herramienta automática. Si no hay
 
 ## 7. Entregar Canvas
 
-Sigue la referencia Canvas. Usa preferentemente un export del curso de destino; la plantilla incluida sirve de base y no garantiza que la importación evite duplicados. No modifiques el curso remoto durante la preparación local.
+Sigue la referencia Canvas. Usa preferentemente un export del curso de destino; la plantilla incluida sirve de base y no garantiza que la importación evite duplicados. No modifiques el curso remoto durante la preparación local. Si el curso ya tiene la plantilla y el docente quiere que lo actualices tú, usa la vía API (`canvas/canvas_api.py`: comprobar y plan solo leen; aplicar con su conformidad expresa para ese curso). El docente guarda su token en su terminal; nunca lo pidas por el chat. Registra la operación y recomiéndale revocar el token al terminar.
 
 Valida el sílabo, comprueba que la ficha del sílabo siga vigente, genera el aula autónoma, genera el paquete y verifica sus archivos. Completa también la traducción de las páginas y tareas Canvas siguiendo la guía: el generador base redacta su estructura en español; incluir PDF bilingües no traduce esas páginas. Revisa `control/COBERTURA.md` antes de llamar completa a la entrega; comprueba además la traducción de las páginas y tareas exportadas, que la matriz de HTML local no certifica.
 

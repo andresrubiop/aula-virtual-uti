@@ -90,6 +90,10 @@ def main() -> int:
         avisos.append('bibliografia: vacía. La plantilla pide bibliografía básica en APA 7, de preferencia de la Biblioteca Virtual.')
     if not D.get('pis'):
         avisos.append('pis: el sílabo no declara Proyecto Interdisciplinario Socioformativo; las tareas PIS de la plantilla quedan como están.')
+    elif not D.get('pis_ra'):
+        avisos.append('pis_ra: faltan los RA de los demás proyectos formativos del PIS; las tareas PIS mostrarán «Agregar los RA…».')
+    if D.get('pis_ra') and not all(isinstance(x, list) and len(x) == 2 and all(isinstance(y, str) and y.strip() for y in x) for x in D['pis_ra']):
+        errores.append('pis_ra: debe ser una lista de pares [proyecto formativo, resultado de aprendizaje].')
 
     ms = D.get('momentos') or []
     if not ms:

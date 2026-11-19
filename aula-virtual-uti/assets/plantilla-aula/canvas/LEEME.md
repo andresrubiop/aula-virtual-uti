@@ -8,6 +8,17 @@ Revisa el sílabo, las actividades, sus fechas, los puntajes y los materiales. E
 
 Si tu curso ya contiene material, conserva una exportación antes de modificarlo y usa un curso de prueba cuando esté disponible. Para adaptar la plantilla de tu curso, entrega al asistente esa exportación original; la colocará en `canvas/exportado/`. Si no la entregas, se utiliza la plantilla institucional incluida y pueden aparecer páginas duplicadas.
 
+## Otra vía: actualizar el curso por la API (sin importar)
+
+Si tu curso ya tiene la plantilla institucional y no puedes borrar páginas, importar el archivo dejaría páginas duplicadas. En ese caso el asistente puede actualizar el curso directamente: cambia cada página en su lugar, crea solo las que faltan y enlaza los archivos y tareas reales del curso.
+
+1. Crea un token en Canvas: **Cuenta → Configuraciones → Nuevo token de acceso** (ponle fecha de caducidad).
+2. En tu terminal, dentro de la carpeta del aula, guárdalo tú mismo (no se muestra al escribirlo): `python3 canvas/canvas_api.py token`. No lo pegues en el chat.
+3. El asistente ejecuta `comprobar` y `plan` (solo leen) y te muestra qué cambiará. Con tu conformidad ejecuta `aplicar`: antes guarda una copia del curso en `canvas/api/privado/`.
+4. Revisa el curso en **Vista de estudiante**. Cuando termines, **revoca el token** en la misma pantalla de Canvas.
+
+Las tareas nuevas quedan sin publicar; las existentes conservan sus puntos y publicación. Inicio no se reemplaza: solo se le antepone el aula. Las páginas genéricas que el aula sustituye se despublican (no se borran). Los módulos que no vienen en el aula no se tocan.
+
 ## Importar el archivo
 
 1. Entra al curso de destino y abre **Configuración → Importar contenido del curso**.
@@ -38,6 +49,9 @@ El asistente debe preparar primero los archivos, páginas y enlaces de tu curso:
 Guarda una copia de la entrega anterior. Pide al asistente que prepare los archivos actualizados y explique qué páginas o recursos cambian. No supongas que volver a importar evita duplicados o conserva todas las ediciones hechas dentro de Canvas. La [guía de exportación](https://community.instructure.com/en/kb/articles/660734-how-do-i-export-a-canvas-course) explica cómo descargar una copia del contenido del curso; esa exportación no respalda las entregas ni las notas de los estudiantes.
 
 ## Para el asistente
+
+Vía API (`canvas/canvas_api.py`): configura el curso con `configurar --curso <URL>`; el docente guarda el token con `token` (o la variable `CANVAS_TOKEN`); nunca lo pidas por el chat ni lo copies a archivos del aula. Ejecuta `comprobar` y `plan`, explica el plan (páginas que se actualizan, crean y despublican; tareas; marcas pendientes) y aplica solo con la conformidad expresa del docente para ese curso. `aplicar` se niega si quedan marcas que verían los estudiantes; corrígelas en el sílabo o el aula y regenera el paquete. Después ejecuta `verificar` y registra en ESTADO.md (Operaciones externas) el curso, la autorización, el resultado y el respaldo `canvas/api/privado/respaldo-*.json`. Repetir `aplicar` actualiza usando `canvas/api/mapa.json`. Para solo el aula en Inicio: `inicio --aplicar`.
+
 
 Ejecuta `python3 canvas/validar_silabo.py` antes de `python3 canvas/generar_canvas.py`, y después `python3 canvas/verificar_paquete.py`. El esquema detallado y el ejemplo están en `references/silabo.md` y `references/silabo-ejemplo.json` de la skill instalada. Copia el ejemplo a `canvas/silabo.json` solo para una demostración; para un curso real transcribe sus fuentes. No declares una demostración como sílabo aprobado.
 

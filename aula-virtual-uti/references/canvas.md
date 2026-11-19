@@ -51,6 +51,28 @@ Los fragmentos de `pegar/` necesitan `curso.canvas_id` real, las páginas de des
 
 Registra en `ESTADO.md`: comandos y resultados, avisos pendientes, archivo y tamaño de entrega, origen de la plantilla, si el contenido está traducido, si se importó realmente y quién comprobó la vista estudiante. No marques importado por haber generado un ZIP válido.
 
+## Actualizar por la API de Canvas
+
+Cuando el curso ya tiene la plantilla institucional, importar el `.imscc` duplica páginas que el docente quizá no puede borrar. `canvas/canvas_api.py` aplica el mismo paquete por la API de Canvas:
+
+```bash
+python3 canvas/canvas_api.py configurar --curso https://indoamerica.instructure.com/courses/12345
+python3 canvas/canvas_api.py token        # lo ejecuta el DOCENTE en su terminal (entrada oculta)
+python3 canvas/canvas_api.py comprobar    # solo lectura: permisos, conteos de inscritos, inventario → canvas/api/inventario.json
+python3 canvas/canvas_api.py plan         # solo lectura → canvas/api/plan.json
+python3 canvas/canvas_api.py aplicar      # respaldo privado del curso y aplicación; luego verifica
+python3 canvas/canvas_api.py verificar    # solo lectura: enlaces, marcas pendientes, aula en Inicio
+```
+
+- **Emparejamiento:** archivos por carpeta, nombre y tamaño (reutiliza los iguales); páginas por `canvas/api/mapa.json`, URL o título; tareas por mapa o nombre base («Actividad 1 · …» = «Actividad 1»); módulos por mapa, título o «Momento N». Lo que no existe se crea.
+- **Páginas:** al cambiar el título, Canvas puede asignar otra URL y rechazar la antigua en los módulos; la herramienta usa siempre la URL devuelta. Las nuevas se crean sin publicar y toman la publicación del paquete al final. Las del paquete sin publicar y sin uso se despublican y salen de los módulos; no se borran.
+- **Inicio:** no se reemplaza. Solo se antepone (o se renueva) el bloque del aula incrustada.
+- **Tareas:** las nuevas se crean sin publicar; las existentes conservan puntos y publicación. Publicar un módulo publica en Canvas lo que contiene: la herramienta retira los elementos antes de publicarlo y al final devuelve cada tarea a su estado previo (incidencia real observada en el piloto: tareas visibles unos minutos).
+- **Cuestionarios:** se enlazan por título si ya existen en el curso (por ejemplo, la encuesta institucional); no se crean por API.
+- **Bloqueos:** `aplicar` se niega si quedan marcas que verían los estudiantes (`[COMPLETAR…]`, `correo@indoamerica.edu.ec`, «Agregar los RA…», «Copiar pegar del sílabo»), salvo `--permitir-pendientes` con acuerdo del docente. Para los RA de los demás proyectos del PIS, usa `pis_ra` en `canvas/silabo.json`.
+- **Privacidad y registro:** el token se lee de `CANVAS_TOKEN` o `~/.config/aula-uti/canvas-token` (permisos 600), nunca del aula, y no se imprime. Las inscripciones se cuentan por tipo, sin nombres. `canvas/api/operaciones.jsonl` registra método, ruta y estado de cada escritura (sin contenido). El respaldo del curso va a `canvas/api/privado/` (excluido de respaldos, git y entregas).
+- **Alcance probado:** suite con un Canvas ficticio en memoria (URL que cambia al renombrar, módulos que publican su contenido, carga en tres pasos) y un curso real de Indoamérica actualizado con la versión anterior específica del piloto. Esto no certifica otras configuraciones institucionales: revisa siempre en Vista de estudiante.
+
 ## Traducción de páginas y tareas
 
 El asistente ejecuta:

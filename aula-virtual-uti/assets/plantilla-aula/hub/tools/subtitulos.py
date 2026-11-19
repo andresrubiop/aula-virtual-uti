@@ -36,10 +36,18 @@ def transcribir(video: str, modelo: str = 'small.en') -> None:
     if not mp4.exists():
         sys.exit(f'Falta {mp4.relative_to(ROOT)} (el video en inglés descargado, sin portada).')
     try:
+        import numpy as np
         from faster_whisper import WhisperModel
     except ImportError:
-        sys.exit('Falta faster-whisper (transcripción local): python3 -m pip install --user faster-whisper')
-    segs, _ = WhisperModel(modelo, device='auto', compute_type='int8').transcribe(str(mp4), language='en', word_timestamps=True, vad_filter=True)
+        sys.exit('Falta faster-whisper (transcripción local). Con uv: uv run --with faster-whisper python3 hub/tools/subtitulos.py '
+                 f'transcribir {video}; o instálalo en un entorno virtual (python3 -m venv …; pip install faster-whisper).')
+    import subprocess
+    # El audio se extrae con ffmpeg (16 kHz, mono): evita depender de la versión de PyAV que trae faster-whisper
+    pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(mp4), '-f', 's16le', '-ac', '1', '-ar', '16000', '-'],
+                         capture_output=True, check=True).stdout
+    audio = np.frombuffer(pcm, np.int16).astype(np.float32) / 32768.0
+    modelo_w = WhisperModel(modelo, device='cpu', compute_type='int8')   # CPU: funciona en cualquier equipo
+    segs, _ = modelo_w.transcribe(audio, language='en', word_timestamps=True, vad_filter=True)
     words = [[round(w.start, 2), round(w.end, 2), w.word] for s in segs for w in (s.words or [])]
     if not words:
         sys.exit('La transcripción salió vacía: revisa el audio del video.')

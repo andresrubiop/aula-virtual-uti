@@ -119,12 +119,14 @@ def manual(v: str):
 7. Avísale a tu asistente (Claude o Codex): «ya descargué el video {v}».''')
 
 
-def nlm(*args, timeout=900):
+def nlm(*args, timeout=900, texto=False):
     cmd = ['nlm', *args] + (['--profile', PERFIL] if PERFIL else [])
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
     if r.returncode:
         sys.exit('La herramienta nlm falló. Revisa autenticación y cuota con el docente; no se reintenta automáticamente.')
     out = r.stdout.strip()
+    if texto:                               # «nlm download» informa en texto, no en JSON
+        return out
     try:
         i = min(x for x in (out.find('{'), out.find('[')) if x >= 0)
         return json.loads(out[i:])
@@ -201,9 +203,10 @@ def automatico(pedidos):
             st = next((a.get('status') for a in videos(c['nb']) if a['id'] == c[v]), 'missing')
             if st == 'completed':
                 salida(v, lang).parent.mkdir(parents=True, exist_ok=True)
-                nlm('download', 'video', c['nb'], '--id', c[v], '-o', str(salida(v, lang)), '--no-progress', timeout=900)
-                if salida(v, lang).exists():
-                    log(f'{v} ({lang}): descargado → {salida(v, lang).relative_to(ROOT)}')
+                nlm('download', 'video', c['nb'], '--id', c[v], '-o', str(salida(v, lang)), '--no-progress', timeout=900, texto=True)
+                if not salida(v, lang).exists() or salida(v, lang).stat().st_size < 100_000:
+                    sys.exit(f'{v} ({lang}): la descarga no dejó un video válido; revisa el cuaderno y repite solo la descarga.')
+                log(f'{v} ({lang}): descargado → {salida(v, lang).relative_to(ROOT)}')
             elif st == 'missing':
                 sys.exit(f'{v} ({lang}): no se encuentra el video registrado; revisa el cuaderno antes de reintentar.')
             elif st == 'failed':

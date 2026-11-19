@@ -122,6 +122,7 @@ python3 control/panel.py                   # panel de avance del docente → PAN
 python3 control/respaldo.py crear --tipo antes --motivo "…"   # respaldo recuperable → respaldos/ (listar · comparar · restaurar)
 python3 canvas/generar_canvas.py           # paquete de Canvas → canvas/salida/   (--sin-videos · --solo-es)
 python3 canvas/verificar_paquete.py        # el paquete, antes de subirlo
+python3 canvas/canvas_api.py plan          # actualizar un curso existente por la API: plan (solo lee) · aplicar · verificar
 node hub/tools/check.mjs --routes "#/u2/animaciones" --shots     # captura en hub/tools/shots/ para mirar el resultado
 ```
 

@@ -6,6 +6,7 @@ autonomo/
 respaldos/
 canvas/salida/
 canvas/exportado/
+canvas/api/privado/
 videos/bruto/
 videos/**/*.mp4
 videos/**/*.mov
