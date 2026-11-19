@@ -23,7 +23,7 @@
   --surface-3: #E9E3F1;          /* pistas de sliders, chips neutros */
   --ink: #1B1722;                /* texto principal · 17.6:1 */
   --ink-2: #5D5866;              /* texto secundario pequeño · 6.9:1 */
-  --ink-3: #7A7582;              /* solo texto grande o decorativo · 4.5:1 */
+  --ink-3: #6B6674;              /* texto terciario · 5.1:1 sobre --bg y 4.7:1 sobre --surface-2 (WCAG AA) */
   --line: #E2DDEA;
   --line-strong: #C9C1D6;
 
@@ -47,6 +47,7 @@
   /* --- Series de gráficos y animaciones --- */
   --c1: #5E3A91;   /* serie principal (morado de datos) */
   --c2: #EA600A;   /* serie 2 (naranja UTI) */
+  --c2-texto: #B04806;   /* naranja UTI oscurecido para texto pequeño sobre claro · 5.6:1 */
   --c3: #1F6F8B;   /* azul petróleo */
   --c4: #3A7D44;   /* verde */
   --c-neutral: #7A7582;
@@ -133,7 +134,7 @@
     --ok: #5CC28A; --ok-soft: rgba(92, 194, 138, .12);
     --warn: #E0A54A; --warn-soft: rgba(224, 165, 74, .12);
     --err: #F07070; --err-soft: rgba(240, 112, 112, .12);
-    --c1: #B7A3DD; --c2: #F2894A; --c3: #5FB3CE; --c4: #6DBE77; --c-neutral: #A39EAD;
+    --c1: #B7A3DD; --c2: #F2894A; --c2-texto: #F2894A; --c3: #5FB3CE; --c4: #6DBE77; --c-neutral: #A39EAD;
     --plot-bg: #1C1822; --plot-grid: #2B2535; --plot-axis: #8E8899; --plot-text: #C4C0CC; --plot-ink: #EDEAF2;
     --shadow-1: 0 1px 2px rgba(0, 0, 0, .4); --shadow-2: 0 8px 28px rgba(0, 0, 0, .45);
     color-scheme: dark;
@@ -151,7 +152,7 @@
   --ok: #5CC28A; --ok-soft: rgba(92, 194, 138, .12);
   --warn: #E0A54A; --warn-soft: rgba(224, 165, 74, .12);
   --err: #F07070; --err-soft: rgba(240, 112, 112, .12);
-  --c1: #B7A3DD; --c2: #F2894A; --c3: #5FB3CE; --c4: #6DBE77; --c-neutral: #A39EAD;
+  --c1: #B7A3DD; --c2: #F2894A; --c2-texto: #F2894A; --c3: #5FB3CE; --c4: #6DBE77; --c-neutral: #A39EAD;
   --plot-bg: #1C1822; --plot-grid: #2B2535; --plot-axis: #8E8899; --plot-text: #C4C0CC; --plot-ink: #EDEAF2;
   --shadow-1: 0 1px 2px rgba(0, 0, 0, .4); --shadow-2: 0 8px 28px rgba(0, 0, 0, .45);
   color-scheme: dark;

@@ -33,6 +33,7 @@ Aprovecha la información y autorizaciones existentes. Si hay un aula en curso, 
 | Antes de un cambio amplio, tras una aprobación o para volver atrás | [Respaldos por hitos](references/respaldos.md) |
 | Al crear contenidos o animaciones | `AGENTS.md` del aula y [animaciones](references/animaciones.md) |
 | Al preparar videos | [Videos y cuentas educativas](references/videos.md) |
+| Al terminar una unidad y antes de entregar | [Calidad pedagógica y accesibilidad](references/calidad-accesibilidad.md) |
 | Antes de exportar a Canvas | [Canvas](references/canvas.md) y `canvas/LEEME.md` del aula |
 | Para instalar o trasladar la skill | [Instalación](references/instalacion.md) |
 | Para conocer las fuentes de diseño | [Procedencia](references/procedencia.md) |
@@ -93,7 +94,7 @@ Crea una unidad completa con los materiales reales del docente. Mantén el recor
 - Prácticas con propósito, RA, pasos, evidencia, evaluación y uso de IA declarado según la política del sílabo. Diferencia guía original y ampliaciones propuestas.
 - Edición docente separada de la estudiantil. Los materiales distribuidos no incluyen solucionarios reservados, notas ni listas privadas.
 
-Compila, comprueba rutas y animaciones, exporta los PDF de esa unidad y revisa capturas y desbordamientos. Muestra el piloto al docente y aplica su retroalimentación antes de extender el mismo diseño al resto, salvo que ya haya aprobado ese patrón.
+Compila, comprueba rutas y animaciones, exporta los PDF de esa unidad y revisa capturas y desbordamientos. Ejecuta `python3 control/calidad.py --unidad u1` y `node hub/tools/accesibilidad.mjs`, corrige lo que falte y entrega al docente la lista de revisión de `control/CALIDAD.md` (no la marques por él). Muestra el piloto al docente y aplica su retroalimentación antes de extender el mismo diseño al resto, salvo que ya haya aprobado ese patrón.
 
 **Respaldos por hitos.** Antes de un cambio amplio (transformar la plantilla con los documentos reales, rehacer o reorganizar una unidad, cambiar la estructura de `course.json` o del sílabo en datos) ejecuta `python3 control/respaldo.py crear --tipo antes --motivo "…"`. Cuando el docente apruebe una unidad, la planificación o la ficha, registra la evidencia y después crea `crear --tipo aprobado --unidad UN --motivo "…"`. Si el docente quiere volver atrás, muestra primero `comparar` y la vista previa de `restaurar`, y aplica con `--aplicar` solo con su conformidad. Para volver al último resultado revisado usa `restaurar --evidencia ID`. Los documentos de `fuentes/` nunca se restauran y `ESTADO.md` no se reemplaza; anota la restauración en él. Sigue [respaldos](references/respaldos.md).
 

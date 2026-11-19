@@ -6,9 +6,9 @@
 @media print {
   :root, :root[data-theme="dark"] {
     --bg: #FFFFFF; --surface: #FFFFFF; --surface-2: #F3EFF8; --surface-3: #E9E3F1;
-    --ink: #1B1722; --ink-2: #5D5866; --ink-3: #7A7582; --line: #E2DDEA; --line-strong: #C9C1D6;
+    --ink: #1B1722; --ink-2: #5D5866; --ink-3: #6B6674; --line: #E2DDEA; --line-strong: #C9C1D6;
     --accent: #3C235F; --accent-fill: #3C235F; --accent-ink: #FFFFFF; --accent-tint: #E6DDF3;
-    --c1: #5E3A91; --c2: #EA600A; --c3: #1F6F8B; --c4: #3A7D44; --c-neutral: #7A7582;
+    --c1: #5E3A91; --c2: #EA600A; --c3: #1F6F8B; --c4: #3A7D44; --c-neutral: #6B6674;
     color-scheme: light;
   }
   body { background: #FFFFFF; font-size: 10.5pt; }
@@ -26,6 +26,7 @@
   details.fold > .fold__body { display: block; }
   .code { background: #F3EFF8; color: #1B1722; border: 1px solid #E2DDEA; }
   .code__bar { background: #E9E3F1; color: #5D5866; }
+  .code__file { color: #5D5866; }
   .code__copy { display: none; }
   .code--long, .code--long pre { break-inside: auto; }
   .code__bar { break-after: avoid; }

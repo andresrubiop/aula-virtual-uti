@@ -235,7 +235,7 @@ details.fold > .fold__body { padding: 0 1.1rem 1.1rem; border-top: 1px solid var
 .callout--docente .callout__title::before { content: "Para el docente · "; }
 
 /* ---------- Código: nombre del archivo y salidas reales ---------- */
-.code__file { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--ink-2); margin-left: .6rem; }
+.code__file { font-family: var(--font-mono); font-size: var(--fs-xs); color: #C9C1D6; margin-left: .6rem; }   /* sobre la barra oscura del código · 9.4:1 */
 .code__bar .grow { flex: 1; }
 .code--out { background: #100D14; }                 /* salida de terminal: un poco más oscura que el código */
 .code--out .code__bar { color: #F59E62; }
