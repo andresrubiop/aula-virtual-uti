@@ -47,6 +47,10 @@ python3 hub/build.py
 
 **Orden:** `video_cards.py` añade un cierre que dice «revisado por el docente» y el reproductor muestra lo mismo: aplícalo solo después de que el docente vea el video completo, y no subas a Canvas un video sin esa revisión registrada en ESTADO.md. La transcripción se hace en el equipo; el audio no se envía a otro servicio. Si falta `faster-whisper`, ejecútalo con `uv run --with faster-whisper python3 hub/tools/subtitulos.py transcribir V1.1` o en un entorno virtual; descarga el modelo la primera vez. El audio se extrae con ffmpeg. El asistente traduce fielmente, sin resumir ni añadir; corrige en `V1.1.json` las palabras técnicas mal transcritas antes de traducir y respeta la terminología del manual. Los tiempos ya incluyen la portada UTI de 3 s. Revisa con el docente un tramo del video con subtítulos antes de darlo por terminado. Con el aula en español, el reproductor abre el video inglés con subtítulos en español y lo indica bajo el video.
 
+## Estado visible
+
+El panel del docente (`python3 control/panel.py`) muestra cada video con su estado: guion listo, en NotebookLM, descargado, en el aula y subtítulos en español. Después de subtitular ejecuta `python3 control/glosario.py` para revisar que los subtítulos usen los términos del glosario.
+
 ## Cierre
 
 Registra por video idioma, fuentes, revisión docente y archivo final. Mantén los videos no generados como pendientes y entrega los guiones. El HTML autónomo de un solo archivo no transporta MP4; la carpeta `autonomo/paquete/` sí incluye los videos locales existentes. El paquete Canvas puede excluirlos con `--sin-videos` cuando convenga subirlos aparte.

@@ -34,6 +34,7 @@ Aprovecha la información y autorizaciones existentes. Si hay un aula en curso, 
 | Al crear contenidos o animaciones | `AGENTS.md` del aula y [animaciones](references/animaciones.md) |
 | Al preparar videos | [Videos y cuentas educativas](references/videos.md) |
 | Al terminar una unidad y antes de entregar | [Calidad pedagógica y accesibilidad](references/calidad-accesibilidad.md) |
+| Al traducir, subtitular o revisar términos | [Glosario ES/EN](references/glosario.md) |
 | Antes de exportar a Canvas | [Canvas](references/canvas.md) y `canvas/LEEME.md` del aula |
 | Para instalar o trasladar la skill | [Instalación](references/instalacion.md) |
 | Para conocer las fuentes de diseño | [Procedencia](references/procedencia.md) |

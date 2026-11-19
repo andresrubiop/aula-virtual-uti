@@ -252,11 +252,44 @@ def comprobaciones(root):
         out['cobertura'] = {'error': err} if err else {**rep['resumen'], 'hallazgos': rep['hallazgos']}
     else:
         out['cobertura'] = {'no_iniciada': True}
-    out['videos'] = {'archivos': len(archivos(root, 'videos', '*.mp4'))}
+    out['videos'] = estado_videos(root)
     import respaldo
     rep, err = intento(lambda: respaldo.resumen(root))
     out['respaldos'] = {'error': err} if err else rep
     return out
+
+
+def estado_videos(root):
+    """Estado de cada video según sus archivos: guion, pedido a NotebookLM, descargado, en el aula y subtítulos."""
+    guiones = sorted((g for g in archivos(root, 'videos/guiones', 'V*.md')), key=lambda r: [int(x) for x in re.findall(r'\d+', Path(r).stem)])
+    pedidos = {}
+    est = seguro(root, 'videos/estado.json')
+    if est and est.is_file():
+        try:
+            for clave, c in json.loads(est.read_text(encoding='utf-8')).items():
+                for k, v in c.items():
+                    if re.fullmatch(r'V\d+\.\d+', k) and v:
+                        pedidos[(k, clave.split('.')[-1])] = True
+        except (ValueError, AttributeError):
+            pass
+    lista = []
+    for g in guiones:
+        v = Path(g).stem
+        n = v[1:].split('.')[0]
+        idiomas = {}
+        for lang in ('es', 'en'):
+            aula = seguro(root, f'videos/unidad-{n}/{v}.{lang}.mp4')
+            bruto = seguro(root, f'videos/bruto/{v}.{lang}.mp4')
+            idiomas[lang] = ('en el aula' if aula else 'descargado' if bruto else 'en NotebookLM' if pedidos.get((v, lang)) else '')
+        subs = [s for s in ('es', 'en') if seguro(root, f'videos/unidad-{n}/{v}.en.{s}.vtt')]
+        if not idiomas['es'] and not idiomas['en']:
+            estado = 'guion listo'
+        else:
+            estado = ' · '.join(f'{"inglés" if l == "en" else "español"}: {x}' for l, x in (('en', idiomas['en']), ('es', idiomas['es'])) if x)
+            if idiomas['en'] == 'en el aula' and idiomas['es'] != 'en el aula':
+                estado += ' · subtítulos en español' if 'es' in subs else ' · faltan subtítulos en español'
+        lista.append({'video': v, 'estado': estado, 'en_aula': 'en el aula' in estado, 'subtitulos': subs})
+    return {'archivos': len(archivos(root, 'videos', '*.mp4')), 'guiones': len(lista), 'en_aula': sum(x['en_aula'] for x in lista), 'lista': lista}
 
 
 def unidades_curso(root):
@@ -345,6 +378,16 @@ def fecha_corta(m):
     return f + (f' · {m["unidad"]}' if m.get('unidad') else '') + f' · {m.get("motivo", "")}'
 
 
+def videos_html(v):
+    if not v.get('lista'):
+        return (f'<div class="chk idle"><h3>Videos</h3><p>Aún no hay guiones de video ({v.get("archivos", 0)} archivo(s) en videos/). '
+                'Los videos son opcionales.</p></div>')
+    filas = ''.join(f'<tr><th scope="row">{escape(x["video"])}</th><td>{escape(x["estado"])}</td></tr>' for x in v['lista'])
+    clase = 'ok' if v['en_aula'] == v['guiones'] else 'idle'
+    return (f'<div class="chk {clase}"><h3>Videos</h3><p>{v["en_aula"]} de {v["guiones"]} en el aula. La revisión de cada video '
+            'por el docente se anota en ESTADO.md.</p><table class="mini"><tbody>' + filas + '</tbody></table></div>')
+
+
 def vista(d):
     e = escape
     c = d['comprobaciones']
@@ -399,8 +442,7 @@ def vista(d):
                   + (fecha_corta(rs['ultimo_aprobado']) if rs.get('ultimo_aprobado') else 'ninguno todavía') + '.',
                   [f'Evidencia aprobada sin copia guardada: `{x}` (pide un respaldo «aprobado»).' for x in rs.get('aprobadas_sin_copia', [])]
                   + ([f'{rs["dañados"]} respaldo(s) no se pudieron leer: pide «comprueba los respaldos».'] if rs.get('dañados') else [])),
-              f'<div class="chk idle"><h3>Videos</h3><p>{c["videos"]["archivos"]} archivo(s) de video en videos/. Estado de generación: '
-              'operaciones externas en ESTADO.md.</p></div>']
+              videos_html(c['videos'])]
 
     grupos = []
     for g in d['accesos']:
@@ -442,7 +484,7 @@ h2{{margin:0 0 10px;color:var(--morado);font-size:1.15rem}} h3{{margin:0 0 4px;f
 .tag.bloqueo,.tag.fase{{background:var(--err)}} .tag.revision{{background:#9A4A06}}
 .checks{{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}}
 .chk{{border:1px solid var(--linea);border-left:6px solid var(--idle);border-radius:8px;padding:10px 12px}} .chk p{{margin:0}} .chk ul{{margin:6px 0 0;padding-left:18px;font-size:.88rem}}
-.chk.ok{{border-left-color:var(--ok)}} .chk.warn{{border-left-color:var(--warn)}} .chk.err{{border-left-color:var(--err)}}
+table.mini{{margin-top:6px;font-size:.85rem}} table.mini th,table.mini td{{padding:4px 8px}} .chk.ok{{border-left-color:var(--ok)}} .chk.warn{{border-left-color:var(--warn)}} .chk.err{{border-left-color:var(--err)}}
 .accesos{{list-style:none;padding:0;margin:0;display:grid;gap:10px}} .accesos li{{display:grid;grid-template-columns:minmax(190px,260px) 1fr;gap:14px;align-items:start}}
 .btn{{display:block;text-align:center;padding:9px 12px;border-radius:8px;background:var(--morado);color:#fff;text-decoration:none;font-weight:bold;overflow-wrap:anywhere}}
 a.btn:hover{{background:#2B1846}} a.btn:focus-visible{{outline:3px solid var(--naranja);outline-offset:2px}}
