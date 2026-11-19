@@ -10,6 +10,8 @@ Para videos: ffmpeg (portada y cierre UTI) y, solo en modo automático, la herra
 Para leer los documentos del docente: pdftotext (poppler); LibreOffice si hay .doc/.ppt antiguos.
 """
 import json
+from pathlib import Path
+import re
 import platform
 import shutil
 import subprocess
@@ -62,6 +64,9 @@ def main() -> int:
     if '--json' in sys.argv:
         print(json.dumps([dict(que=f[0], ok=f[1], version=f[2], tipo=f[3], para=f[4], instalar=f[5]) for f in filas], ensure_ascii=False, indent=1))
         return 0
+    texto = (Path(__file__).resolve().parents[1] / 'SKILL.md').read_text(encoding='utf-8').split('\n---', 1)[0]
+    m = re.search(r'^\s*version:\s*"?([\w.\-]+)"?\s*$', texto, re.M)
+    print(f'Skill aula-virtual-uti {m[1] if m else "(sin versión)"} · cambios en CAMBIOS.md')
     print(f'Equipo: {SO} {platform.release()}\n')
     for que, ok, ver, tipo, para, como in filas:
         print(f'  {"✓" if ok else "✗"} {que:26s} {ver[:44]:46s} [{tipo}]')

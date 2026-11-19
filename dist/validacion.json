@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "de166df086551f0bfdd3f2f9f6c28685aa9add9dadec4c1d57eeab60f9f02a72",
-  "bytes": 9799992,
+  "sha256": "4a1c9b5ca476a51da9372fa27f6faf5f1c1b44406f529bd2045993daba9cff6b",
+  "bytes": 9805295,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 143,
+    "passed": 148,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,7 +18,7 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejoras 1–7; corrección de respaldos; aula interactiva incrustada a todo el ancho al comienzo de Inicio en Canvas (resto de Inicio intacto; traducción sin duplicarla); videos: por omisión un solo video en inglés con subtítulos en español (transcripción local y traducción del asistente); mejora 8: actualización de Canvas por API (canvas_api.py: comprobar, plan, aplicar, verificar, inicio), pis_ra, perfil docente sin teléfono ni ORCID ajeno, transcripción local de subtítulos; mejora 10: calidad pedagógica por unidad (control/calidad.py) y accesibilidad automática (hub/tools/accesibilidad.mjs), contraste AA corregido en la plantilla; mejora 11: glosario ES/EN con revisión terminológica (aula, cuestionarios, course.json, Canvas y subtítulos) y estado de cada video en el panel",
+  "scope": "Mejoras 1–7; corrección de respaldos; aula interactiva incrustada a todo el ancho al comienzo de Inicio en Canvas (resto de Inicio intacto; traducción sin duplicarla); videos: por omisión un solo video en inglés con subtítulos en español (transcripción local y traducción del asistente); mejora 8: actualización de Canvas por API (canvas_api.py: comprobar, plan, aplicar, verificar, inicio), pis_ra, perfil docente sin teléfono ni ORCID ajeno, transcripción local de subtítulos; mejora 10: calidad pedagógica por unidad (control/calidad.py) y accesibilidad automática (hub/tools/accesibilidad.mjs), contraste AA corregido en la plantilla; mejora 11: glosario ES/EN con revisión terminológica (aula, cuestionarios, course.json, Canvas y subtítulos) y estado de cada video en el panel; mejora 12: versión identificable (SKILL.md, CAMBIOS.md, entorno.py, control/VERSION_SKILL), guía de una sola fuente con PDF comprobado y scripts/actualizar_aula.py",
   "source_matches_package": "PASS",
   "state_verifier_new_and_existing_classroom": "PASS",
   "state_decisions_preserved": "PASS",
@@ -74,5 +74,8 @@
   "accessibility_template_errors": 0,
   "pedagogical_quality_checks": "PASS",
   "glossary_consistency": "PASS",
-  "panel_video_state": "PASS"
+  "panel_video_state": "PASS",
+  "version": "0.12.0",
+  "guide_single_source": "PASS",
+  "update_existing_classroom": "PASS"
 }

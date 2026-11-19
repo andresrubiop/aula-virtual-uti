@@ -93,7 +93,9 @@ La implementación se probó en Linux. Estas instrucciones contemplan macOS y Wi
 | Claude Code | `MiAula-B26/.claude/skills/aula-virtual-uti/SKILL.md` |
 | Codex | `MiAula-B26/.agents/skills/aula-virtual-uti/SKILL.md` |
 
-Puedes instalar ambas copias si vas a alternar. Actualízalas juntas cuando descargues otra versión. Las carpetas que comienzan con punto pueden estar ocultas: Linux suele mostrarlas con `Ctrl+H`, macOS con `Cmd+Shift+.`. En Windows puedes crearlas desde PowerShell con `New-Item -ItemType Directory -Force .claude/skills` o `.agents/skills`, estando dentro de `MiAula-B26`.
+Puedes instalar ambas copias si vas a alternar. Las carpetas que comienzan con punto pueden estar ocultas: Linux suele mostrarlas con `Ctrl+H`, macOS con `Cmd+Shift+.`. En Windows puedes crearlas desde PowerShell con `New-Item -ItemType Directory -Force .claude/skills` o `.agents/skills`, estando dentro de `MiAula-B26`.
+
+**Actualizar a una versión nueva.** La versión instalada está en `SKILL.md` (`version`) y los cambios, en [CAMBIOS.md](aula-virtual-uti/CAMBIOS.md). Guarda una copia de la carpeta anterior, reemplaza la carpeta completa en las dos ubicaciones y reinicia el asistente. Tus aulas no se recrean: pide «actualiza las herramientas de mi aula a la versión instalada»; el asistente te muestra antes qué cambia y guarda copia de lo reemplazado.
 
 No anides dos veces `aula-virtual-uti`. Si descargaste **Code → Download ZIP**, entra primero en la carpeta del repositorio y busca dentro la carpeta de la skill.
 

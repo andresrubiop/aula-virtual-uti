@@ -33,6 +33,13 @@ def slug(s: str) -> str:
     return re.sub(r'[^a-z0-9]+', '-', s).strip('-')
 
 
+def version_skill():
+    """metadata.version de SKILL.md (también la muestran entorno.py y actualizar_aula.py)."""
+    texto = (Path(__file__).resolve().parents[1] / 'SKILL.md').read_text(encoding='utf-8').split('\n---', 1)[0]
+    m = re.search(r'^\s*version:\s*"?([\w.\-]+)"?\s*$', texto, re.M)
+    return m[1] if m else 'sin versión'
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('destino')
@@ -72,7 +79,9 @@ def main() -> int:
         p = dst / f
         if p.exists():
             p.write_text(p.read_text(encoding='utf-8').replace('{{NOMBRE}}', a.nombre).replace('{{CLAVE}}', clave)
-                         .replace('{{PERIODO}}', a.periodo or '[COMPLETAR]'), encoding='utf-8')
+                         .replace('{{PERIODO}}', a.periodo or '[COMPLETAR]').replace('{{VERSION_SKILL}}', version_skill()), encoding='utf-8')
+    (dst / 'control').mkdir(exist_ok=True)
+    (dst / 'control' / 'VERSION_SKILL').write_text(version_skill() + '\n', encoding='utf-8')   # para actualizar_aula.py
 
     print(f'Aula creada en {dst}')
     print(f'  clave: {clave} · archivo para Canvas: {course["archivo"]}.html')

@@ -54,7 +54,7 @@ Actualizar este bloque en cada hito y antes de cerrar. Al retomar, leer este arc
 
 ## 6. Bitácora
 
-- [fecha] · [agente] · Proyecto creado desde la plantilla de la skill `aula-virtual-uti`.
+- [fecha] · [agente] · Proyecto creado desde la plantilla de la skill `aula-virtual-uti` {{VERSION_SKILL}}.
 
 ## 7. Verificaciones y archivos modificados
 

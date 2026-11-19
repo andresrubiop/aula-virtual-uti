@@ -4,6 +4,8 @@ Skill para Claude y Codex que acompaña a docentes de la Universidad Tecnológic
 
 Autor: **Andrès Rubio Proaño** · [@andresrubiop](https://github.com/andresrubiop).
 
+**Versión 0.12.0** · [cambios](aula-virtual-uti/CAMBIOS.md) · [descargar la skill](dist/aula-virtual-uti.skill). Para actualizar una instalación y tus aulas, consulta la sección 3 de la guía.
+
 ## Empieza aquí
 
 **[Guía del profesor en PDF](GUIA_DE_USO.pdf)** · **[Leer la guía completa](GUIA_DE_USO.md)**

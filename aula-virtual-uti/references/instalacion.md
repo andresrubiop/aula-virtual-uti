@@ -12,6 +12,8 @@ Copia la carpeta completa dentro de `.claude/skills/` para Claude Code y dentro 
 
 En este proyecto de desarrollo ambas rutas pueden ser enlaces simbólicos a la carpeta fuente para evitar versiones divergentes. En equipos Windows sin soporte de enlaces, usa copias completas. La creación y las pruebas se verificaron en Linux; macOS y Windows requieren comprobar las dependencias con `scripts/entorno.py`.
 
+**Actualizar.** La versión instalada está en `SKILL.md` (`metadata.version`) y en la primera línea de `python3 scripts/entorno.py`; los cambios, en [CAMBIOS.md](../CAMBIOS.md). Conserva una copia de la carpeta anterior y reemplaza la carpeta completa en `.claude/skills/` y `.agents/skills/`. Las aulas existentes no se recrean: `python3 <skill>/scripts/actualizar_aula.py <aula>` muestra qué herramientas cambian; con `--aplicar` guarda copia de lo reemplazado en `respaldos/actualizacion-<fecha>/` y anota la versión en `control/VERSION_SKILL`. El contenido del aula nunca se toca, y el motor (estilos y componentes) solo con `--incluir-motor`.
+
 Reinicia o vuelve a abrir la sesión para que descubra la skill. Si no aparece, indica explícitamente al asistente que lea `<ruta>/aula-virtual-uti/SKILL.md`; todas las instrucciones y herramientas funcionan también por esa vía.
 
 ## Primer mensaje del docente
