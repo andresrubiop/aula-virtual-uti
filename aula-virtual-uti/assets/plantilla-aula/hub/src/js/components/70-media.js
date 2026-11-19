@@ -50,7 +50,8 @@
     });
     // Un solo idioma: aviso en los demás (el texto del idioma del video queda vacío)
     if (nodes.length === 1 && !langs.en) nodes.push(h('p', { class: 'muted video-lang-note', html: I.html(L('', 'Video available in Spanish only.')) }));
-    if (nodes.length === 1 && langs.en && !langs.es) nodes.push(h('p', { class: 'muted video-lang-note', html: I.html(L('Video disponible solo en inglés.', '',
+    const subEs = langs.en && (typeof langs.en.subtitulos === 'object' ? langs.en.subtitulos.es : false);
+    if (nodes.length === 1 && langs.en && !langs.es) nodes.push(h('p', { class: 'muted video-lang-note', html: I.html(L(subEs ? 'Video en inglés con subtítulos en español.' : 'Video disponible solo en inglés.', '',
       { fr: 'Vidéo disponible en anglais uniquement.', ca: 'Vídeo disponible només en anglès.', ja: '動画は英語版のみです。' })) }));
     const box = h('div', { class: 'video-box' }, nodes);
     poster.replaceWith(box);

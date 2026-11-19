@@ -6,6 +6,8 @@ La implementación usa NotebookLM mediante la herramienta `nlm`, o acompaña al 
 
 Al iniciar el aula, pregunta si el docente dispone de una cuenta de NotebookLM y desea usarla para los videos, salvo que ya lo haya respondido. Ofrece cuenta institucional con acceso, otra cuenta propia o seguir sin videos. Registra la preferencia y acompaña el inicio de sesión directo cuando corresponda; no solicites secretos ni hagas obligatorio proporcionar el correo. Antes de subir fuentes o generar, concreta perfil, cuaderno, archivos y videos/idiomas y comprueba la autorización del docente.
 
+**Idioma por defecto:** un solo video por guion, **en inglés**, con **subtítulos en español** hechos después. Ahorra cuota (una generación por video, no dos) y conserva el aula bilingüe. Genera también audio en español solo si el docente lo pide expresamente (`--idiomas es,en`) y regístralo como decisión.
+
 1. Completa manual y práctica ES/EN, exporta sus PDF y escribe `videos/guiones/V#.#.md`, con título ES | EN y apartados `## prompt es` y `## prompt en`.
 2. Revisa las fuentes que se van a subir: solo guía de producción y PDF de la unidad. No incluyas el directorio de documentos originales, datos personales o edición docente.
 3. `python3 videos/generar_videos.py --lista` muestra lo que existe.
@@ -15,7 +17,7 @@ Al iniciar el aula, pregunta si el docente dispone de una cuenta de NotebookLM y
 
 El docente entra en su cuenta institucional, crea un cuaderno con esas fuentes, abre Studio y el resumen de video, elige idioma y personalización, y genera. La ubicación de controles puede variar. No prometas tiempo fijo: Google advierte que puede superar 30 minutos. Revisa el resultado completo porque puede contener errores. [Guía oficial de videos](https://support.google.com/gemininotebook/answer/16454555?hl=en).
 
-Descarga a `videos/bruto/V1.1.es.mp4` y `V1.1.en.mp4`. El asistente procesa la identidad visual con `python3 hub/tools/video_cards.py videos/bruto/V1.1.es.mp4`, repite en EN y recompila. El prompt de color no garantiza fidelidad visual; las portadas UTI y la revisión siguen siendo necesarias.
+Descarga a `videos/bruto/V1.1.en.mp4`. El asistente procesa la identidad visual con `python3 hub/tools/video_cards.py videos/bruto/V1.1.en.mp4` y recompila. El prompt de color no garantiza fidelidad visual; las portadas UTI y la revisión siguen siendo necesarias.
 
 ## Modo automático opcional
 
@@ -25,10 +27,25 @@ El docente inicia sesión por el mecanismo de la CLI en su equipo. Nunca le pida
 
 ```bash
 nlm login --profile uti
-python3 videos/generar_videos.py V1.1 --perfil uti --idiomas es,en --una-vez
+python3 videos/generar_videos.py V1.1 --perfil uti --una-vez     # solo inglés (por omisión)
 ```
 
 El estado local está en `videos/estado.json`. Revisa el cuaderno antes de repetir una solicitud que haya quedado en estado incierto: podría seguir generándose y un reintento crearía otro video. Si hay fallo de autenticación, cuota o respuesta inesperada, detén los intentos y usa modo guiado; no prometas acceso ilimitado ni cambies a una cuenta ajena.
+
+## Subtítulos en español
+
+Después de descargar y revisar el video inglés:
+
+```bash
+python3 hub/tools/subtitulos.py transcribir V1.1     # audio inglés → frases con tiempos (local, faster-whisper)
+python3 hub/tools/subtitulos.py ver V1.1             # «N|texto» para traducir
+# el asistente escribe videos/subtitulos/V1.1.es.txt: una línea «N|traducción» por frase, misma numeración
+python3 hub/tools/video_cards.py videos/bruto/V1.1.en.mp4
+python3 hub/tools/subtitulos.py vtt V1.1             # V1.1.en.es.vtt, V1.1.en.en.vtt y V1.1.en.subs.js
+python3 hub/build.py
+```
+
+La transcripción se hace en el equipo; el audio no se envía a otro servicio. Si falta `faster-whisper`, la herramienta indica cómo instalarlo (`python3 -m pip install --user faster-whisper`; descarga el modelo la primera vez). El asistente traduce fielmente, sin resumir ni añadir; corrige en `V1.1.json` las palabras técnicas mal transcritas antes de traducir y respeta la terminología del manual. Los tiempos ya incluyen la portada UTI de 3 s. Revisa con el docente un tramo del video con subtítulos antes de darlo por terminado. Con el aula en español, el reproductor abre el video inglés con subtítulos en español y lo indica bajo el video.
 
 ## Cierre
 

@@ -4,7 +4,8 @@
     python3 videos/generar_videos.py --lista            qué videos hay, en qué idioma y su estado
     python3 videos/generar_videos.py --manual V1.1      instrucciones paso a paso para hacerlo en la web (sin instalar nada)
     python3 videos/generar_videos.py V1.1 [V1.2 …]      modo automático con la herramienta «nlm» (todos si no se indica)
-        --idiomas es,en    idiomas a generar (por omisión los dos)
+        --idiomas en       idiomas a generar. Por omisión solo inglés: el español llega como subtítulos
+                           (hub/tools/subtitulos.py). --idiomas es,en solo si el docente pide también audio en español
         --perfil uti       perfil de nlm con la cuenta institucional (nlm login --profile uti)
         --una-vez          un solo ciclo (lanza o descarga lo que toque) en lugar de esperar a que terminen
 
@@ -32,7 +33,7 @@ STATE = AQUI / 'estado.json'
 COURSE = json.loads((ROOT / 'hub/src/course.json').read_text(encoding='utf-8'))
 ARGS = sys.argv[1:]
 PERFIL = ARGS[ARGS.index('--perfil') + 1] if '--perfil' in ARGS else ''
-IDIOMAS = (ARGS[ARGS.index('--idiomas') + 1] if '--idiomas' in ARGS else 'es,en').split(',')
+IDIOMAS = (ARGS[ARGS.index('--idiomas') + 1] if '--idiomas' in ARGS else 'en').split(',')   # español: subtítulos
 # Estilo visual único para toda la serie: colores de la UTI, sin personas ni marcas
 ESTILO = ('Clean, modern academic explainer. Flat vector diagrams and simple charts on a white or very light background. '
           'Deep purple #3C235F for titles and main shapes, orange #EA600A only for highlights, soft grey for secondary elements. '
@@ -87,6 +88,10 @@ def lista():
         est = []
         for lang in ('es', 'en'):
             listo = (AQUI / f'unidad-{n}' / f'{v}.{lang}.mp4').exists()
+            if lang == 'es' and not listo and not salida(v, 'es').exists():   # sin audio en español: subtítulos del video inglés
+                sub = (AQUI / f'unidad-{n}' / f'{v}.en.es.vtt').exists()
+                est.append('es: ' + ('subtítulos listos' if sub else 'subtítulos pendientes'))
+                continue
             est.append(f'{lang}: ' + ('en el aula' if listo else 'descargado' if salida(v, lang).exists() else 'sin guion' if not g[lang]['prompt'] else 'pendiente'))
         print(f'{v} · {g["es"]["titulo"]} · ' + ' · '.join(est))
 

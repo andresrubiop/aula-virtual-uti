@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-19 · Videos: por omisión se genera un solo video por guion, en inglés, y el español llega como subtítulos (`hub/tools/subtitulos.py transcribir` en el equipo con faster-whisper, traducción fiel del asistente y `vtt`). El reproductor indica «Video en inglés con subtítulos en español». Audio en español solo a pedido (`--idiomas es,en`). 123/123 regresiones PASS; la generación real con NotebookLM está en prueba en un curso piloto.
+
 2026-11-18 · Canvas: la página Inicio lleva el aula interactiva incrustada a todo el ancho al comienzo (85 % de la pantalla, mínimo 640 px), con botones para abrirla, ver cómo usarla y descargarla; el contenido institucional de Inicio sigue intacto debajo. La traducción bilingüe no duplica el aula. Comprobado en un curso real de Canvas (el aula carga dentro de la página de inicio). 119/119 regresiones PASS.
 
 2026-11-13 · Versión pública de Andrès Rubio Proaño; ampliación de guía docente y continuidad por fases.

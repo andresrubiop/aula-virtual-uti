@@ -10,6 +10,9 @@ script: el reproductor del aula lo carga con <script>, que funciona también abr
 otro origen, como la plantilla de GitHub Classroom; Chrome no carga <track> en esos casos). hub/tools/videos.py los
 registra en videos/videos.js y el reproductor ofrece todos los idiomas (por omisión, el del idioma activo del aula).
 
+  python3 hub/tools/subtitulos.py transcribir V3.1 [--modelo small.en]
+        transcribe videos/bruto/V3.1.en.mp4 en el equipo (faster-whisper; nada sale a la nube) con tiempos por palabra
+        → videos/subtitulos/V3.1.palabras.json, y crea V3.1.json como «frases»
   python3 hub/tools/subtitulos.py frases V3.1 palabras.json [--silencio 210.4-212.5,…]
         crea V3.1.json a partir de la transcripción con tiempos por palabra (faster-whisper, sobre el MP4 de
         videos/bruto/, sin portada): suma los 3 s de la portada y descarta lo que cae en los tramos silenciados
@@ -26,6 +29,25 @@ SUB = ROOT / 'videos' / 'subtitulos'
 PORTADA = 3.0                       # hub/tools/video_cards.py: portada de 3 s antes del video
 LANGS = ('en', 'es', 'fr', 'ca', 'ja')
 MAX = 84                            # caracteres por frase (dos líneas de ~42)
+
+
+def transcribir(video: str, modelo: str = 'small.en') -> None:
+    mp4 = ROOT / 'videos' / 'bruto' / f'{video}.en.mp4'
+    if not mp4.exists():
+        sys.exit(f'Falta {mp4.relative_to(ROOT)} (el video en inglés descargado, sin portada).')
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError:
+        sys.exit('Falta faster-whisper (transcripción local): python3 -m pip install --user faster-whisper')
+    segs, _ = WhisperModel(modelo, device='auto', compute_type='int8').transcribe(str(mp4), language='en', word_timestamps=True, vad_filter=True)
+    words = [[round(w.start, 2), round(w.end, 2), w.word] for s in segs for w in (s.words or [])]
+    if not words:
+        sys.exit('La transcripción salió vacía: revisa el audio del video.')
+    SUB.mkdir(parents=True, exist_ok=True)
+    out = SUB / f'{video}.palabras.json'
+    out.write_text(json.dumps(words) + '\n')
+    print(f'  → videos/subtitulos/{out.name} ({len(words)} palabras)')
+    frases(video, str(out))
 
 
 def frases(video: str, palabras: str, silencio: str = '') -> None:
@@ -95,7 +117,7 @@ def textos(video: str, lang: str):
 def vtt(videos) -> None:
     hechos = 0
     for video in videos:
-        unidad = ROOT / 'videos' / f'unidad-{video[1]}'
+        unidad = ROOT / 'videos' / f'unidad-{video[1:].split(".")[0]}'
         todos = {}
         for lang in LANGS:
             cues, txt = textos(video, lang)
@@ -118,7 +140,9 @@ def main() -> int:
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     cmd = sys.argv[1]
-    if cmd == 'frases':
+    if cmd == 'transcribir':
+        transcribir(sys.argv[2], sys.argv[sys.argv.index('--modelo') + 1] if '--modelo' in sys.argv else 'small.en')
+    elif cmd == 'frases':
         sil = sys.argv[sys.argv.index('--silencio') + 1] if '--silencio' in sys.argv else ''
         frases(sys.argv[2], sys.argv[3], sil)
     elif cmd == 'vtt':

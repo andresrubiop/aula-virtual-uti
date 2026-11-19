@@ -122,7 +122,7 @@ Inspecciona una captura representativa en ambos idiomas, el modo oscuro y un anc
 
 ## 6. Videos con la cuenta del docente
 
-Prepara guiones y fuentes ES/EN primero. Consulta la guía de videos. La cuenta de Gemini no garantiza acceso, cuota ni permiso de NotebookLM. Presenta qué fuentes se subirán y comprueba autorización antes de enviarlas. El docente inicia sesión; no solicites contraseñas ni copies cookies.
+Prepara guiones y fuentes ES/EN primero. Consulta la guía de videos. Por defecto cada video se genera una vez, en inglés, y el español llega como subtítulos (transcripción local y traducción del asistente); audio en español solo si el docente lo pide. La cuenta de Gemini no garantiza acceso, cuota ni permiso de NotebookLM. Presenta qué fuentes se subirán y comprueba autorización antes de enviarlas. El docente inicia sesión; no solicites contraseñas ni copies cookies.
 
 Retoma la preferencia sobre NotebookLM registrada al inicio. Si todavía falta, pregunta por disponibilidad de una cuenta propia y deseo de generar videos. Concreta cuenta/perfil elegido, cuaderno de destino, lista de archivos y videos/idiomas antes de solicitar autorización de envío/generación. Conserva solo el alias del perfil y estado necesario para retomar, nunca credenciales. No repitas preguntas ya respondidas.
 

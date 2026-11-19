@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "d117f81e55f9fa020f57f1b8869be3ab9f2b72dadd0fbe3cbb86cd09e895f8c0",
-  "bytes": 9764141,
+  "sha256": "47d8dfc7073bd6d5a7360ea931aa324b0786317542053b55c718347381b92483",
+  "bytes": 9765867,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 119,
+    "passed": 123,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -18,7 +18,7 @@
     "pptx_order_and_notes",
     "guide_name_collision"
   ],
-  "scope": "Mejoras 1–7; corrección de respaldos; aula interactiva incrustada a todo el ancho al comienzo de Inicio en Canvas (resto de Inicio intacto; traducción sin duplicarla)",
+  "scope": "Mejoras 1–7; corrección de respaldos; aula interactiva incrustada a todo el ancho al comienzo de Inicio en Canvas (resto de Inicio intacto; traducción sin duplicarla); videos: por omisión un solo video en inglés con subtítulos en español (transcripción local y traducción del asistente)",
   "source_matches_package": "PASS",
   "state_verifier_new_and_existing_classroom": "PASS",
   "state_decisions_preserved": "PASS",
@@ -67,5 +67,6 @@
   "backup_damaged_copy_repaired_on_create": "PASS",
   "backup_destination_conflict_no_changes": "PASS",
   "backup_midway_failure_rolled_back": "PASS",
-  "canvas_home_embeds_classroom": "PASS"
+  "canvas_home_embeds_classroom": "PASS",
+  "videos_english_with_spanish_subtitles": "PASS"
 }
