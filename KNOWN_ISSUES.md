@@ -1,6 +1,6 @@
 # Problemas conocidos y correcciones
 
-Actualizado el 2026-11-20 para la versión 0.13.0 (historial en [CAMBIOS.md](aula-virtual-uti/CAMBIOS.md)). La mejora 1 corrige los tres defectos reproducidos en la revisión inicial:
+Actualizado el 2026-11-20 para la versión 0.14.0 (historial en [CAMBIOS.md](aula-virtual-uti/CAMBIOS.md)). La mejora 1 corrige los tres defectos reproducidos en la revisión inicial:
 
 1. **Caché de extracción:** `scripts/fuentes.py` reconstruye `fuentes/_texto/` y el inventario. Retira textos de archivos borrados, movidos a privado o que ya no se pueden extraer. La caché es una salida regenerable; conserva las anotaciones en otro archivo. Los originales no se modifican.
 2. **Orden y notas de PowerPoint:** utiliza `ppt/presentation.xml` y sus relaciones para el orden; cada diapositiva resuelve sus notas mediante relaciones. Los archivos huérfanos no se presentan como diapositivas del curso. Una presentación sin relaciones válidas produce un aviso de extracción fallida, sin inventar su orden.
@@ -33,3 +33,7 @@ Corregido el 2026-11-18 (detectado en una revisión independiente): un respaldo 
 **Versiones y actualización (mejora 12).** `scripts/actualizar_aula.py` reemplaza herramientas completas; si un aula modificó una herramienta, el cambio se pierde (queda copia en `respaldos/actualizacion-<fecha>/`). El motor (estilos y componentes) solo se actualiza con `--incluir-motor`. Las aulas creadas antes de 0.12.0 no tienen `control/VERSION_SKILL` y figuran como «anteriores».
 
 **Licencia.** CC BY 4.0 para la obra del autor; los logos y la plantilla Canvas de la Universidad Tecnológica Indoamérica, KaTeX (MIT) y las fuentes Poppins y JetBrains Mono (SIL OFL 1.1) conservan sus condiciones. Ver [LICENCIA.md](aula-virtual-uti/LICENCIA.md).
+
+**GitHub obligatorio (0.14.0).** El docente necesita Git, una cuenta de GitHub y la sesión iniciada en GitHub CLI; la skill no crea cuentas ni maneja contraseñas. `control/repositorio.py guardar` revisa nombres y contenido de lo que se sube (privados, tokens, archivos de más de 50 MB), pero no reconoce todos los datos personales posibles: el repositorio debe ser **privado** y `fuentes/privado/` sigue siendo el lugar para lo que no debe salir del equipo. No resuelve conflictos entre dos equipos; trabaja en uno o descarga antes de cambiar.
+
+**Animaciones obligatorias (0.14.0).** Se exige al menos una animación por sesión del sílabo, declarada con `"sesion"` en `course.json`, hecha y presente en la presentación. La comprobación verifica que existan y estén incrustadas, y la vara de calidad (escenas, controles, «Qué observar») como aviso; no juzga si la animación calcula lo correcto: eso lo revisa el docente. Las aulas creadas antes de 0.14.0 deben añadir `"sesion"` a sus animaciones y crear las que falten antes de generar la entrega de Canvas (`--borrador` permite revisar mientras tanto).

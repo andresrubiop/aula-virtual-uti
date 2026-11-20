@@ -78,6 +78,8 @@ Abre Codex con `codex` desde tu carpeta de trabajo y elige el inicio de sesión 
 
 El asistente comprobará Python 3.10 o posterior, Node 22 o posterior y Chrome/Chromium para las comprobaciones y PDF. Si falta Python, usa [python.org](https://www.python.org/downloads/) o el gestor habitual de tu sistema. En Windows comprueba con `py -3 --version`; en Linux/macOS, con `python3 --version`. El asistente adaptará los comandos al ejecutable disponible. La extracción de PDF y los videos pueden necesitar herramientas adicionales; instala solo las que se vayan a usar.
 
+**Git y GitHub son obligatorios:** tu aula se guarda en un repositorio **privado** de tu cuenta. Instala [Git](https://git-scm.com/downloads) y [GitHub CLI](https://cli.github.com), crea tu cuenta gratis en [github.com](https://github.com/signup) (mejor con tu correo institucional) e inicia sesión tú mismo con `gh auth login`. El asistente nunca te pedirá la contraseña.
+
 La implementación se probó en Linux. Estas instrucciones contemplan macOS y Windows, pero el asistente debe comprobar compilación, rutas y PDF en tu equipo antes de declararlos validados. Si usas WSL en Windows, abre el asistente y mantén los archivos y dependencias en ese mismo entorno.
 
 ## 3. Descargar y cargar la skill
@@ -120,7 +122,7 @@ codex
 
 Acepta el acceso a la carpeta del proyecto que has elegido. En Claude Code puedes invocar `/aula-virtual-uti`. En Codex puedes mencionar `$aula-virtual-uti` en el mensaje; la petición en lenguaje natural de abajo también identifica la skill. Escribe el mensaje **dentro del asistente**, no como comando del sistema.
 
-> Usa la skill aula-virtual-uti instalada en esta carpeta. Quiero crear el aula de [materia], período [período]. Lee insumos/ y requisitos-del-aula.md si existe. El sílabo vigente está en insumos/silabo-vigente/; revisa también las guías y documentos complementarios. Crea el producto en la subcarpeta nueva aula/. Conserva estructura y stack FSO, presentaciones HTML embebidas y contenidos ES/EN. Trabaja por fases: hoy verifica el entorno, inventaría los insumos y señala dudas. Registra avances y el próximo paso en aula/ESTADO.md cuando crees el aula; antes usa un estado provisional en esta carpeta. Pregúntame por el PIS, NotebookLM y la API de Canvas, y prepara después una unidad piloto para mi revisión. No subas fuentes ni publiques el curso hasta que revisemos la operación concreta.
+> Usa la skill aula-virtual-uti instalada en esta carpeta. Quiero crear el aula de [materia], período [período]. Lee insumos/ y requisitos-del-aula.md si existe. El sílabo vigente está en insumos/silabo-vigente/; revisa también las guías y documentos complementarios. Crea el producto en la subcarpeta nueva aula/. Trabaja por fases: hoy verifica el entorno, inventaría los insumos y señala dudas. Registra avances y el próximo paso en aula/ESTADO.md cuando crees el aula; antes usa un estado provisional en esta carpeta. Conecta el aula a mi GitHub. Pregúntame por el PIS, NotebookLM y la API de Canvas, y prepara después una unidad piloto para mi revisión. No subas fuentes ni publiques el curso hasta que revisemos la operación concreta.
 
 Si no reconoce la skill, indica: «Lee `.claude/skills/aula-virtual-uti/SKILL.md` y sigue sus instrucciones» o la ruta equivalente `.agents/skills/...`.
 
@@ -136,7 +138,7 @@ No es necesario terminar todo en una conversación. El siguiente orden permite r
 | 1. Insumos | Inventario, versiones, guías incluidas y faltantes. | Documento vigente y dudas. |
 | 2. Sílabo | Transcripción y ficha con la página de cada dato. | Ficha del sílabo. |
 | 3. Planificación | Mapa de unidades y matriz de cobertura del sílabo. | RA, temas y prácticas previstos. |
-| 4. Piloto | Una unidad completa HTML ES/EN. | Diseño, contenido y práctica. |
+| 4. Piloto | Una unidad completa HTML ES/EN, con una animación por temática. | Diseño, contenido, práctica y animaciones. |
 | 5. Desarrollo | Completa las unidades con el patrón aprobado. | Avances por unidad. |
 | 6. Verificación | Aula local, presentación, PDF y carpeta portátil. | Recorrido y materiales. |
 | 7. Videos opcionales | Fuentes, guiones, generación y montaje. | Fuentes a enviar y resultado. |
@@ -151,7 +153,7 @@ Si cambias un material, pide: «Analiza el impacto y actualiza solo lo necesario
 
 Antes de cerrar escribe:
 
-> Guarda el avance en aula/ESTADO.md: qué completaste, qué falta, decisiones, pruebas realizadas, trabajo en curso y el primer paso concreto para continuar mañana. No marques como terminado lo que todavía no revisamos.
+> Guarda el avance en aula/ESTADO.md: qué completaste, qué falta, decisiones, pruebas realizadas, trabajo en curso y el primer paso concreto para continuar mañana, y súbelo a mi repositorio de GitHub. No marques como terminado lo que todavía no revisamos.
 
 Al día siguiente, abre de nuevo **MiAula-B26**, ejecuta `claude` o `codex` y escribe:
 
@@ -239,4 +241,4 @@ Publica solo los elementos aprobados y comunica al asistente el resultado. Píde
 | Canvas rechaza el token | Pudo caducar o ser revocado: crea otro y pégalo de nuevo en el chat. |
 | La skill se actualizó | Pide «actualiza las herramientas de mi aula a la versión instalada» (sección 3). |
 
-Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.13.0 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).
+Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.14.0 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).

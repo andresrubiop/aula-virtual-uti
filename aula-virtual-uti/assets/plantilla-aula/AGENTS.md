@@ -77,6 +77,8 @@ API completa en la cabecera de `hub/src/js/components/10-stage.js`; modelo míni
 })();
 ```
 
+**Obligatorio:** al menos una animación por temática (sesión del sílabo), declarada en `course.json` con `"sesion": N` e incrustada en la presentación de la unidad.
+
 **Vara de calidad** (para dar una animación por terminada): 4–8 escenas, cada una con una nota que explica lo que se ve con los valores reales del estado (es lo que lee el recorrido guiado); cálculo o simulación real (con `Hub.rng(semilla)` si hay azar); 2–6 métricas en vivo; ≥ 2 controles que rehacen el cálculo; «Qué observar»; enlaces Teoría ↔ Práctica; colores solo de `api.c`; textos en los dos idiomas; cifras con `Hub.i18n.num(x, d, idioma)`, nunca `toFixed` a secas. Funciona en claro, oscuro, dentro de una diapositiva (`data-compact`), en móvil y a pantalla completa.
 En una presentación: `<div class="anim" data-anim="A2.1" data-compact data-aspect="2.85" data-print="2:4"></div>` (`data-print="escena:segundos"` es la foto que sale en el PDF; elígela con `node hub/tools/anim-shots.mjs A2.1 --slide --scenes all`).
 
@@ -123,6 +125,7 @@ python3 control/calidad.py                 # piezas del modelo socioformativo po
 node hub/tools/accesibilidad.mjs           # contraste, alternativas, nombres, teclado y foco (ES/EN, claro/oscuro) → control/ACCESIBILIDAD.md
 python3 control/glosario.py proponer       # glosario ES/EN: candidatos y traducciones distintas en aula, Canvas y subtítulos → control/GLOSARIO.md
 python3 control/pis.py                     # PIS según pis_rol: articulador (documento y datos obligatorios) · exportar · importar
+python3 control/repositorio.py guardar -m "…"   # OBLIGATORIO: commit y subida al repositorio privado de GitHub del docente (estado · iniciar)
 python3 control/respaldo.py crear --tipo antes --motivo "…"   # respaldo recuperable → respaldos/ (listar · comparar · restaurar)
 python3 canvas/generar_canvas.py           # paquete de Canvas → canvas/salida/   (--sin-videos · --solo-es)
 python3 canvas/verificar_paquete.py        # el paquete, antes de subirlo
@@ -157,6 +160,10 @@ El desarrollo puede durar varios días y sesiones. `ESTADO.md` del aula es la fu
 **Respaldos por hitos:** antes de un cambio amplio (rehacer o reorganizar una unidad, aplicar un plan de `impacto` que afecta varias entregas, cambiar la estructura de `course.json` o de `canvas/silabo.json`) ejecuta `python3 control/respaldo.py crear --tipo antes --motivo "…"`. Tras registrar la aprobación docente de una unidad, la planificación o la ficha, crea `crear --tipo aprobado --unidad UN --motivo "…"`. Para volver atrás, muestra al docente `comparar` y la vista previa de `restaurar` (limita con `--ruta`), y aplica con `--aplicar` solo con su conformidad; `restaurar --evidencia ID` vuelve a lo registrado en ESTADO.md. Nunca se restauran `fuentes/` ni, salvo pedido expreso (`--incluir-estado`), ESTADO.md: anota en él qué se restauró, desde qué respaldo y por qué, recompila y verifica. `respaldos/` es privado: no lo compartas ni lo registres como evidencia.
 
 **Calidad y accesibilidad:** al terminar cada unidad y antes de entregar, ejecuta `python3 control/calidad.py` y, tras compilar, `node hub/tools/accesibilidad.mjs`. Corrige lo que falte sin inventar contenido (lo que dependa del sílabo queda `[COMPLETAR]` y se pregunta). Muestra al docente la lista de `control/CALIDAD.md`, aplica sus observaciones y registra su conformidad como evidencia docente; no la marques por él. Un informe sin errores no aprueba la unidad ni sustituye probar con un lector de pantalla. Consulta la referencia de calidad y accesibilidad de la skill.
+
+**GitHub (obligatorio):** el aula vive en el repositorio privado de GitHub del docente. Al empezar ejecuta `python3 control/repositorio.py`; si no está conectada, acompaña al docente (Git, cuenta, `gh auth login` hecho por él) y conéctala con `iniciar`. Al terminar cada hito y al cerrar la sesión, después de actualizar ESTADO.md, ejecuta `guardar -m "…"`. Si se detiene por privados, tokens o archivos grandes, corrige antes de reintentar; nunca fuerces la subida.
+
+**Animaciones (obligatorio):** cada temática (sesión) tiene al menos una animación planificada en PLANIFICACION.md §5 y en `course.json` (`sesion`), hecha en `hub/src/js/anim/` y usada en la presentación de su unidad; la vista Animaciones la muestra sola. `control/calidad.py` y el generador de Canvas lo exigen.
 
 **PIS:** si el sílabo declara PIS, `pis_rol` es obligatorio. Articulador: el documento en `fuentes/pis/` y `canvas/pis.json` (ES/EN, sin inventar) son obligatorios; la vista PIS y el módulo de Canvas salen de ahí y se comparten con `control/pis.py exportar`. Aportante: pide el paquete al docente articulador y, al recibirlo, `control/pis.py importar`; no edites lo importado. Para llevar solo el PIS a Canvas: `canvas/canvas_api.py plan|aplicar --modulo PIS`.
 

@@ -83,6 +83,8 @@ def main() -> int:
                          .replace('{{PERIODO}}', a.periodo or '[COMPLETAR]').replace('{{VERSION_SKILL}}', version_skill()), encoding='utf-8')
     (dst / 'control').mkdir(exist_ok=True)
     (dst / 'control' / 'VERSION_SKILL').write_text(version_skill() + '\n', encoding='utf-8')   # para actualizar_aula.py
+    if shutil.which('git') and not (dst / '.git').exists():   # el aula nace como repositorio; se conecta a GitHub con control/repositorio.py
+        subprocess.run(['git', 'init', '-q', '-b', 'main', str(dst)], capture_output=True)
 
     print(f'Aula creada en {dst}')
     print(f'  clave: {clave} · archivo para Canvas: {course["archivo"]}.html')

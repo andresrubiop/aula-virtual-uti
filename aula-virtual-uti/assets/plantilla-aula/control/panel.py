@@ -256,6 +256,12 @@ def comprobaciones(root):
     import pis
     rep, err = intento(lambda: pis.verificar(root))
     out['pis'] = {'error': err} if err else rep
+    import repositorio
+    rep, err = intento(lambda: repositorio.estado(root))
+    out['github'] = {'error': err} if err else rep
+    import calidad
+    rep, err = intento(lambda: calidad.animaciones_pendientes())
+    out['animaciones'] = {'error': err} if err else {'pendientes': rep}
     import respaldo
     rep, err = intento(lambda: respaldo.resumen(root))
     out['respaldos'] = {'error': err} if err else rep
@@ -381,6 +387,17 @@ def fecha_corta(m):
     return f + (f' · {m["unidad"]}' if m.get('unidad') else '') + f' · {m.get("motivo", "")}'
 
 
+def github_card(g):
+    if g.get('error'):
+        return f'<div class="chk err"><h3>GitHub</h3><p>No se pudo comprobar: {escape(g["error"])}</p></div>'
+    if g.get('errores'):
+        return '<div class="chk err"><h3>GitHub</h3><p>Obligatorio: el aula debe estar en tu repositorio privado de GitHub.</p><ul>' + \
+            ''.join(f'<li>{escape(x)}</li>' for x in g['errores']) + '</ul></div>'
+    clase = 'warn' if g.get('avisos') else 'ok'
+    texto = f'Repositorio: {escape(g.get("remoto") or "")}' + (f' ({escape(g["visibilidad"])})' if g.get('visibilidad') else '')
+    return f'<div class="chk {clase}"><h3>GitHub</h3><p>{texto}</p>' + (''.join(f'<small class="warn">{escape(x)}</small>' for x in g.get('avisos', []))) + '</div>'
+
+
 def pis_card(p):
     """PIS según el rol que respondió el docente: articulador (documento y datos obligatorios) o aportante (paquete compartido)."""
     if p.get('error'):
@@ -463,7 +480,10 @@ def vista(d):
                   + (fecha_corta(rs['ultimo_aprobado']) if rs.get('ultimo_aprobado') else 'ninguno todavía') + '.',
                   [f'Evidencia aprobada sin copia guardada: `{x}` (pide un respaldo «aprobado»).' for x in rs.get('aprobadas_sin_copia', [])]
                   + ([f'{rs["dañados"]} respaldo(s) no se pudieron leer: pide «comprueba los respaldos».'] if rs.get('dañados') else [])),
-              videos_html(c['videos']), pis_card(c.get('pis') or {})]
+              videos_html(c['videos']), pis_card(c.get('pis') or {}), github_card(c.get('github') or {}),
+              chk('Animaciones por temática', c.get('animaciones') or {}, not (c.get('animaciones') or {}).get('pendientes'),
+                  'Cada temática tiene su animación en Animaciones y en la presentación.' if not (c.get('animaciones') or {}).get('pendientes')
+                  else f'{len(c["animaciones"]["pendientes"])} temática(s) sin su animación obligatoria.', c.get('animaciones', {}).get('pendientes', [])[:8])]
 
     grupos = []
     for g in d['accesos']:

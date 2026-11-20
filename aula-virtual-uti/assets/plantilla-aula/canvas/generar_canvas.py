@@ -26,7 +26,8 @@ Qué hace con la plantilla institucional
 Los identificadores generados son estables; el resultado de reimportar depende de Canvas y del curso.
 No se garantiza ausencia de duplicados. Conserva un export original anterior a esta herramienta.
 
-Uso:  python3 canvas/generar_canvas.py [--sin-videos] [--solo-es]
+Uso:  python3 canvas/generar_canvas.py [--sin-videos] [--solo-es] [--borrador]
+      --borrador: genera aunque falten animaciones de alguna temática o la conexión con GitHub (solo para revisar; no es una entrega)
 """
 import hashlib
 import html
@@ -937,6 +938,8 @@ def main() -> int:
     global PIS_DATA
     sys.path.insert(0, str(ROOT / 'control'))
     import pis as pis_mod
+    import calidad
+    import repositorio
     sys.path.pop(0)
     rp = pis_mod.verificar()
     if rp['errores'] and DATA.get('pis_rol') == 'articulador':
@@ -944,6 +947,18 @@ def main() -> int:
     for x in rp['errores'] + rp['pendientes']:
         aviso('PIS: ' + x)
     PIS_DATA = json.loads(pis_mod.DATOS.read_text(encoding='utf-8'))['es'] if rp['datos'] and not rp['errores'] else None
+    sin_anim = calidad.animaciones_pendientes()       # obligatorio: cada temática con su animación en Animaciones y en la presentación
+    if sin_anim and '--borrador' not in sys.argv:
+        sys.exit('Faltan animaciones obligatorias (una por temática, planificada, hecha y en la presentación):\n  - '
+                 + '\n  - '.join(sin_anim[:40]) + '\nCréalas (references/animaciones.md de la skill) o genera un borrador de revisión con --borrador.')
+    for x in sin_anim:
+        aviso('Animación pendiente (borrador): ' + x)
+    gh = repositorio.estado()                         # obligatorio: el aula vive en el repositorio GitHub del docente
+    if gh['errores'] and '--borrador' not in sys.argv:
+        sys.exit('El aula debe estar en un repositorio de GitHub del docente (obligatorio):\n  - ' + '\n  - '.join(gh['errores'])
+                 + '\nConéctala con control/repositorio.py iniciar (references/github.md de la skill) o genera un borrador con --borrador.')
+    for x in gh['errores'] + gh['avisos']:
+        aviso('GitHub: ' + x)
     aula_html = ROOT / 'autonomo' / f'{ARCHIVO}.html'
     if not aula_html.exists():
         sys.exit(f'Falta autonomo/{ARCHIVO}.html: corre python3 hub/build.py && python3 hub/tools/autonomo.py --sin-paquete')

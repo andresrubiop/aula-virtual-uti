@@ -2,6 +2,11 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.14.0 · 2026-11-20
+
+- **GitHub obligatorio:** `entorno.py` exige Git y comprueba la sesión de GitHub; el aula nace como repositorio y `control/repositorio.py` la conecta a un repositorio **privado** de la cuenta del docente (`iniciar --crear`), guarda y sube en cada hito (`guardar`) y se detiene ante privados, tokens o archivos de más de 50 MB. Sin GitHub, el generador de Canvas solo produce un borrador (`--borrador`); el panel lo muestra.
+- **Animaciones obligatorias por temática:** cada sesión del sílabo tiene al menos una animación planificada (PLANIFICACION.md §5, `course.json` con `"sesion"`), hecha y usada en la presentación; aparece en la vista Animaciones. `control/calidad.py` la exige, `build.py` lo avisa y el generador de Canvas no entrega sin ellas.
+
 ## 0.13.0 · 2026-11-20
 
 - **PIS obligatorio para el articulador y compartible:** al inicio el asistente pregunta si el proyecto formativo es el articulador del PIS (`pis_rol`). Si lo es, el documento del PIS (`fuentes/pis/`) y sus datos (`canvas/pis.json`, ES/EN) son obligatorios; de ahí salen la vista **PIS** del aula y el módulo **PIS** de Canvas (proyecto, momentos, rúbrica y evidencia integradora, sin publicar). `control/pis.py exportar` lo empaqueta para los proyectos formativos que aportan, que lo importan con `control/pis.py importar`; si aún no llega, queda pendiente en el panel. `canvas_api.py --modulo PIS` lleva solo ese módulo a un curso.

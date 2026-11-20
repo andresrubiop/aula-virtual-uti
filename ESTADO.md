@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-20 · **Versión 0.14.0**: GitHub obligatorio (Git y sesión de GitHub en `entorno.py`, aula como repositorio privado del docente con `control/repositorio.py`, guardado con revisión de privados y tokens; sin GitHub solo hay borrador de Canvas) y animaciones obligatorias por temática (una por sesión del sílabo, planificada, hecha y en la presentación; `calidad.py` y el generador de Canvas lo exigen). 165/165 regresiones PASS.
+
 2026-11-20 · **Versión 0.13.0** · PIS: pregunta obligatoria `pis_rol` (articulador, aportante, no aplica). El articulador debe tener el documento del PIS (`fuentes/pis/`) y sus datos (`canvas/pis.json`, ES/EN); de ahí salen la vista PIS del aula y el módulo PIS de Canvas (proyecto, momentos, rúbrica, evidencia integradora, sin publicar), que se exporta para los proyectos formativos que aportan. Los que aportan lo importan; si falta, queda pendiente. `canvas_api.py --modulo PIS` lleva solo ese módulo a un curso. Probado en un curso real (módulo PIS creado sin tocar el resto). 157/157 regresiones PASS.
 
 2026-11-20 · **Versión 0.12.2**: al inicio el asistente pregunta también la vía para llevar el aula a Canvas (API con token del docente o importación del `.imscc`) y el enlace del curso. Por decisión del autor el token se pega en el chat: el asistente lo guarda al momento fuera del aula (`canvas_api.py token --stdin`), no lo repite ni lo escribe en archivos y recuerda revocarlo. 150/150 regresiones PASS.

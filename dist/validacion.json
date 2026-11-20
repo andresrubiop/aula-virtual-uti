@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "11e577563518882d37cfa91c22b6bcbfee5f216ea74f7aa5dea75afb7a51ef2b",
-  "bytes": 9822157,
+  "sha256": "7073690163d519ed0d996189badd55ed14875b21f766d47654be6911fc77502c",
+  "bytes": 9832274,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -10,7 +10,7 @@
   "existing_classroom_state_preserved": "PASS",
   "local_markdown_links": "PASS",
   "regression_tests": {
-    "passed": 157,
+    "passed": 165,
     "failed": 0
   },
   "known_defects_fixed": [
@@ -75,9 +75,11 @@
   "pedagogical_quality_checks": "PASS",
   "glossary_consistency": "PASS",
   "panel_video_state": "PASS",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "guide_single_source": "PASS",
   "update_existing_classroom": "PASS",
   "license": "CC-BY-4.0 (excepciones de terceros en LICENCIA.md)",
-  "pis_articulador_y_compartido": "PASS"
+  "pis_articulador_y_compartido": "PASS",
+  "github_obligatorio": "PASS",
+  "animaciones_por_tematica": "PASS"
 }

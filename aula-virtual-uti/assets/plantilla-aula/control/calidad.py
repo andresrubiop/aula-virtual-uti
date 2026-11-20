@@ -11,6 +11,7 @@ Comprueba en el contenido de cada unidad (hub/src/content/uN/) lo que un docente
   · práctica con pasos, entrega, rúbrica con los cinco niveles y desafío con IA;
   · cuestionario con al menos 5 preguntas, retroalimentación para CADA opción («por qué») y enlace a la teoría;
   · presentación con nota para el docente en cada diapositiva;
+  · OBLIGATORIO: cada temática (sesión) con al menos una animación planificada, hecha y usada en la presentación;
   · animaciones con escenas explicadas, «Qué observar», enlaces teoría ↔ práctica y al menos 2 controles;
   · marcas [COMPLETAR] pendientes.
 Es una revisión de presencia y estructura: NO juzga si los ejemplos son buenos ni si el nivel es el adecuado.
@@ -49,7 +50,54 @@ def texto(h):
     return html.unescape(re.sub(r'<[^>]+>', ' ', h or ''))
 
 
-def revisar_unidad(u, anims):
+def archivo_anim(ident):
+    return next(iter(sorted((ROOT / 'hub/src/js/anim').glob(ident.lower().replace('.', '-') + '-*.js'))), None)
+
+
+def temas_unidad(unidad):
+    """[(sesión, tema)] de la unidad: course.json → sessions, con el tema de canvas/silabo.json si existe."""
+    temas = {}
+    s = ROOT / 'canvas' / 'silabo.json'
+    if s.exists():
+        d = json.loads(s.read_text(encoding='utf-8'))
+        mom = next((m for m in d.get('momentos') or [] if m.get('n') == unidad.get('moment')), None)
+        temas = {x.get('n'): x.get('tema', '') for x in (mom or {}).get('sesiones') or []}
+    return [(n, temas.get(n, '')) for n in unidad.get('sessions') or []]
+
+
+def animaciones_unidad(unidad, pres=None):
+    """Obligatorio: cada temática (sesión) de la unidad tiene al menos una animación planificada en course.json
+    («sesion»), hecha en hub/src/js/anim/ y usada en la presentación de la unidad (data-anim). La vista Animaciones
+    las muestra todas a partir de course.json."""
+    if pres is None:
+        fs = sorted((CONTENT / unidad['id']).glob('*-presentacion.html')) if (CONTENT / unidad['id']).is_dir() else []
+        pres = fs[0].read_text(encoding='utf-8') if fs else ''
+    anims = unidad.get('anims') or []
+    en_pres = set(re.findall(r'data-anim="([^"]+)"', pres or ''))
+    out = []
+    sesiones = temas_unidad(unidad) or [(None, '')]
+    for n, tema in sesiones:
+        suyas = [a for a in anims if n is None or a.get('sesion') == n or n in (a.get('sesiones') or [])]
+        etiqueta = f'Sesión {n}' + (f' · {tema}' if tema else '') if n is not None else 'Unidad'
+        if not suyas:
+            out.append({'que': f'{etiqueta}: animación planificada', 'ok': False,
+                        'detalle': 'ninguna animación de course.json tiene «sesion»: ' + str(n) if n is not None else 'la unidad no tiene animaciones'})
+            continue
+        for a in suyas:
+            hecha, usada = archivo_anim(a['id']) is not None, a['id'] in en_pres
+            falta = [x for x, ok in (('archivo en hub/src/js/anim/', hecha), ('en la presentación (data-anim)', usada)) if not ok]
+            out.append({'que': f'{etiqueta}: {a["id"]} hecha y en la presentación', 'ok': not falta,
+                        'detalle': ('falta: ' + ', '.join(falta)) if falta else 'en Animaciones y en la presentación'})
+    return out
+
+
+def animaciones_pendientes():
+    """Para generar_canvas.py y el panel: lista de temáticas sin animación completa en todo el curso."""
+    course = json.loads((ROOT / 'hub/src/course.json').read_text(encoding='utf-8'))
+    return [f'{u["id"].upper()} · {x["que"]} ({x["detalle"]})' for u in course['units'] for x in animaciones_unidad(u) if not x['ok']]
+
+
+def revisar_unidad(u, anims, unidad=None):
     filas = []
 
     def chk(area, que, ok, detalle='', obligatorio=True):
@@ -100,15 +148,17 @@ def revisar_unidad(u, anims):
             mal = [i + 1 for i, q in enumerate(qs) if not isinstance(q.get('ans'), int) or not 0 <= q['ans'] < len(q.get('opts') or [])]
             chk('Evaluación', 'Respuesta correcta válida', not mal, f'preguntas: {mal}' if mal else '')
     pres = leer(u, 'presentacion')
+    unidad = unidad or {'id': u, 'anims': anims}
     if pres:
         n = len(re.findall(r'<section class="slide', pres))
         notas = len(re.findall(r'<aside class="notes"', pres))
         chk('Presentación', 'Nota para el docente en cada diapositiva', n > 0 and notas >= n, f'{notas} nota(s) para {n} diapositiva(s)', obligatorio=False)
+    for x in animaciones_unidad(unidad, pres):              # obligatorio: cada temática con su animación
+        chk('Animaciones', x['que'], x['ok'], x['detalle'])
     for a in anims:
-        archivo = next(iter(sorted((ROOT / 'hub/src/js/anim').glob(a['id'].lower().replace('.', '-') + '-*.js'))), None)
+        archivo = archivo_anim(a['id'])
         if not archivo:
-            chk('Animaciones', f'{a["id"]} existe', False, 'planificada en course.json, sin archivo en hub/src/js/anim/', obligatorio=False)
-            continue
+            continue                                         # ya informado arriba como falta
         js = archivo.read_text(encoding='utf-8')
         escenas = len(re.findall(r'\bdur\s*:', js))
         controles = len(re.findall(r"type\s*:\s*'(?:range|select|toggle|button|number)'", js))
@@ -132,7 +182,7 @@ def main():
         sys.exit(f'No existe la unidad {a.unidad} en hub/src/course.json')
     resultado = {'fecha': datetime.now(timezone.utc).isoformat(), 'unidades': []}
     for u in unidades:
-        filas = revisar_unidad(u['id'], u.get('anims') or [])
+        filas = revisar_unidad(u['id'], u.get('anims') or [], u)
         titulo = (u.get('title') or {}).get('es', u['id'])
         resultado['unidades'].append({'id': u['id'], 'titulo': titulo, 'comprobaciones': filas,
                                       'faltan': sum(f['estado'] == 'falta' for f in filas), 'avisos': sum(f['estado'] == 'aviso' for f in filas)})

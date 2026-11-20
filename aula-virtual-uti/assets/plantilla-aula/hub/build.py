@@ -575,6 +575,18 @@ def main() -> int:
             print('ADVERTENCIA: supera el objetivo de 15 MB', file=sys.stderr)
     print(f'  contenido: {len(content_files)} archivos · js: {len(js_files)} + app.js · animaciones: {len(definidas)} definidas, '
           f'{len(citadas)} en uso, {len(planificadas - definidas)} planificadas sin hacer · bloques docentes: {abiertos} · datos: {len(data)}')
+    sys.path.insert(0, str(ROOT / 'control'))
+    try:
+        import calidad
+        sin_anim = calidad.animaciones_pendientes()
+    except Exception:                                   # noqa: BLE001 — el aviso no debe impedir compilar
+        sin_anim = []
+    finally:
+        sys.path.pop(0)
+    if sin_anim:
+        print(f'AVISO  {len(sin_anim)} temática(s) sin su animación obligatoria (python3 control/calidad.py):', file=sys.stderr)
+        for x in sin_anim[:12]:
+            print('         · ' + x, file=sys.stderr)
     pend = len(re.findall(r'\[COMPLETAR[^\]]*\]', estudiante))
     if pend:
         print(f'  pendientes: {pend} marca(s) [COMPLETAR] visibles para el estudiante')

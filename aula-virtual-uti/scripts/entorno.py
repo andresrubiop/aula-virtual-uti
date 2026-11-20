@@ -36,7 +36,18 @@ def instalar(pkg_apt, pkg_brew, pkg_winget, web=''):
     return (f'winget install {pkg_winget}' if pkg_winget else web)
 
 
+def github_ok():
+    """Sesión iniciada en GitHub CLI (la cuenta la crea y la abre el docente; nunca se piden contraseñas)."""
+    if not shutil.which('gh'):
+        return False
+    try:
+        return subprocess.run(['gh', 'auth', 'status'], capture_output=True, timeout=20).returncode == 0
+    except Exception:                                   # noqa: BLE001
+        return False
+
+
 def main() -> int:
+    gh_ok = github_ok()
     chrome = next((c for c in ('google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser', 'msedge', 'microsoft-edge') if shutil.which(c)), None)
     if not chrome and SO == 'Darwin':
         import os
@@ -48,6 +59,11 @@ def main() -> int:
     filas = [
         ('Python ≥ 3.10', sys.version_info >= (3, 10), platform.python_version(), 'imprescindible', 'compilar el aula y generar el paquete de Canvas',
          instalar('python3', 'python', 'Python.Python.3.12', 'https://www.python.org/downloads/')),
+        ('Git', bool(shutil.which('git')), version(['git', '--version']) or 'no está', 'imprescindible',
+         'guardar el aula en tu repositorio de GitHub (obligatorio)', instalar('git', 'git', 'Git.Git', 'https://git-scm.com/downloads')),
+        ('Cuenta de GitHub (gh)', gh_ok, 'sesión iniciada' if gh_ok else ('gh sin sesión' if shutil.which('gh') else 'gh no está'),
+         'obligatorio', 'tener el aula en un repositorio privado de GitHub; crea tu cuenta en https://github.com/signup y luego inicia sesión',
+         instalar('gh', 'gh', 'GitHub.cli', 'https://cli.github.com') + '   y después: gh auth login'),
         ('Node ≥ 22', node_ok, node or 'no está', 'verificación', 'comprobar el aula sin abrirla y exportar los PDF',
          instalar('nodejs  (o https://nodejs.org)', 'node', 'OpenJS.NodeJS.LTS', 'https://nodejs.org')),
         ('Chrome / Edge / Chromium', bool(chrome), chrome or 'no está', 'verificación', 'lo mismo: el aula se revisa y se imprime con el navegador',
@@ -73,6 +89,9 @@ def main() -> int:
         if not ok:
             print(f'      Sirve para {para}.\n      Cómo instalarlo: {como}')
     falta = [f[0] for f in filas if not f[1] and f[3] == 'imprescindible']
+    if not gh_ok:
+        print('OBLIGATORIO: el aula se guarda en un repositorio privado de tu cuenta de GitHub. Crea la cuenta (gratis) en '
+              'https://github.com/signup, instala GitHub CLI e inicia sesión tú mismo con «gh auth login».\n')
     sin_verif = [f[0] for f in filas if not f[1] and f[3] == 'verificación']
     print()
     if falta:

@@ -7,6 +7,7 @@ respaldos/
 canvas/salida/
 canvas/exportado/
 canvas/api/privado/
+pis/compartir/
 videos/bruto/
 videos/**/*.mp4
 videos/**/*.mov

@@ -26,10 +26,12 @@ Criterio: una unidad agrupa las sesiones que comparten tema y práctica; las ses
 | `V#.#` | Video (NotebookLM, ES y EN) |
 | `Q#` | Cuestionario de autoevaluación con retroalimentación |
 
-## 5. Catálogo de animaciones
+## 5. Animaciones por temática (obligatorio)
 
-| ID | Animación | Qué calcula o simula de verdad | Controles |
-|---|---|---|---|
+Cada temática (sesión del sílabo) tiene al menos una animación que calcula o simula de verdad. Se declara también en `hub/src/course.json` (unidad → `anims`, con `"sesion": N`), se programa en `hub/src/js/anim/` y se incrusta en la presentación de la unidad (`data-anim`); la vista Animaciones la muestra sola. `python3 control/calidad.py` y el generador de Canvas lo exigen.
+
+| Unidad · sesión | Temática | ID | Animación | Qué calcula o simula de verdad | Controles | Diapositiva |
+|---|---|---|---|---|---|---|
 
 ## 6. Prácticas
 
