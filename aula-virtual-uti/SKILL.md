@@ -3,7 +3,7 @@ name: aula-virtual-uti
 description: Crea, completa y mantiene aulas virtuales de la Universidad Tecnológica Indoamérica a partir del sílabo vigente, sílabos anteriores, presentaciones, guías prácticas y lecturas del docente. Produce un aula interactiva local ES/EN con identidad UTI, PDF, animaciones, videos opcionales de NotebookLM y un paquete importable en Canvas Instructure. Úsala cuando un docente quiera preparar su proyecto formativo, transformar sus materiales en un aula, continuar un aula UTI o generar su paquete Canvas, aunque no mencione una skill. Compatible con Claude y Codex.
 license: CC-BY-4.0 (ver LICENCIA.md; logos UTI y componentes de terceros con sus propias condiciones)
 metadata:
-  version: "0.14.1"
+  version: "0.15.0"
 ---
 
 # Aula virtual UTI
@@ -141,6 +141,8 @@ Usa modo guiado cuando no esté disponible la herramienta automática. Si no hay
 ## 7. Entregar Canvas
 
 Sigue la referencia Canvas. Usa preferentemente un export del curso de destino; la plantilla incluida sirve de base y no garantiza que la importación evite duplicados. No modifiques el curso remoto durante la preparación local. Si el curso ya tiene la plantilla y el docente quiere que lo actualices tú, usa la vía API (`canvas/canvas_api.py`: comprobar y plan solo leen; aplicar con su conformidad expresa para ese curso). El docente pega su token en el chat (o lo guarda en su terminal); guárdalo al momento con `token --stdin`, no lo repitas ni lo escribas en archivos del aula. Registra la operación y recuérdale revocar el token al terminar.
+
+**El aula interactiva se publica en la web para verse en Canvas (obligatorio con Canvas).** Canvas sirve los HTML subidos al curso con `Content-Security-Policy: sandbox; script-src 'none'`: el aula se ve estática y no responde (menú, animaciones, cuestionarios y avance no funcionan), en cualquier enlace o vista previa del archivo; Moodle sí la ejecuta. Explícaselo al docente y, con su conformidad expresa, publícala en un repositorio **público y aparte** de GitHub Pages: `python3 control/publicar_web.py publicar --repo <nombre>` (pregúntale el nombre y la edición: la del estudiante por omisión, o `--edicion profesor` si la comparte con sus estudiantes; dile que todo lo docente que contenga quedará público). El repositorio privado del aula no cambia. La herramienta revisa antes de subir (teléfonos, tokens y, en la edición del estudiante, bloques docentes) y comprueba que GitHub sirva el archivo; la dirección queda en `course.json` → `publicacion` y el generador la usa en el marco de Inicio, la página del aula y «Abrir». Después de cada cambio del aula vuelve a publicar (`publicar_web.py` muestra si está al día). Prueba con clics dentro de Canvas: ver el aula no basta.
 
 Valida el sílabo, comprueba que la ficha del sílabo siga vigente, genera el aula autónoma, genera el paquete y verifica sus archivos. Completa también la traducción de las páginas y tareas Canvas siguiendo la guía: el generador base redacta su estructura en español; incluir PDF bilingües no traduce esas páginas. Revisa `control/COBERTURA.md` antes de llamar completa a la entrega; comprueba además la traducción de las páginas y tareas exportadas, que la matriz de HTML local no certifica.
 

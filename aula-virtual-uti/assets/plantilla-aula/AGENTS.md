@@ -127,6 +127,7 @@ python3 control/glosario.py proponer       # glosario ES/EN: candidatos y traduc
 python3 control/pis.py                     # PIS según pis_rol: articulador (documento y datos obligatorios) · exportar · importar
 python3 control/repositorio.py guardar -m "…"   # OBLIGATORIO: commit y subida al repositorio privado de GitHub del docente (estado · iniciar)
 python3 control/respaldo.py crear --tipo antes --motivo "…"   # respaldo recuperable → respaldos/ (listar · comparar · restaurar)
+python3 control/publicar_web.py publicar --repo <nombre>   # Canvas no ejecuta el aula subida: se publica en GitHub Pages (con conformidad del docente)
 python3 canvas/generar_canvas.py           # paquete de Canvas → canvas/salida/   (--sin-videos · --solo-es)
 python3 canvas/verificar_paquete.py        # el paquete, antes de subirlo
 python3 canvas/canvas_api.py plan          # actualizar un curso existente por la API: plan (solo lee) · aplicar · verificar

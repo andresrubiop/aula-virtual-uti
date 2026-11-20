@@ -597,6 +597,12 @@ AULA_INICIO = ('<!--aula-inicio-->', '<!--/aula-inicio-->')
 PIS_DATA = None
 
 
+def aula_web():
+    """Dirección https donde está publicada el aula (control/publicar_web.py). Canvas no ejecuta el JavaScript de los HTML
+    subidos al curso, así que el marco y «Abrir» usan esta dirección; el archivo subido queda solo para descargar."""
+    return ((COURSE.get('publicacion') or {}).get('url') or '').strip() or None
+
+
 def pis_pages():
     """Páginas del módulo PIS (español) desde canvas/pis.json: proyecto, un momento por página, rúbrica y evidencia."""
     if not PIS_DATA:
@@ -645,9 +651,9 @@ def aula_inicio(texto):
     f = f'{CARPETA}/{ARCHIVO}.html'
     bloque = (f'{AULA_INICIO[0]}<div id="aula-interactiva-inicio" style="margin: 0 0 18px 0;">'
               f'<iframe style="display: block; width: 100%; height: 85vh; min-height: 640px; border: 1px solid #cbd5e0; border-radius: 10px;" '
-              f'title="Aula interactiva de {e(NOMBRE)}" src="{file_ref(f, "abrir")}" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>'
+              f'title="Aula interactiva de {e(NOMBRE)}" src="{aula_web() or file_ref(f, "abrir")}" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>'
               f'<p style="margin: 10px 0 0 0; text-align: center;">'
-              f'{link(file_ref(f, "abrir"), "Abrir el aula en una pestaña nueva", blank=True)}'
+              f'{link(aula_web() or file_ref(f, "abrir"), "Abrir el aula en una pestaña nueva", blank=True)}'
               f'{link(page_ref(PAGES["aula"]["id"]), "Cómo usar el aula", BTN2)}'
               f'{link(file_ref(f, "bajar"), "Descargar el aula (sin conexión)", BTN2)}</p></div>{AULA_INICIO[1]}\n')
     m = re.search(r'<body\b[^>]*>\s*', texto, re.I)
@@ -658,7 +664,7 @@ def aula_inicio(texto):
 def aula_page():
     f = f'{CARPETA}/{ARCHIVO}.html'
     na = len(ANIM)
-    botones = (link(file_ref(f, 'abrir'), 'Abrir el aula en una pestaña nueva', blank=True)
+    botones = (link(aula_web() or file_ref(f, 'abrir'), 'Abrir el aula en una pestaña nueva', blank=True)
                + link(file_ref(f, 'bajar'), 'Descargar el aula (un solo archivo, sin conexión)', BTN2))
     intro = card(f'Aula interactiva de {e(NOMBRE)}', [
         (None, f'<p style="margin: 0 0 10px 0;">Todo el curso en un solo archivo: <strong>{len(UNIDAD)} unidades</strong> con resumen, «Antes de clase», '
@@ -673,7 +679,7 @@ def aula_page():
     marco = (f'<p style="max-width: 1000px; margin: 0 auto 10px auto; font-family: {FONT}; color: #4a5568; font-size: 13px;">Vista previa integrada '
              '(para trabajar con comodidad, ábrela en una pestaña nueva):</p>'
              f'<p style="max-width: 1000px; margin: 0 auto 28px auto;"><iframe style="width: 100%; height: 820px; border: 1px solid #cbd5e0; border-radius: 10px;" '
-             f'title="Aula interactiva" src="{file_ref(f, "abrir")}" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe></p>')
+             f'title="Aula interactiva" src="{aula_web() or file_ref(f, "abrir")}" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe></p>')
     return intro + marco
 
 
@@ -959,6 +965,9 @@ def main() -> int:
                  + '\nConéctala con control/repositorio.py iniciar (references/github.md de la skill) o genera un borrador con --borrador.')
     for x in gh['errores'] + gh['avisos']:
         aviso('GitHub: ' + x)
+    if not aula_web():
+        aviso('El aula no está publicada en la web: Canvas bloquea el JavaScript de los HTML subidos y el aula se verá estática dentro del curso. '
+              'Publícala con control/publicar_web.py publicar --repo <nombre> (con la conformidad del docente) y vuelve a generar.')
     aula_html = ROOT / 'autonomo' / f'{ARCHIVO}.html'
     if not aula_html.exists():
         sys.exit(f'Falta autonomo/{ARCHIVO}.html: corre python3 hub/build.py && python3 hub/tools/autonomo.py --sin-paquete')

@@ -373,8 +373,11 @@ def aplicar(c, d):
     archivos_id = dict(mapa['archivos'])
 
     # Páginas, fase A: título (Canvas puede asignar una URL nueva al cambiarlo) y creación sin publicar
+    renombradas = {}                                    # URL anterior → nueva, para corregir los enlaces de Inicio
     for s, destino in d['actualizar'].items():
         r, _ = c.pedir('PUT', f'/pages/{destino}', {'wiki_page': {'title': paginas[s]['titulo']}})
+        if r['url'] != destino:
+            renombradas[destino] = r['url']
         mapa['paginas'][s] = r['url']; guardar_mapa(mapa)
     for s in d['crear']:
         r, _ = c.pedir('POST', '/pages', {'wiki_page': {'title': paginas[s]['titulo'], 'body': '', 'published': False}})
@@ -411,7 +414,11 @@ def aplicar(c, d):
     bloque = bloque_inicio(c, d, archivos_id, urls)
     if bloque and d['portada']:
         actual = c.get(f'/pages/{d["portada"]}')
-        c.pedir('PUT', f'/pages/{d["portada"]}', {'wiki_page': {'body': con_aula(actual.get('body'), bloque)}})
+        cuerpo = con_aula(actual.get('body'), bloque)
+        # Inicio no se reemplaza: si Canvas cambió la URL de una página al cambiar su título, sus enlaces se actualizan
+        for viejo, nuevo in renombradas.items():
+            cuerpo = re.sub(r'/pages/' + re.escape(viejo) + r'(?=["\'?#<\s])', '/pages/' + nuevo, cuerpo)
+        c.pedir('PUT', f'/pages/{d["portada"]}', {'wiki_page': {'body': cuerpo}})
 
     # Módulos: se emparejan por mapa, título o «Momento N»; primero se retiran sus elementos, porque publicar un
     # módulo publica lo que contiene

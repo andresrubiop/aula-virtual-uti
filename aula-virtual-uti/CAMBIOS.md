@@ -2,6 +2,13 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.15.0 · 2026-11-20
+
+- **El aula se publica en la web para funcionar en Canvas.** Canvas sirve los HTML subidos con `Content-Security-Policy: sandbox; script-src 'none'` (comprobado en el curso piloto en todas las variantes de enlace): el aula se veía estática. Nuevo `control/publicar_web.py`: con conformidad del docente publica la edición del estudiante (o la del profesor, `--edicion profesor`) en un repositorio público aparte con GitHub Pages, revisa antes (teléfonos, tokens, bloques docentes) y comprueba que se sirva; guarda la dirección en `course.json` → `publicacion`.
+- `generar_canvas.py`: el marco de Inicio, la página del aula y «Abrir» usan esa dirección; sin ella, avisa.
+- `canvas_api.py aplicar`: si una página cambia de URL al tomar el título del paquete, actualiza sus enlaces en Inicio (en el piloto, Momento 1–4).
+- SKILL.md, referencia Canvas, AGENTS de la plantilla y guía del profesor lo explican. Probado en el curso real: menú y animaciones funcionan dentro de Canvas. Pruebas nuevas en `tests/test_publicar_web.py`.
+
 ## 0.14.1 · 2026-11-20
 
 - `hub/tools/anim-e2e.mjs`: la prueba propia de la animación de memoria de FSO solo se ejecuta si el aula tiene esa animación (antes fallaba en cualquier aula con su propia A4.1). Probado con un aula real de 16 animaciones: 336 comprobaciones bien.

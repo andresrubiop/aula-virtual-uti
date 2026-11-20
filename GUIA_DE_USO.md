@@ -226,7 +226,7 @@ Los nombres de los controles dependen del idioma y la configuración. Consulta l
 
 Abre Inicio, módulos, sesiones, tareas, PDF, videos y enlaces al aula. Comprueba fechas y puntajes, y usa Vista del estudiante para detectar recursos inaccesibles. Las tareas pueden quedar sin publicar para revisión. Las rúbricas HTML no son rúbricas nativas del libro de calificaciones.
 
-El aula HTML contiene JavaScript: pegarla en una página de Canvas puede alterar su funcionamiento. Usa los recursos y enlaces que prepara el paquete; verifica el archivo descargado en un navegador y la experiencia dentro de Canvas. Si Canvas limita la previsualización, conserva la descarga de la edición estudiantil; no publiques en un alojamiento externo sin decidirlo expresamente.
+**Por qué el aula se publica en la web.** Canvas no deja funcionar el aula interactiva subida como archivo: la muestra sin menú, animaciones ni cuestionarios (Moodle sí la ejecuta). Por eso el asistente te propone publicarla en GitHub Pages, en un repositorio público aparte con solo el aula; Canvas la muestra desde allí en Inicio y en la página del aula, completa. Tú eliges el nombre y si va la edición del estudiante o la del profesor; ten en cuenta que quedará pública en internet. Tus documentos y tu repositorio privado no cambian. Después de cada cambio, pide al asistente que la vuelva a publicar; el archivo del aula sigue disponible en Canvas para descargar.
 
 Publica solo los elementos aprobados y comunica al asistente el resultado. Pídele registrar curso, fecha, nombre/hash del paquete, problemas encontrados y comprobaciones reales en `ESTADO.md`. El paquete local validado y la importación verificada son hitos distintos. Si deseas automatizar la importación, autoriza antes el curso y la operación concreta; esta guía no presupone acceso automático.
 
@@ -243,4 +243,4 @@ Publica solo los elementos aprobados y comunica al asistente el resultado. Píde
 | Canvas rechaza el token | Pudo caducar o ser revocado: crea otro y pégalo de nuevo en el chat. |
 | La skill se actualizó | Pide «actualiza las herramientas de mi aula a la versión instalada» (sección 3). |
 
-Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.14.1 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](aula-virtual-uti/LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).
+Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.15.0 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](aula-virtual-uti/LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).

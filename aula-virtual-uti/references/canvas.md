@@ -51,6 +51,24 @@ Los fragmentos de `pegar/` necesitan `curso.canvas_id` real, las páginas de des
 
 Registra en `ESTADO.md`: comandos y resultados, avisos pendientes, archivo y tamaño de entrega, origen de la plantilla, si el contenido está traducido, si se importó realmente y quién comprobó la vista estudiante. No marques importado por haber generado un ZIP válido.
 
+## El aula interactiva en Canvas: publicada en la web
+
+Canvas no ejecuta el JavaScript de los HTML subidos al curso: los entrega desde su servicio de archivos con `Content-Security-Policy: sandbox; script-src 'none'` (comprobado en el curso piloto con la descarga, la vista previa y el enlace firmado; todas igual). Incrustada o abierta desde Archivos, el aula se ve como documento estático y no responde. Pegar su HTML en una página tampoco sirve: el editor elimina los scripts. Moodle sirve el archivo desde su propio sitio y lo ejecuta.
+
+Solución: publicar el aula en una dirección https propia y que Canvas la muestre en un marco (los marcos externos https sí se permiten, como el video institucional de Vimeo):
+
+```bash
+python3 hub/tools/autonomo.py --sin-paquete
+python3 control/publicar_web.py publicar --repo <nombre> [--edicion profesor]   # repositorio público aparte + GitHub Pages, comprobado
+python3 control/publicar_web.py                                                # estado: dirección, responde, al día
+python3 canvas/generar_canvas.py                                               # marco de Inicio, página del aula y «Abrir» → la dirección web
+```
+
+- Solo con la conformidad expresa del docente: queda **público en internet**. Publica la edición del estudiante salvo que el docente pida la del profesor (todo lo `<!--docente-->` queda público).
+- Repositorio aparte (`index.html`, `README.md`, `.nojekyll`); el repositorio privado del aula no cambia. Se detiene ante teléfonos, tokens y, en la edición del estudiante, bloques docentes.
+- El archivo del aula sigue en el paquete para descargar y usar sin conexión. Sin `publicacion`, el generador avisa y usa el archivo (que en Canvas se verá estático).
+- Tras cada cambio del aula: `autonomo.py`, `publicar_web.py publicar` con el mismo repositorio y comprobar «al día». Prueba con clics dentro del curso.
+
 ## Actualizar por la API de Canvas
 
 Al inicio el asistente pregunta la vía (API con token del docente o importación del `.imscc`) y el enlace del curso, y la registra en ESTADO.md. Cuando el curso ya tiene la plantilla institucional, importar el `.imscc` duplica páginas que el docente quizá no puede borrar. `canvas/canvas_api.py` aplica el mismo paquete por la API de Canvas:
@@ -66,7 +84,7 @@ python3 canvas/canvas_api.py verificar    # solo lectura: enlaces, marcas pendie
 
 - **Emparejamiento:** archivos por carpeta, nombre y tamaño (reutiliza los iguales); páginas por `canvas/api/mapa.json`, URL o título; tareas por mapa o nombre base («Actividad 1 · …» = «Actividad 1»); módulos por mapa, título o «Momento N». Lo que no existe se crea.
 - **Páginas:** al cambiar el título, Canvas puede asignar otra URL y rechazar la antigua en los módulos; la herramienta usa siempre la URL devuelta. Las nuevas se crean sin publicar y toman la publicación del paquete al final. Las del paquete sin publicar y sin uso se despublican y salen de los módulos; no se borran.
-- **Inicio:** no se reemplaza. Solo se antepone (o se renueva) el bloque del aula incrustada.
+- **Inicio:** no se reemplaza. Solo se antepone (o se renueva) el bloque del aula incrustada. Si una página cambió de URL al tomar el título del paquete, sus enlaces en Inicio se actualizan a la URL nueva (Canvas suele redirigir la antigua, pero `verificar` la marca).
 - **Tareas:** las nuevas se crean sin publicar; las existentes conservan puntos y publicación. Publicar un módulo publica en Canvas lo que contiene: la herramienta retira los elementos antes de publicarlo y al final devuelve cada tarea a su estado previo (incidencia real observada en el piloto: tareas visibles unos minutos).
 - **Cuestionarios:** se enlazan por título si ya existen en el curso (por ejemplo, la encuesta institucional); no se crean por API.
 - **Bloqueos:** `aplicar` se niega si quedan marcas que verían los estudiantes (`[COMPLETAR…]`, `correo@indoamerica.edu.ec`, «Agregar los RA…», «Copiar pegar del sílabo»), salvo `--permitir-pendientes` con acuerdo del docente. Para los RA de los demás proyectos del PIS, usa `pis_ra` en `canvas/silabo.json`.
