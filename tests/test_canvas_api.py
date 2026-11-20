@@ -38,6 +38,23 @@ class CanvasApi(unittest.TestCase):
         self.assertIn('token', r.stderr.lower())
         self.assertEqual(self.curso.log, [])
 
+    def test_token_pegado_en_el_chat_se_guarda_sin_mostrarlo(self):
+        r = subprocess.run([sys.executable, 'canvas/canvas_api.py', 'token', '--stdin'], cwd=self.aula, input=fake_canvas.TOKEN + '\n',
+                           capture_output=True, text=True, encoding='utf-8', env={k: v for k, v in self.env.items() if k != 'CANVAS_TOKEN'})
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertNotIn(fake_canvas.TOKEN, r.stdout + r.stderr)
+        self.assertIn('Revócalo', r.stdout)
+        guardado = Path(self.tmp.name) / '.config/aula-uti/canvas-token'
+        self.assertEqual(guardado.read_text(encoding='utf-8').strip(), fake_canvas.TOKEN)
+        if os.name != 'nt':
+            self.assertEqual(oct(guardado.stat().st_mode & 0o777), '0o600')
+        self.assertFalse([p for p in self.aula.rglob('*') if p.is_file() and fake_canvas.TOKEN.encode() in p.read_bytes()])
+        # con el token guardado (sin variable de entorno) la herramienta funciona
+        self.run_api('comprobar', env={k: v for k, v in self.env.items() if k != 'CANVAS_TOKEN'})
+        r = subprocess.run([sys.executable, 'canvas/canvas_api.py', 'token', '--stdin'], cwd=self.aula, input='no es un token',
+                           capture_output=True, text=True, encoding='utf-8', env=self.env)
+        self.assertNotEqual(r.returncode, 0)
+
     def test_token_rechazado(self):
         r = self.run_api('comprobar', code=None, env={**self.env, 'CANVAS_TOKEN': 'x' * 30})
         self.assertNotEqual(r.returncode, 0)

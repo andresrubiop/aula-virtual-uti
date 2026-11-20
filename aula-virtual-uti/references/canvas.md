@@ -53,11 +53,11 @@ Registra en `ESTADO.md`: comandos y resultados, avisos pendientes, archivo y tam
 
 ## Actualizar por la API de Canvas
 
-Cuando el curso ya tiene la plantilla institucional, importar el `.imscc` duplica páginas que el docente quizá no puede borrar. `canvas/canvas_api.py` aplica el mismo paquete por la API de Canvas:
+Al inicio el asistente pregunta la vía (API con token del docente o importación del `.imscc`) y el enlace del curso, y la registra en ESTADO.md. Cuando el curso ya tiene la plantilla institucional, importar el `.imscc` duplica páginas que el docente quizá no puede borrar. `canvas/canvas_api.py` aplica el mismo paquete por la API de Canvas:
 
 ```bash
 python3 canvas/canvas_api.py configurar --curso https://indoamerica.instructure.com/courses/12345
-python3 canvas/canvas_api.py token        # lo ejecuta el DOCENTE en su terminal (entrada oculta)
+printf '%s' '<token>' | python3 canvas/canvas_api.py token --stdin   # el docente lo pegó en el chat (o: token, entrada oculta)
 python3 canvas/canvas_api.py comprobar    # solo lectura: permisos, conteos de inscritos, inventario → canvas/api/inventario.json
 python3 canvas/canvas_api.py plan         # solo lectura → canvas/api/plan.json
 python3 canvas/canvas_api.py aplicar      # respaldo privado del curso y aplicación; luego verifica
@@ -70,7 +70,8 @@ python3 canvas/canvas_api.py verificar    # solo lectura: enlaces, marcas pendie
 - **Tareas:** las nuevas se crean sin publicar; las existentes conservan puntos y publicación. Publicar un módulo publica en Canvas lo que contiene: la herramienta retira los elementos antes de publicarlo y al final devuelve cada tarea a su estado previo (incidencia real observada en el piloto: tareas visibles unos minutos).
 - **Cuestionarios:** se enlazan por título si ya existen en el curso (por ejemplo, la encuesta institucional); no se crean por API.
 - **Bloqueos:** `aplicar` se niega si quedan marcas que verían los estudiantes (`[COMPLETAR…]`, `correo@indoamerica.edu.ec`, «Agregar los RA…», «Copiar pegar del sílabo»), salvo `--permitir-pendientes` con acuerdo del docente. Para los RA de los demás proyectos del PIS, usa `pis_ra` en `canvas/silabo.json`.
-- **Privacidad y registro:** el token se lee de `CANVAS_TOKEN` o `~/.config/aula-uti/canvas-token` (permisos 600), nunca del aula, y no se imprime. Las inscripciones se cuentan por tipo, sin nombres. `canvas/api/operaciones.jsonl` registra método, ruta y estado de cada escritura (sin contenido). El respaldo del curso va a `canvas/api/privado/` (excluido de respaldos, git y entregas).
+- **Token:** el docente lo crea con caducidad y lo pega en el chat; el asistente lo guarda de inmediato con `token --stdin` en `~/.config/aula-uti/canvas-token` (permisos 600, fuera del aula), no lo repite ni lo escribe en archivos del aula, ESTADO.md, informes o commits, y recuerda revocarlo al terminar (queda en el historial de la conversación).
+- **Privacidad y registro:** el token se lee de `CANVAS_TOKEN` o `~/.config/aula-uti/canvas-token`, nunca del aula, y no se imprime. Las inscripciones se cuentan por tipo, sin nombres. `canvas/api/operaciones.jsonl` registra método, ruta y estado de cada escritura (sin contenido). El respaldo del curso va a `canvas/api/privado/` (excluido de respaldos, git y entregas).
 - **Alcance probado:** suite con un Canvas ficticio en memoria (URL que cambia al renombrar, módulos que publican su contenido, carga en tres pasos) y un curso real de Indoamérica actualizado con la versión anterior específica del piloto. Esto no certifica otras configuraciones institucionales: revisa siempre en Vista de estudiante.
 
 ## Traducción de páginas y tareas

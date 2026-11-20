@@ -28,6 +28,18 @@ class Distribucion(unittest.TestCase):
         val = json.loads((ROOT / 'dist/validacion.json').read_text(encoding='utf-8'))
         self.assertEqual(val.get('version'), v, 'dist/validacion.json debe declarar la versión publicada')
 
+    def test_preguntas_iniciales_notebooklm_y_canvas(self):
+        inicio = (SKILL / 'SKILL.md').read_text(encoding='utf-8').split('## 1.', 1)[0]
+        self.assertIn('NotebookLM', inicio)
+        self.assertIn('API de Canvas', inicio)
+        self.assertIn('enlace del curso', inicio)
+        self.assertIn('token --stdin', inicio)
+        self.assertIn('pegue en el chat', inicio)
+        self.assertIn('revocarlo', inicio)
+        self.assertIn('No lo repitas', inicio)
+        self.assertIn('conformidad expresa', inicio)
+        self.assertIn('API de Canvas', (SKILL / 'GUIA_DE_USO.md').read_text(encoding='utf-8'))
+
     def test_guia_de_una_sola_fuente(self):
         r = subprocess.run([sys.executable, str(ROOT / 'tools/guias.py'), 'comprobar'], capture_output=True, text=True, encoding='utf-8')
         self.assertEqual(r.returncode, 0, r.stdout)

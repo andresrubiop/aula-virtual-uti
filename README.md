@@ -4,7 +4,7 @@ Skill para Claude y Codex que acompaña a docentes de la Universidad Tecnológic
 
 Autor: **Andrès Rubio Proaño** · [@andresrubiop](https://github.com/andresrubiop).
 
-**Versión 0.12.1** · [cambios](aula-virtual-uti/CAMBIOS.md) · [descargar la skill](dist/aula-virtual-uti.skill). Para actualizar una instalación y tus aulas, consulta la sección 3 de la guía.
+**Versión 0.12.2** · [cambios](aula-virtual-uti/CAMBIOS.md) · [descargar la skill](dist/aula-virtual-uti.skill). Para actualizar una instalación y tus aulas, consulta la sección 3 de la guía.
 
 **Licencia:** [CC BY 4.0](aula-virtual-uti/LICENCIA.md). Puedes usarla, adaptarla y compartirla con otros docentes citando al autor. Los logos y la plantilla Canvas de la UTI, KaTeX y las fuentes incluidas conservan sus propias condiciones.
 

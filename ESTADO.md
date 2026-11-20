@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-20 · **Versión 0.12.2**: al inicio el asistente pregunta también la vía para llevar el aula a Canvas (API con token del docente o importación del `.imscc`) y el enlace del curso. Por decisión del autor el token se pega en el chat: el asistente lo guarda al momento fuera del aula (`canvas_api.py token --stdin`), no lo repite ni lo escribe en archivos y recuerda revocarlo. 150/150 regresiones PASS.
+
 2026-11-20 · **Versión 0.12.1**: licencia CC BY 4.0 (con excepciones de terceros en `aula-virtual-uti/LICENCIA.md`), guía de uso y PDF actualizados con Canvas por API, videos en inglés con subtítulos, calidad, accesibilidad y glosario; «Problemas conocidos» al día. Lista para compartir con otros docentes. 148/148 regresiones PASS.
 
 2026-11-19 · **Versión 0.12.0** · Mejora 12 (documentación y distribución): versión en `SKILL.md` (`metadata.version`), visible en `entorno.py` y anotada en cada aula (`control/VERSION_SKILL`); historial en `aula-virtual-uti/CAMBIOS.md`; `scripts/actualizar_aula.py` lleva las herramientas de un aula existente a la versión instalada con vista previa, copia de lo reemplazado y sin tocar contenido (el motor solo con `--incluir-motor`); la guía tiene una sola fuente (`aula-virtual-uti/GUIA_DE_USO.md`) y `tools/guias.py` genera la de la raíz y comprueba que el PDF corresponda. Mejoras 1–8 y 10–12 completas; la 9 se descartó. 148/148 regresiones PASS.

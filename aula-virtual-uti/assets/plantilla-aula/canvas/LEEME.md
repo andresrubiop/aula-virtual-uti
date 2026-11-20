@@ -13,9 +13,9 @@ Si tu curso ya contiene material, conserva una exportación antes de modificarlo
 Si tu curso ya tiene la plantilla institucional y no puedes borrar páginas, importar el archivo dejaría páginas duplicadas. En ese caso el asistente puede actualizar el curso directamente: cambia cada página en su lugar, crea solo las que faltan y enlaza los archivos y tareas reales del curso.
 
 1. Crea un token en Canvas: **Cuenta → Configuraciones → Nuevo token de acceso** (ponle fecha de caducidad).
-2. En tu terminal, dentro de la carpeta del aula, guárdalo tú mismo (no se muestra al escribirlo): `python3 canvas/canvas_api.py token`. No lo pegues en el chat.
+2. Pégalo en el chat cuando el asistente te lo pida: él lo guarda en tu equipo, fuera del aula. (Si prefieres, guárdalo tú en la terminal con `python3 canvas/canvas_api.py token`.)
 3. El asistente ejecuta `comprobar` y `plan` (solo leen) y te muestra qué cambiará. Con tu conformidad ejecuta `aplicar`: antes guarda una copia del curso en `canvas/api/privado/`.
-4. Revisa el curso en **Vista de estudiante**. Cuando termines, **revoca el token** en la misma pantalla de Canvas.
+4. Revisa el curso en **Vista de estudiante**. Cuando termines, **revoca el token** en la misma pantalla de Canvas: queda en el historial de la conversación.
 
 Las tareas nuevas quedan sin publicar; las existentes conservan sus puntos y publicación. Inicio no se reemplaza: solo se le antepone el aula. Las páginas genéricas que el aula sustituye se despublican (no se borran). Los módulos que no vienen en el aula no se tocan.
 
@@ -50,7 +50,7 @@ Guarda una copia de la entrega anterior. Pide al asistente que prepare los archi
 
 ## Para el asistente
 
-Vía API (`canvas/canvas_api.py`): configura el curso con `configurar --curso <URL>`; el docente guarda el token con `token` (o la variable `CANVAS_TOKEN`); nunca lo pidas por el chat ni lo copies a archivos del aula. Ejecuta `comprobar` y `plan`, explica el plan (páginas que se actualizan, crean y despublican; tareas; marcas pendientes) y aplica solo con la conformidad expresa del docente para ese curso. `aplicar` se niega si quedan marcas que verían los estudiantes; corrígelas en el sílabo o el aula y regenera el paquete. Después ejecuta `verificar` y registra en ESTADO.md (Operaciones externas) el curso, la autorización, el resultado y el respaldo `canvas/api/privado/respaldo-*.json`. Repetir `aplicar` actualiza usando `canvas/api/mapa.json`. Para solo el aula en Inicio: `inicio --aplicar`.
+Vía API (`canvas/canvas_api.py`): configura el curso con `configurar --curso <URL>`; pide al docente que pegue el token en el chat y guárdalo al momento con `token --stdin` (o la variable `CANVAS_TOKEN`); no lo repitas ni lo copies a archivos del aula, y recuérdale revocarlo al terminar. Ejecuta `comprobar` y `plan`, explica el plan (páginas que se actualizan, crean y despublican; tareas; marcas pendientes) y aplica solo con la conformidad expresa del docente para ese curso. `aplicar` se niega si quedan marcas que verían los estudiantes; corrígelas en el sílabo o el aula y regenera el paquete. Después ejecuta `verificar` y registra en ESTADO.md (Operaciones externas) el curso, la autorización, el resultado y el respaldo `canvas/api/privado/respaldo-*.json`. Repetir `aplicar` actualiza usando `canvas/api/mapa.json`. Para solo el aula en Inicio: `inicio --aplicar`.
 
 
 Ejecuta `python3 canvas/validar_silabo.py` antes de `python3 canvas/generar_canvas.py`, y después `python3 canvas/verificar_paquete.py`. El esquema detallado y el ejemplo están en `references/silabo.md` y `references/silabo-ejemplo.json` de la skill instalada. Copia el ejemplo a `canvas/silabo.json` solo para una demostración; para un curso real transcribe sus fuentes. No declares una demostración como sílabo aprobado.

@@ -31,7 +31,7 @@ Actualizar este bloque en cada hito y antes de cerrar. Al retomar, leer este arc
 | 6 · PDF y aula para llevar | ⬜ | |
 | 7 · Videos | ⬜ | |
 | 8 · Paquete de Canvas generado y verificado | ⬜ | |
-| 9 · Importado en Canvas y revisado por el docente | ⬜ | Lo hace el docente con la guía |
+| 9 · En Canvas y revisado por el docente | ⬜ | Vía: [API con token del docente / importación del .imscc] · curso: [enlace] |
 
 ## 2. Unidades
 

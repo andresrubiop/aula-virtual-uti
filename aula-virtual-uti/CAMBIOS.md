@@ -2,6 +2,11 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.12.2 · 2026-11-20
+
+- Al inicio el asistente pregunta también cómo llevar el aula a Canvas (API con token del docente o importación del `.imscc`) y el enlace del curso; lo registra en ESTADO.md y, si es la API, configura el curso y comprueba acceso y permisos en solo lectura.
+- El token de Canvas se pega en el chat (lo más sencillo para el docente): el asistente lo guarda al momento fuera del aula con `canvas_api.py token --stdin`, no lo repite ni lo escribe en archivos, y recuerda revocarlo al terminar porque queda en el historial de la conversación.
+
 ## 0.12.1 · 2026-11-20
 
 - **Licencia CC BY 4.0** (`LICENCIA.md`, también en `SKILL.md`), con las excepciones de terceros: logos y plantilla Canvas de la UTI, KaTeX (MIT), fuentes Poppins y JetBrains Mono (SIL OFL 1.1).

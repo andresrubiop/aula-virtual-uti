@@ -5,7 +5,8 @@ Sirve cuando el curso ya tiene la plantilla institucional y el docente no puede 
 duplicaría páginas. Con la API se actualiza cada página en su lugar, se crean solo las que faltan y los enlaces
 apuntan a las páginas, archivos y tareas reales del curso. Repetir la ejecución actualiza; no duplica.
 
-    python3 canvas/canvas_api.py token                      # el DOCENTE guarda su token (entrada oculta) — una vez
+    python3 canvas/canvas_api.py token                      # el docente guarda su token (entrada oculta) — una vez
+    printf '%s' "$TOKEN" | python3 canvas/canvas_api.py token --stdin   # o el asistente, si el docente lo pegó en el chat
     python3 canvas/canvas_api.py configurar --curso https://indoamerica.instructure.com/courses/12345
     python3 canvas/canvas_api.py comprobar                  # solo lectura: acceso, permisos e inventario del curso
     python3 canvas/canvas_api.py plan                       # solo lectura: qué se subiría, actualizaría y crearía
@@ -484,7 +485,8 @@ def verificar(c):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='orden', required=True)
-    sub.add_parser('token', help='guardar el token del docente (entrada oculta)')
+    s = sub.add_parser('token', help='guardar el token del docente (entrada oculta, o --stdin si lo pegó en el chat)')
+    s.add_argument('--stdin', action='store_true', help='leer el token de la entrada estándar (el asistente lo recibe del docente)')
     s = sub.add_parser('configurar', help='curso de destino')
     s.add_argument('--curso', required=True, help='URL del curso: https://<institución>.instructure.com/courses/<número>')
     sub.add_parser('comprobar', help='acceso, permisos e inventario (solo lectura)')
@@ -499,14 +501,15 @@ def main():
     a = ap.parse_args()
 
     if a.orden == 'token':
-        t = getpass.getpass('Pega tu token de Canvas (no se mostrará): ').strip()
+        t = sys.stdin.read().strip() if a.stdin else getpass.getpass('Pega tu token de Canvas (no se mostrará): ').strip()
         if not re.fullmatch(r'[\w~.\-]{20,}', t):
             sys.exit('Eso no parece un token de Canvas. No se guardó nada.')
         TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
         os.chmod(TOKEN_FILE.parent, 0o700)
         TOKEN_FILE.write_text(t + '\n', encoding='utf-8')
         os.chmod(TOKEN_FILE, 0o600)
-        print(f'Guardado en {TOKEN_FILE} (solo tu usuario puede leerlo). Revócalo en Canvas cuando ya no se use.')
+        print(f'Token guardado en {TOKEN_FILE} (fuera del aula; solo tu usuario puede leerlo). '
+              'Revócalo en Canvas (Cuenta → Configuraciones → Tokens de acceso) cuando termines.')
         return 0
     if a.orden == 'configurar':
         u = urllib.parse.urlparse(a.curso)
