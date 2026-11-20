@@ -2,6 +2,10 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.14.1 · 2026-11-20
+
+- `hub/tools/anim-e2e.mjs`: la prueba propia de la animación de memoria de FSO solo se ejecuta si el aula tiene esa animación (antes fallaba en cualquier aula con su propia A4.1). Probado con un aula real de 16 animaciones: 336 comprobaciones bien.
+
 ## 0.14.0 · 2026-11-20
 
 - **GitHub obligatorio:** `entorno.py` exige Git y comprueba la sesión de GitHub; el aula nace como repositorio y `control/repositorio.py` la conecta a un repositorio **privado** de la cuenta del docente (`iniciar --crear`), guarda y sube en cada hito (`guardar`) y se detiene ante privados, tokens o archivos de más de 50 MB. Sin GitHub, el generador de Canvas solo produce un borrador (`--borrador`); el panel lo muestra.

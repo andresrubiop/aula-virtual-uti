@@ -95,8 +95,9 @@ for (const id of ids) {
     check(`${id}: «Simular: ${p.label}» la lanza (${p.run ? 'recorriendo las escenas' : 'modo libre'})`,
       r.mode === (p.run ? 'corrido' : 'libre') && r.on && sceneOk && paramsOk && (r.playing || await ev(`${S}.t > 0`)), JSON.stringify([p, r]));
   }
-  // A4.1: una simulación elegida (zona) explica esa traducción, no la escena de fondo (revisión de Codex)
-  if (id === 'A4.1') {
+  // Prueba propia de la animación de memoria de FSO (A4.1 con «Simular: pila»); solo si esta aula tiene esa animación
+  const tienePila = await ev(`${S}.presetList().some(p => p.params && p.params.zone === 'stack')`);
+  if (id === 'A4.1' && tienePila) {
     await ev(`(() => { const st = ${S}; st.setMode('libre', true); st.scene = -1; st.go(3, false); st.speed = 40; return true; })()`);
     const k = await ev(`${S}.presetList().findIndex(p => p.params && p.params.zone === 'stack')`);
     await ev(`${S}.presetBtns[${k}].click()`);
