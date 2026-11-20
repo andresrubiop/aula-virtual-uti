@@ -167,7 +167,7 @@ El asistente preguntará si tienes cuenta de NotebookLM y quieres videos. Usa un
 1. Abre [NotebookLM](https://notebooklm.google.com/) y entra con tu cuenta de Google. Si hay varias, comprueba el perfil seleccionado; completa tú la verificación de acceso. Si tu institución no habilitó el servicio, consulta a soporte o continúa sin videos.
 2. El asistente preparará PDF públicos de la unidad y guiones ES/EN. Revisa la lista exacta de fuentes y acuerda cuáles pueden enviarse.
 3. Crea un cuaderno para la materia o unidad y añade esas fuentes. En **Studio**, selecciona **Resumen de video**, personaliza idioma e instrucciones con el guion preparado y genera.
-4. Revisa el resultado completo, descarga el video y colócalo en `aula/videos/bruto/` con el nombre que indique el asistente, por ejemplo `V1.1.es.mp4`. Repite para inglés si corresponde.
+4. Revisa el resultado completo, descarga el video y colócalo en `aula/videos/bruto/` con el nombre que indique el asistente, por ejemplo `V1.1.en.mp4`. Cada video se genera una vez, en inglés: el asistente prepara después en tu equipo los subtítulos en español y te pide revisarlos.
 5. Pide integrar los archivos, añadir identidad UTI, recompilar y registrar el resultado.
 
 Consulta las guías oficiales de [crear un cuaderno](https://support.google.com/notebooklm/answer/16206563?hl=es) y [generar videos](https://support.google.com/notebooklm/answer/16454555?hl=es). Los controles, acceso y cuota pueden variar; una generación puede tardar y requiere revisión.
@@ -178,11 +178,11 @@ Pide: «Comprueba si hay una herramienta NotebookLM compatible en este equipo; s
 
 La skill incluye un adaptador para la CLI de terceros `nlm`. El asistente comprobará versión y ayuda antes de instalarla o usarla. Para la versión compatible, el docente inicia sesión mediante `nlm login --profile uti`; luego el asistente puede ejecutar el adaptador con ese perfil y autorización. No hay un botón universal de conexión Google común a ambos asistentes. Si una integración ofrece OAuth, inicia sesión y acepta sus permisos en la página del proveedor; no pegues contraseñas, cookies, tokens ni códigos en el chat.
 
-El modo autenticado aún requiere validación real. Si falla, usa el camino guiado. Los trabajos pendientes se registran en `videos/estado.json` y se resumen en `ESTADO.md`; antes de reintentar una generación incierta hay que comprobar si ya terminó. Puedes completar el aula con guiones y dejar videos pendientes. Consulta [la referencia técnica de videos](references/videos.md).
+Este modo se probó con una generación real: video en inglés descargado, con portada UTI y subtítulos en español. Si falla, usa el camino guiado. Los trabajos pendientes se registran en `videos/estado.json` y se resumen en `ESTADO.md`; antes de reintentar una generación incierta hay que comprobar si ya terminó. Puedes completar el aula con guiones y dejar videos pendientes. Consulta [la referencia técnica de videos](references/videos.md).
 
 ## 7. Revisar la entrega
 
-Pide enlaces a los archivos reales y un resumen de lo probado y pendiente. Añade: «Muéstrame la cobertura del sílabo y qué falta». En `aula/control/COBERTURA.md` revisa RA, temas, prácticas y evaluaciones, sus recursos ES/EN y revisiones vigentes. Un archivo existente no demuestra que el contenido esté cubierto.
+Pide enlaces a los archivos reales y un resumen de lo probado y pendiente. Añade: «Muéstrame la cobertura del sílabo, la revisión de calidad y accesibilidad, y qué falta». En `aula/control/CALIDAD.md` marca la lista de cada unidad; `ACCESIBILIDAD.md` resume contraste, teclado y textos alternativos. Para los términos, pide «propón el glosario»: queda en Recursos → Glosario. En `aula/control/COBERTURA.md` revisa RA, temas, prácticas y evaluaciones, sus recursos ES/EN y revisiones vigentes. Un archivo existente no demuestra que el contenido esté cubierto.
 
 | Dentro de `aula/` | Para qué sirve |
 |---|---|
@@ -200,7 +200,9 @@ Comprueba español e inglés, navegación, presentaciones, animaciones, manuales
 
 ### Preparar la operación
 
-Entra al [acceso institucional de Canvas](https://indoamerica.instructure.com/login/saml) y completa tú el acceso institucional. Ese enlace fue proporcionado para este proyecto; no se ha certificado una sesión SAML ni una importación real desde esta skill. Selecciona el curso y período correctos, con permisos de profesor. Usa primero un curso de ensayo; si no lo tienes o no aparecen las opciones, solicita apoyo institucional.
+Entra al [acceso institucional de Canvas](https://indoamerica.instructure.com/login/saml) y completa tú el acceso institucional. La actualización por API se probó en un curso real; la importación del `.imscc` y el acceso SAML no se han certificado. Selecciona el curso y período correctos, con permisos de profesor. Usa primero un curso de ensayo; si no lo tienes o no aparecen las opciones, solicita apoyo institucional.
+
+**Si el curso ya tiene la plantilla institucional**, importar puede duplicar páginas que no puedes borrar. Pide en su lugar «actualiza mi curso por la API»: crea un token en Canvas (**Cuenta → Configuraciones → Nuevo token de acceso**, con caducidad), guárdalo tú en la terminal con `python3 canvas/canvas_api.py token` y nunca lo pegues en el chat. El asistente te muestra el plan sin cambiar nada y aplica solo con tu conformidad; las tareas nuevas quedan sin publicar. Al terminar, revoca el token.
 
 Si el curso ya tiene material, conserva un export original antes de importar y comparte con el asistente únicamente el paquete autorizado que necesita como base. Revisa con él qué contenido se incorporará y el efecto sobre lo existente. No hagas importaciones repetidas suponiendo que evitarán duplicados.
 
@@ -233,5 +235,7 @@ Publica solo los elementos aprobados y comunica al asistente el resultado. Píde
 | No está el estado después de cambiar de asistente | Abre la misma carpeta y busca `aula/ESTADO.md`; si falta, reconstruye desde archivos verificados. |
 | NotebookLM no permite generar | Comprueba cuenta, acceso y cuota; conserva guiones y sigue con el aula. |
 | Canvas muestra errores o duplicados | Detén nuevas importaciones, conserva el informe y revisa con el asistente o soporte. |
+| Canvas rechaza el token | Pudo caducar o ser revocado: crea otro y guárdalo de nuevo con `canvas_api.py token`. |
+| La skill se actualizó | Pide «actualiza las herramientas de mi aula a la versión instalada» (sección 3). |
 
-Instrucciones contrastadas con documentación oficial el 2026-11-13. La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).
+Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.12.1 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).

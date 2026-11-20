@@ -1,7 +1,7 @@
 {
   "file": "dist/aula-virtual-uti.skill",
-  "sha256": "4a1c9b5ca476a51da9372fa27f6faf5f1c1b44406f529bd2045993daba9cff6b",
-  "bytes": 9805295,
+  "sha256": "7351ad81323dc55b9473641895162af8a2d0bfea2971d76c3f404c66baf32fdb",
+  "bytes": 9807231,
   "extracted_create_build": "PASS",
   "example_not_official_syllabus": "PASS",
   "html_presentation_embedded": "PASS",
@@ -75,7 +75,8 @@
   "pedagogical_quality_checks": "PASS",
   "glossary_consistency": "PASS",
   "panel_video_state": "PASS",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "guide_single_source": "PASS",
-  "update_existing_classroom": "PASS"
+  "update_existing_classroom": "PASS",
+  "license": "CC-BY-4.0 (excepciones de terceros en LICENCIA.md)"
 }

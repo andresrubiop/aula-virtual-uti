@@ -1,8 +1,9 @@
 ---
 name: aula-virtual-uti
 description: Crea, completa y mantiene aulas virtuales de la Universidad Tecnológica Indoamérica a partir del sílabo vigente, sílabos anteriores, presentaciones, guías prácticas y lecturas del docente. Produce un aula interactiva local ES/EN con identidad UTI, PDF, animaciones, videos opcionales de NotebookLM y un paquete importable en Canvas Instructure. Úsala cuando un docente quiera preparar su proyecto formativo, transformar sus materiales en un aula, continuar un aula UTI o generar su paquete Canvas, aunque no mencione una skill. Compatible con Claude y Codex.
+license: CC-BY-4.0 (ver LICENCIA.md; logos UTI y componentes de terceros con sus propias condiciones)
 metadata:
-  version: "0.12.0"
+  version: "0.12.1"
 ---
 
 # Aula virtual UTI

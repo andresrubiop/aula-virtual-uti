@@ -2,6 +2,11 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.12.1 · 2026-11-20
+
+- **Licencia CC BY 4.0** (`LICENCIA.md`, también en `SKILL.md`), con las excepciones de terceros: logos y plantilla Canvas de la UTI, KaTeX (MIT), fuentes Poppins y JetBrains Mono (SIL OFL 1.1).
+- **Guía de uso y PDF al día** para compartir con otros docentes: actualización de Canvas por API con token propio, videos en inglés con subtítulos en español, revisión de calidad, accesibilidad y glosario, nuevos problemas comunes. «Problemas conocidos» actualizado.
+
 ## 0.12.0 · 2026-11-19
 
 - **Documentación y distribución:** versión visible en `SKILL.md`, en `entorno.py` y en cada aula; este registro de cambios; `scripts/actualizar_aula.py` para llevar las herramientas de un aula a la versión instalada con vista previa y copia de lo reemplazado; la guía de uso tiene una sola fuente (la de la skill) y la del repositorio y el PDF se generan y comprueban desde ella.
