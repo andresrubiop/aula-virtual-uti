@@ -1,0 +1,186 @@
+{
+ "version": 1,
+ "_comentario": "EJEMPLO FICTICIO del formato de canvas/pis.json. El asistente transcribe el documento real del PIS (fuentes/pis/) y traduce al inglés; no inventa datos.",
+ "origen": {
+  "rol": "articulador",
+  "documentos": [
+   "fuentes/pis/PIS-ejemplo.pdf"
+  ]
+ },
+ "es": {
+  "titulo": "Aula ficticia de repaso colaborativo",
+  "pf_articulador": "Proyecto formativo A (articulador, ficticio)",
+  "reto": "Mejorar el estudio autónomo de un grupo ficticio con planes de repaso compartidos (dato de ejemplo).",
+  "proposito": "Integrar dos proyectos formativos en una evidencia común (ejemplo).",
+  "ra": "Diseña planes de repaso basados en evidencia para un contexto real (ejemplo).",
+  "proyectos": [
+   {
+    "nombre": "Proyecto formativo A",
+    "ra": "Resultado A (ficticio).",
+    "aporte": "Diagnóstico y plan.",
+    "articulador": true
+   },
+   {
+    "nombre": "Proyecto formativo B",
+    "ra": "Resultado B (ficticio).",
+    "aporte": "Herramienta de seguimiento."
+   }
+  ],
+  "momentos": [
+   {
+    "n": 1,
+    "nombre": "Momento 1. Diagnóstico",
+    "fechas": "01/03/2027–19/03/2027",
+    "semanas": "1–3",
+    "hito": "",
+    "proposito": "Delimitar el problema.",
+    "actividades": [
+     "Reunir datos del contexto.",
+     "Definir indicadores."
+    ],
+    "evidencia": "Diagnóstico con línea base."
+   },
+   {
+    "n": 2,
+    "nombre": "Momento 2. Solución y cierre",
+    "fechas": "22/03/2027–30/04/2027",
+    "semanas": "4–9",
+    "hito": "Predefensa en la semana 8",
+    "proposito": "Construir y validar la solución.",
+    "actividades": [
+     "Construir el plan.",
+     "Validarlo con actores."
+    ],
+    "evidencia": "Plan validado y portafolio."
+   }
+  ],
+  "evidencia": {
+   "titulo": "Portafolio de planes de repaso",
+   "descripcion": "Portafolio digital con los planes y su validación (ejemplo).",
+   "trabajos": [
+    "Plan del equipo 1",
+    "Plan del equipo 2"
+   ],
+   "componentes": [
+    "Diagnóstico",
+    "Plan",
+    "Validación"
+   ]
+  },
+  "rubrica": {
+   "niveles": [
+    "Receptivo (0,0–5,9)",
+    "Resolutivo (6,0–6,9)",
+    "Reflexivo (7,0–7,9)",
+    "Crítico (8,0–8,9)",
+    "Cocreativo (9,0–10,0)"
+   ],
+   "indicadores": [
+    {
+     "nombre": "Pertinencia del problema",
+     "descriptores": [
+      "Describe sin delimitar.",
+      "Delimita parcialmente.",
+      "Delimita con datos.",
+      "Contrasta fuentes y actores.",
+      "Transforma el contexto con evidencia."
+     ]
+    }
+   ],
+   "reglas": [
+    "Se valora cada indicador con evidencia verificable."
+   ]
+  },
+  "competencias": [
+   "Competencia ficticia del perfil de egreso."
+  ]
+ },
+ "en": {
+  "titulo": "Fictitious collaborative review classroom",
+  "pf_articulador": "Course A (articulating, fictitious)",
+  "reto": "Improve the independent study of a fictitious group with shared review plans (sample data).",
+  "proposito": "Bring two courses together in one shared piece of evidence (sample).",
+  "ra": "Designs evidence-based review plans for a real context (sample).",
+  "proyectos": [
+   {
+    "nombre": "Course A",
+    "ra": "Outcome A (fictitious).",
+    "aporte": "Diagnosis and plan.",
+    "articulador": true
+   },
+   {
+    "nombre": "Course B",
+    "ra": "Outcome B (fictitious).",
+    "aporte": "Tracking tool."
+   }
+  ],
+  "momentos": [
+   {
+    "n": 1,
+    "nombre": "Stage 1. Diagnosis",
+    "fechas": "01/03/2027–19/03/2027",
+    "semanas": "1–3",
+    "hito": "",
+    "proposito": "Define the problem.",
+    "actividades": [
+     "Gather context data.",
+     "Define indicators."
+    ],
+    "evidencia": "Diagnosis with a baseline."
+   },
+   {
+    "n": 2,
+    "nombre": "Stage 2. Solution and closure",
+    "fechas": "22/03/2027–30/04/2027",
+    "semanas": "4–9",
+    "hito": "Pre-defence in week 8",
+    "proposito": "Build and validate the solution.",
+    "actividades": [
+     "Build the plan.",
+     "Validate it with stakeholders."
+    ],
+    "evidencia": "Validated plan and portfolio."
+   }
+  ],
+  "evidencia": {
+   "titulo": "Portfolio of review plans",
+   "descripcion": "Digital portfolio with the plans and their validation (sample).",
+   "trabajos": [
+    "Team 1 plan",
+    "Team 2 plan"
+   ],
+   "componentes": [
+    "Diagnosis",
+    "Plan",
+    "Validation"
+   ]
+  },
+  "rubrica": {
+   "niveles": [
+    "Receptive (0.0–5.9)",
+    "Resolutive (6.0–6.9)",
+    "Reflective (7.0–7.9)",
+    "Critical (8.0–8.9)",
+    "Co-creative (9.0–10.0)"
+   ],
+   "indicadores": [
+    {
+     "nombre": "Relevance of the problem",
+     "descriptores": [
+      "Describes without defining.",
+      "Partly defines.",
+      "Defines with data.",
+      "Contrasts sources and stakeholders.",
+      "Transforms the context with evidence."
+     ]
+    }
+   ],
+   "reglas": [
+    "Each indicator is graded with verifiable evidence."
+   ]
+  },
+  "competencias": [
+   "Fictitious graduate profile competence."
+  ]
+ }
+}

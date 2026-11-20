@@ -253,6 +253,9 @@ def comprobaciones(root):
     else:
         out['cobertura'] = {'no_iniciada': True}
     out['videos'] = estado_videos(root)
+    import pis
+    rep, err = intento(lambda: pis.verificar(root))
+    out['pis'] = {'error': err} if err else rep
     import respaldo
     rep, err = intento(lambda: respaldo.resumen(root))
     out['respaldos'] = {'error': err} if err else rep
@@ -378,6 +381,24 @@ def fecha_corta(m):
     return f + (f' · {m["unidad"]}' if m.get('unidad') else '') + f' · {m.get("motivo", "")}'
 
 
+def pis_card(p):
+    """PIS según el rol que respondió el docente: articulador (documento y datos obligatorios) o aportante (paquete compartido)."""
+    if p.get('error'):
+        return f'<div class="chk err"><h3>PIS</h3><p>No se pudo comprobar: {escape(p["error"])}</p></div>'
+    rol = p.get('rol')
+    if rol == 'no_aplica':
+        return '<div class="chk idle"><h3>PIS</h3><p>Este período no tiene PIS.</p></div>'
+    if rol not in ('articulador', 'aportante'):
+        return ('<div class="chk warn"><h3>PIS</h3><p>Falta tu respuesta: ¿tu proyecto formativo es el articulador del PIS, '
+                'aporta a un PIS de otro proyecto formativo o no aplica?</p></div>')
+    texto = ('Tu proyecto formativo es el <strong>articulador</strong>: el documento del PIS y su módulo son obligatorios y se comparten con los demás.'
+             if rol == 'articulador' else 'Tu proyecto formativo <strong>aporta</strong> al PIS: se usa el PIS que comparte el docente articulador.')
+    lista = ''.join(f'<li>{escape(x)}</li>' for x in p.get('errores', []) + p.get('pendientes', []))
+    clase = 'err' if p.get('errores') else 'warn' if p.get('pendientes') else 'ok'
+    listo = ' Vista «PIS» del aula y módulo de Canvas listos para revisar.' if clase == 'ok' else ''
+    return f'<div class="chk {clase}"><h3>PIS</h3><p>{texto}{listo}</p>' + (f'<ul>{lista}</ul>' if lista else '') + '</div>'
+
+
 def videos_html(v):
     if not v.get('lista'):
         return (f'<div class="chk idle"><h3>Videos</h3><p>Aún no hay guiones de video ({v.get("archivos", 0)} archivo(s) en videos/). '
@@ -442,7 +463,7 @@ def vista(d):
                   + (fecha_corta(rs['ultimo_aprobado']) if rs.get('ultimo_aprobado') else 'ninguno todavía') + '.',
                   [f'Evidencia aprobada sin copia guardada: `{x}` (pide un respaldo «aprobado»).' for x in rs.get('aprobadas_sin_copia', [])]
                   + ([f'{rs["dañados"]} respaldo(s) no se pudieron leer: pide «comprueba los respaldos».'] if rs.get('dañados') else [])),
-              videos_html(c['videos'])]
+              videos_html(c['videos']), pis_card(c.get('pis') or {})]
 
     grupos = []
     for g in d['accesos']:

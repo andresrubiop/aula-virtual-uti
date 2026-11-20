@@ -28,6 +28,7 @@ Los nombres son sensibles a mayúsculas y tildes. Las fechas son cadenas `dd/mm/
 | `ejes` | Lista de pares `[nombre, descripción]`; puede estar vacía si falta información. |
 | `ra` | Lista de filas `[id, texto del resultado, evidencia]`. ID estable, por ejemplo `RA1`. No usar diccionarios. |
 | `pis`, `aporte_pis` | Textos cuando el documento declare PIS. Si no aparece, omite o deja vacío y registra la consulta pendiente; no inventes un PIS para evitar un aviso. |
+| `pis_rol` | Obligatorio si hay `pis`. Respuesta del docente, no dato del sílabo: `articulador` (su proyecto formativo integra el PIS: el documento del PIS en `fuentes/pis/` y `canvas/pis.json` pasan a ser obligatorios), `aportante` (se importa el PIS que comparte el articulador) o `no_aplica`. Ver [PIS](pis.md). |
 | `pis_ra` | Opcional: lista de pares `[proyecto formativo, resultado de aprendizaje]` de los **demás** proyectos formativos que aportan al PIS, copiados del documento del PIS que entregue el docente. Completa las tareas PIS en Canvas; sin este campo queda la marca «Agregar los RA…», que `canvas_api.py` señala como pendiente visible. |
 | `metodologias` | Lista no vacía de textos: primero la metodología principal, luego las complementarias. |
 | `rubrica_final` | Lista de filas de seis textos: indicador, Receptivo, Resolutivo, Reflexivo, Crítico, Cocreativo. |

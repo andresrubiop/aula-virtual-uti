@@ -34,7 +34,8 @@ LIMITE = ('Ficha de cotejo. La coincidencia de palabras con la página indicada 
 EXCLUIDOS = [r'/_[^/]*(/.*)?', r'/no_publicar(/.*)?', r'/curso/canvas_id', r'/curso/bienvenida',
              r'/momentos/\d+/n', r'/momentos/\d+/sesiones/\d+/n', r'/momentos/\d+/sesiones/\d+/aula(/.*)?',
              r'/momentos/\d+/ra/\d+', r'/ra/\d+/0', r'/practicas/\d+/(id|momento|sesion|unidad|archivo)(/.*)?',
-             r'/practicas/\d+/ra/\d+', r'/bibliografia/\d+/[1-9]\d*']
+             r'/practicas/\d+/ra/\d+', r'/bibliografia/\d+/[1-9]\d*',
+             r'/pis_rol', r'/pis_ra(/.*)?']   # respuesta del docente y datos del documento del PIS, no del sílabo
 ESTADOS = {
     'exacta': ('✔', 'Texto localizado en la página'),
     'palabras': ('✔', 'Palabras localizadas en la página (orden o columnas distintos)'),

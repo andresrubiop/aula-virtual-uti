@@ -593,6 +593,52 @@ def recursos_page(M, s):
 AULA_INICIO = ('<!--aula-inicio-->', '<!--/aula-inicio-->')
 
 
+PIS_DATA = None
+
+
+def pis_pages():
+    """Páginas del módulo PIS (español) desde canvas/pis.json: proyecto, un momento por página, rúbrica y evidencia."""
+    if not PIS_DATA:
+        return []
+    D = PIS_DATA
+    ol = lambda xs: '<ol style="margin: 0; padding-left: 22px;">' + ''.join(f'<li style="margin-bottom: 4px;">{e(x)}</li>' for x in xs) + '</ol>'
+    enlaces = ''.join(f'<li>{link(page_ref(PAGES[f"pis-m{i}"]["id"]), e(m["nombre"]) + " · " + e(m["fechas"]), BTN2)}</li>'
+                      for i, m in enumerate(D['momentos'], 1))
+    filas_pf = [[f'<strong>{e(p["nombre"])}</strong>' + (' (articulador)' if p.get('articulador') else ''), e(p['ra']), e(p['aporte'])] for p in D['proyectos']]
+    proyecto = card(f'PIS: {e(D["titulo"])}', [('Necesidad o reto', f'<p style="margin: 0;">{e(D["reto"])}</p>')]
+                    + ([('Propósito', f'<p style="margin: 0;">{e(D["proposito"])}</p>')] if D.get('proposito') else [])
+                    + [('Resultado de aprendizaje del PIS', f'<p style="margin: 0;"><strong>{e(D["ra"])}</strong></p>'),
+                       ('Proyecto formativo articulador', f'<p style="margin: 0;">{e(D["pf_articulador"])}</p>'),
+                       ('Momentos', f'<ul style="list-style: none; margin: 0; padding: 0;">{enlaces}</ul>'
+                                    f'<p style="margin: 10px 0 0 0;">{link(page_ref(PAGES["pis-rubrica"]["id"]), "Rúbrica y evidencia integradora")}</p>')],
+                    sub='Proyecto Interdisciplinario Socioformativo', hero=True)
+    proyecto += grid_table('Proyectos formativos que lo integran', ['Proyecto formativo', 'Resultado de aprendizaje', 'Aporte'], filas_pf, ['24%', '38%', '38%'])
+    if D.get('competencias'):
+        proyecto += card('Competencias del perfil de egreso', [(None, ul([e(x) for x in D['competencias']]))])
+    out = [('pis', proyecto)]
+    for i, m in enumerate(D['momentos'], 1):
+        filas = [(None, f'<p style="margin: 0;"><strong>{e(m["fechas"])}</strong>' + (f' · semanas {e(m["semanas"])}' if m.get('semanas') else '') + '</p>'),
+                 ('Propósito', f'<p style="margin: 0;">{e(m["proposito"])}</p>')]
+        if m.get('hito'):
+            filas.append(('Hito de evaluación', f'<p style="margin: 0;"><strong>{e(m["hito"])}</strong></p>'))
+        filas += [('Actividades', ol(m['actividades'])), ('Evidencia parcial', f'<p style="margin: 0;">{e(m["evidencia"])}</p>')]
+        out.append((f'pis-m{i}', card(e(m['nombre']), filas, sub=f'PIS: {e(D["titulo"])}', hero=True)))
+    ev, rb = D['evidencia'], D['rubrica']
+    filas_ev = [(None, f'<p style="margin: 0;">{e(ev["descripcion"])}</p>')]
+    if ev.get('trabajos'):
+        filas_ev.append(('Trabajos que integra', ol(ev['trabajos'])))
+    if ev.get('componentes'):
+        filas_ev.append(('Componentes verificables', ul([e(x) for x in ev['componentes']])))
+    pagina = card(e(ev['titulo']), filas_ev, sub='Evidencia integradora del PIS', hero=True)
+    pagina += grid_table('Rúbrica analítica del PIS', ['Indicador'] + [e(x) for x in rb['niveles']],
+                         [[f'<strong>{e(x["nombre"])}</strong>'] + [e(y) for y in x['descriptores']] for x in rb['indicadores']],
+                         ['20%'] + ['16%'] * 5)
+    if rb.get('reglas'):
+        pagina += card('Reglas de valoración', [(None, ul([e(x) for x in rb['reglas']]))])
+    out.append(('pis-rubrica', pagina))
+    return out
+
+
 def aula_inicio(texto):
     """Pone el aula interactiva incrustada a todo el ancho al comienzo de Inicio; el contenido institucional sigue intacto debajo."""
     f = f'{CARPETA}/{ARCHIVO}.html'
@@ -888,6 +934,16 @@ def main() -> int:
     import subprocess
     if subprocess.run([sys.executable, str(HERE / 'validar_silabo.py')]).returncode:
         return 1
+    global PIS_DATA
+    sys.path.insert(0, str(ROOT / 'control'))
+    import pis as pis_mod
+    sys.path.pop(0)
+    rp = pis_mod.verificar()
+    if rp['errores'] and DATA.get('pis_rol') == 'articulador':
+        sys.exit('PIS obligatorio (este proyecto formativo es el articulador):\n  - ' + '\n  - '.join(rp['errores']))
+    for x in rp['errores'] + rp['pendientes']:
+        aviso('PIS: ' + x)
+    PIS_DATA = json.loads(pis_mod.DATOS.read_text(encoding='utf-8'))['es'] if rp['datos'] and not rp['errores'] else None
     aula_html = ROOT / 'autonomo' / f'{ARCHIVO}.html'
     if not aula_html.exists():
         sys.exit(f'Falta autonomo/{ARCHIVO}.html: corre python3 hub/build.py && python3 hub/tools/autonomo.py --sin-paquete')
@@ -910,6 +966,11 @@ def main() -> int:
     PAGES['aula'] = dict(id=gid('aula'), file='aula-interactiva', title='Aula interactiva', pub=True)
     PAGES['materiales'] = dict(id=gid('materiales'), file='materiales-del-curso', title='Materiales del curso', pub=True)
     PAGES['guia'] = dict(id=gid('guia'), file='guia-del-docente', title='Guía del docente (oculta)', pub=False)
+    if PIS_DATA:
+        PAGES['pis'] = dict(id=gid('pis'), file='pis-proyecto', title='PIS: proyecto y proyectos formativos', pub=False)
+        for i, mo in enumerate(PIS_DATA['momentos'], 1):
+            PAGES[f'pis-m{i}'] = dict(id=gid(f'pis-m{i}'), file=f'pis-momento-{i}', title=f'PIS: {mo["nombre"]}', pub=False)   # «·» en un título vuelve «star» la URL de Canvas
+        PAGES['pis-rubrica'] = dict(id=gid('pis-rubrica'), file='pis-rubrica-y-evidencia', title='PIS: rúbrica y evidencia integradora', pub=False)
     for M in momentos:
         for s in M['sesiones']:
             for kind in ('sesion', 'recursos'):
@@ -946,6 +1007,9 @@ def main() -> int:
     for k, fn in (('aula', aula_page), ('materiales', materiales_page), ('guia', guia_page)):
         P = PAGES[k]
         (W / f'{P["file"]}.html').write_text(wrap_page(P['title'], P['id'], fn(), home, P['pub']))
+    for k, cuerpo in pis_pages():
+        P = PAGES[k]
+        (W / f'{P["file"]}.html').write_text(wrap_page(P['title'], P['id'], cuerpo, home, P['pub']))
     fi = W / f'{T["inicio_file"]}.html'
     assert fi.read_bytes() == inicio_antes, 'La página Inicio no debe cambiar antes de incrustar el aula'
     fi.write_text(aula_inicio(fi.read_text()))   # el aula, de lleno al comienzo; lo institucional queda igual debajo
@@ -1058,6 +1122,17 @@ def main() -> int:
     for m in d['modulos']:                       # momentos de la plantilla que el sílabo no usa: sin publicar
         if m['id'] not in usados_mod and re.fullmatch(r'momento \d+', m['titulo'].lower()):
             mods.append(repos(m['xml'], pos, 'unpublished')); usados_mod.add(m['id']); pos += 1
+    if PIS_DATA:                                 # módulo PIS completo; conserva las tareas PIS de la plantilla
+        tp = next((m for m in d['modulos'] if m['titulo'].strip().lower() == 'pis'), None)
+        its = [((gid('it-pis'), 'WikiPage', 'unpublished', PAGES['pis']['title'], PAGES['pis']['id']), 0)]
+        its += [((gid(f'it-pis-m{i}'), 'WikiPage', 'unpublished', PAGES[f'pis-m{i}']['title'], PAGES[f'pis-m{i}']['id']), 1)
+                for i in range(1, len(PIS_DATA['momentos']) + 1)]
+        its += [((gid('it-pis-rubrica'), 'WikiPage', 'unpublished', PAGES['pis-rubrica']['title'], PAGES['pis-rubrica']['id']), 0)]
+        its += [((i[0], i[1], 'unpublished', html.unescape(i[2]), i[3]), 0) for i in (tp['items'] if tp else [])]
+        mods.append(module(tp['id'] if tp else gid('mod-pis'), f'PIS: {PIS_DATA["titulo"]}', 'unpublished', pos, its))
+        if tp:
+            usados_mod.add(tp['id'])
+        pos += 1
     for m in d['modulos']:                       # el resto de la plantilla (Encuesta, PIS…), tal cual
         if m['id'] not in usados_mod:
             mods.append(repos(m['xml'], pos)); pos += 1

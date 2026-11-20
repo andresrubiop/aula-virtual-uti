@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-20 · **Versión 0.13.0** · PIS: pregunta obligatoria `pis_rol` (articulador, aportante, no aplica). El articulador debe tener el documento del PIS (`fuentes/pis/`) y sus datos (`canvas/pis.json`, ES/EN); de ahí salen la vista PIS del aula y el módulo PIS de Canvas (proyecto, momentos, rúbrica, evidencia integradora, sin publicar), que se exporta para los proyectos formativos que aportan. Los que aportan lo importan; si falta, queda pendiente. `canvas_api.py --modulo PIS` lleva solo ese módulo a un curso. Probado en un curso real (módulo PIS creado sin tocar el resto). 157/157 regresiones PASS.
+
 2026-11-20 · **Versión 0.12.2**: al inicio el asistente pregunta también la vía para llevar el aula a Canvas (API con token del docente o importación del `.imscc`) y el enlace del curso. Por decisión del autor el token se pega en el chat: el asistente lo guarda al momento fuera del aula (`canvas_api.py token --stdin`), no lo repite ni lo escribe en archivos y recuerda revocarlo. 150/150 regresiones PASS.
 
 2026-11-20 · **Versión 0.12.1**: licencia CC BY 4.0 (con excepciones de terceros en `aula-virtual-uti/LICENCIA.md`), guía de uso y PDF actualizados con Canvas por API, videos en inglés con subtítulos, calidad, accesibilidad y glosario; «Problemas conocidos» al día. Lista para compartir con otros docentes. 148/148 regresiones PASS.

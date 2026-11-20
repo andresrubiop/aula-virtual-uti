@@ -48,6 +48,7 @@
   "producto_final": "Plan de repaso anotado con justificación y límites del modelo.",
   "pis": "Demostración ficticia de aprendizaje colaborativo",
   "aporte_pis": "Compartir planes de repaso y contrastar sus decisiones (dato ficticio).",
+  "pis_rol": "aportante",
   "metodologias": [
     "Aprendizaje basado en problemas",
     "Trabajo colaborativo"

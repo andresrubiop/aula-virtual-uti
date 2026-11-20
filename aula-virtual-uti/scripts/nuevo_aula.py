@@ -24,6 +24,7 @@ INSUMOS = {
     'fuentes/guias-practicas': 'Guías de prácticas o de laboratorio (PDF, DOCX). Si vienen dentro del sílabo, no hace falta.',
     'fuentes/lecturas': 'Lecturas, capítulos, artículos y apuntes que quieres que el aula use.',
     'fuentes/otros': 'Cualquier otro material: bancos de preguntas, casos, datos, imágenes propias.',
+    'fuentes/pis': 'El documento del PIS (Proyecto Interdisciplinario Socioformativo). Obligatorio si tu proyecto formativo es el articulador del PIS.',
     'fuentes/privado': 'Lo que NO debe salir de tu equipo: listas de estudiantes, notas, datos personales. El agente no lo usa.',
 }
 

@@ -11,6 +11,7 @@ apuntan a las páginas, archivos y tareas reales del curso. Repetir la ejecució
     python3 canvas/canvas_api.py comprobar                  # solo lectura: acceso, permisos e inventario del curso
     python3 canvas/canvas_api.py plan                       # solo lectura: qué se subiría, actualizaría y crearía
     python3 canvas/canvas_api.py aplicar                    # respaldo del curso y aplicación del plan
+    python3 canvas/canvas_api.py plan|aplicar --modulo PIS  # solo un módulo (el PIS compartido entre aulas)
     python3 canvas/canvas_api.py verificar                  # solo lectura: enlaces, marcas pendientes y publicación
     python3 canvas/canvas_api.py inicio [--aplicar]         # solo el aula incrustada al comienzo de Inicio
 
@@ -230,7 +231,7 @@ def base(titulo):
     return re.split(r'\s+·\s+', titulo or '')[0].strip().casefold()
 
 
-def calcular(c, ruta_paquete):
+def calcular(c, ruta_paquete, modulo=None):
     z, paginas, tareas, modulos, archivos, adjuntos, quizzes = leer_paquete(ruta_paquete)
     mapa = json.loads(MAPA.read_text(encoding='utf-8')) if MAPA.exists() else {}
     for k in ('archivos', 'paginas', 'tareas', 'modulos'):
@@ -290,11 +291,27 @@ def calcular(c, ruta_paquete):
             tareas_plan.append((ident, 'actualizar', existentes_t[base(t['titulo'])]['id']))
         else:
             tareas_plan.append((ident, 'crear', None))
+    if modulo:                                   # solo un módulo (p. ej. el PIS compartido): sus páginas, tareas y archivos
+        sel = [m for m in modulos if m['titulo'].casefold().startswith(modulo.casefold())]
+        if not sel:
+            sys.exit(f'El paquete no tiene un módulo que empiece por «{modulo}». Módulos: ' + ', '.join(m['titulo'] for m in modulos))
+        refs = {it['ref'] for m in sel for it in m['items']}
+        pags_sel = {s for s, p in paginas.items() if p['identificador'] in refs}
+        tareas_sel = {i for i in tareas if i in refs}
+        texto = ' '.join(paginas[s]['cuerpo'] for s in pags_sel) + ' '.join(tareas[i]['cuerpo'] for i in tareas_sel)
+        usados = {urllib.parse.unquote(x) for x in re.findall(r'\$IMS-CC-FILEBASE\$/([^"\'?#<>\s]+)', texto)}
+        usados |= {adjuntos[it['ref']] for m in sel for it in m['items'] if it['ref'] in adjuntos}
+        plan_archivos = [x for x in plan_archivos if x[0] in usados]
+        usar = [s for s in usar if s in pags_sel]
+        actualizar = {s: v for s, v in actualizar.items() if s in pags_sel}
+        crear = [s for s in crear if s in pags_sel]
+        retirar_curso, inicio, modulos = [], None, sel
+        tareas_plan = [x for x in tareas_plan if x[0] in tareas_sel]
     quizzes_id = {i: cquizzes[t] for i, t in quizzes.items() if t in cquizzes}
     faltan_quizzes = sorted({t for i, t in quizzes.items() if i not in quizzes_id})
 
     textos = [(f'página «{paginas[s]["titulo"]}»', paginas[s]['cuerpo']) for s in usar if paginas[s]['publicada']]
-    textos += [(f'tarea «{t["titulo"]}»', t['cuerpo']) for t in tareas.values()]
+    textos += [(f'tarea «{tareas[i]["titulo"]}»', tareas[i]['cuerpo']) for i, _, _ in tareas_plan]
     if inicio:
         bloque = AULA_INICIO.search(paginas[inicio]['cuerpo'])
         textos.append(('Inicio (aula)', bloque[0] if bloque else ''))
@@ -305,6 +322,7 @@ def calcular(c, ruta_paquete):
             'paginas_a_actualizar': {s: actualizar[s] for s in sorted(actualizar)}, 'paginas_a_crear': crear,
             'paginas_a_despublicar': retirar_curso,
             'inicio': ('anteponer el aula en «' + portada + '»') if inicio and portada and AULA_INICIO.search(paginas[inicio]['cuerpo']) else 'sin cambios',
+            'modulo': modulo or 'todos',
             'tareas': [{'titulo': tareas[i]['titulo'], 'accion': a} for i, a, _ in tareas_plan],
             'modulos': [m['titulo'] for m in modulos], 'cuestionarios_no_encontrados': faltan_quizzes,
             'marcas_pendientes_visibles': pendientes}
@@ -401,7 +419,7 @@ def aplicar(c, d):
     por_nombre = {m['name']: m for m in cmods}
     for pos, m in enumerate(d['modulos'], 1):
         cm = next((x for x in cmods if x['id'] == mapa['modulos'].get(m['titulo'])), None) or por_nombre.get(m['titulo'])
-        corto = re.match(r'(Momento \d+)\b', m['titulo'])
+        corto = re.match(r'(Momento \d+|PIS)\b', m['titulo'])     # el módulo «PIS» de la plantilla es el mismo
         cm = cm or (por_nombre.get(corto[1]) if corto else None)
         if cm is None:
             cm, _ = c.pedir('POST', '/modules', {'module': {'name': m['titulo'], 'position': pos}})
@@ -493,6 +511,8 @@ def main():
     for n in ('plan', 'aplicar', 'inicio'):
         s = sub.add_parser(n)
         s.add_argument('--paquete', type=Path)
+        if n != 'inicio':
+            s.add_argument('--modulo', help='solo el módulo cuyo título empieza así (p. ej. «PIS»), con sus páginas, tareas y archivos')
         if n == 'aplicar':
             s.add_argument('--permitir-pendientes', action='store_true', help='aplicar aunque queden marcas pendientes visibles')
         if n == 'inicio':
@@ -552,7 +572,7 @@ def main():
             print('  -', p)
         return 0 if not r['problemas'] else 1
 
-    plan, d = calcular(c, a.paquete or paquete_por_omision())
+    plan, d = calcular(c, a.paquete or paquete_por_omision(), getattr(a, 'modulo', None))
     if a.orden == 'inicio':
         print(json.dumps({'curso': plan['curso'], 'inicio': plan['inicio']}, ensure_ascii=False))
         if not a.aplicar:

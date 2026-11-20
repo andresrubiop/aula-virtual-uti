@@ -88,6 +88,12 @@ def main() -> int:
     rubrica(D.get('rubrica_final'), 'rubrica_final (producto final)')
     if not D.get('bibliografia'):
         avisos.append('bibliografia: vacía. La plantilla pide bibliografía básica en APA 7, de preferencia de la Biblioteca Virtual.')
+    rol = D.get('pis_rol')
+    if rol is not None and rol not in ('articulador', 'aportante', 'no_aplica'):
+        errores.append('pis_rol: debe ser "articulador", "aportante" o "no_aplica".')
+    if D.get('pis') and rol is None:
+        errores.append('pis_rol: pregunta al docente si su proyecto formativo es el articulador del PIS («articulador»), '
+                       'si aporta a un PIS que integra otro proyecto formativo («aportante») o si no aplica («no_aplica»).')
     if not D.get('pis'):
         avisos.append('pis: el sílabo no declara Proyecto Interdisciplinario Socioformativo; las tareas PIS de la plantilla quedan como están.')
     elif not D.get('pis_ra'):

@@ -30,11 +30,12 @@ MiAula-B26/
     presentaciones/
     guias-practicas/
     lecturas/
+    pis/
     otros/
   requisitos-del-aula.md
 ```
 
-Coloca el sílabo actual en `silabo-vigente`, claramente identificado. Añade presentaciones PPTX/PDF, guías, lecturas, bibliografía, imágenes propias y documentación que consideres importante. Conserva los originales en su ubicación habitual. Aclara si las guías están dentro del sílabo, si hay varias versiones y cuál prevalece.
+Coloca el sílabo actual en `silabo-vigente`, claramente identificado. Añade presentaciones PPTX/PDF, guías, lecturas, bibliografía, imágenes propias y documentación que consideres importante. Conserva los originales en su ubicación habitual. Aclara si las guías están dentro del sílabo, si hay varias versiones y cuál prevalece. Si tu materia es la **articuladora del PIS**, pon el documento del PIS en `pis/`: es obligatorio y con él se arma el módulo PIS que compartirás con los docentes que aportan. Si tu materia aporta, el asistente te pedirá el paquete del PIS que comparte el docente articulador.
 
 `requisitos-del-aula.md` es una nota opcional de texto: nombre de materia, período, público, qué quieres lograr, materiales indispensables, necesidades de accesibilidad y preferencias para videos. Puedes usar un `.txt` si te resulta más cómodo. No incluyas contraseñas, listas de estudiantes ni notas privadas en los insumos. Los asistentes pueden procesar documentos mediante sus servicios en línea: usa materiales autorizados para ese fin.
 
@@ -121,7 +122,7 @@ codex
 
 Acepta el acceso a la carpeta del proyecto que has elegido. En Claude Code puedes invocar `/aula-virtual-uti`. En Codex puedes mencionar `$aula-virtual-uti` en el mensaje; la petición en lenguaje natural de abajo también identifica la skill. Escribe el mensaje **dentro del asistente**, no como comando del sistema.
 
-> Usa la skill aula-virtual-uti instalada en esta carpeta. Quiero crear el aula de [materia], período [período]. Lee insumos/ y requisitos-del-aula.md si existe. El sílabo vigente está en insumos/silabo-vigente/; revisa también las guías y documentos complementarios. Crea el producto en la subcarpeta nueva aula/. Conserva estructura y stack FSO, presentaciones HTML embebidas y contenidos ES/EN. Trabaja por fases: hoy verifica el entorno, inventaría los insumos y señala dudas. Registra avances y el próximo paso en aula/ESTADO.md cuando crees el aula; antes usa un estado provisional en esta carpeta. Pregúntame por NotebookLM y por la API de Canvas, y prepara después una unidad piloto para mi revisión. No subas fuentes ni publiques el curso hasta que revisemos la operación concreta.
+> Usa la skill aula-virtual-uti instalada en esta carpeta. Quiero crear el aula de [materia], período [período]. Lee insumos/ y requisitos-del-aula.md si existe. El sílabo vigente está en insumos/silabo-vigente/; revisa también las guías y documentos complementarios. Crea el producto en la subcarpeta nueva aula/. Conserva estructura y stack FSO, presentaciones HTML embebidas y contenidos ES/EN. Trabaja por fases: hoy verifica el entorno, inventaría los insumos y señala dudas. Registra avances y el próximo paso en aula/ESTADO.md cuando crees el aula; antes usa un estado provisional en esta carpeta. Pregúntame por el PIS, NotebookLM y la API de Canvas, y prepara después una unidad piloto para mi revisión. No subas fuentes ni publiques el curso hasta que revisemos la operación concreta.
 
 Si no reconoce la skill, indica: «Lee `.claude/skills/aula-virtual-uti/SKILL.md` y sigue sus instrucciones» o la ruta equivalente `.agents/skills/...`.
 
@@ -240,4 +241,4 @@ Publica solo los elementos aprobados y comunica al asistente el resultado. Píde
 | Canvas rechaza el token | Pudo caducar o ser revocado: crea otro y pégalo de nuevo en el chat. |
 | La skill se actualizó | Pide «actualiza las herramientas de mi aula a la versión instalada» (sección 3). |
 
-Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.12.2 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](aula-virtual-uti/LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).
+Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.13.0 el 2026-11-20. Uso libre con atribución: [CC BY 4.0](aula-virtual-uti/LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).

@@ -248,6 +248,24 @@ def desafios_html(content: str) -> tuple[str, list[str]]:
     return re.sub(r'<!--@@desafio:([A-Za-z0-9.]+)@@-->', repl, content), faltan
 
 
+def pis_html() -> str:
+    """Vista del PIS si el aula tiene canvas/pis.json válido (articuladora o importado de la articuladora)."""
+    datos = ROOT / 'canvas' / 'pis.json'
+    if not datos.exists():
+        return ''
+    sys.path.insert(0, str(ROOT / 'control'))
+    try:
+        import pis
+    finally:
+        sys.path.pop(0)
+    d = json.loads(datos.read_text(encoding='utf-8'))
+    errores = pis.errores_datos(d)
+    if errores:
+        print('AVISO  canvas/pis.json no es válido; el aula se compila sin la vista PIS: ' + '; '.join(errores[:5]), file=sys.stderr)
+        return ''
+    return pis.vista_html(d)
+
+
 def nav_html(course: dict) -> str:
     items = []
     for u in course['units']:
@@ -443,6 +461,9 @@ def main() -> int:
         view, files = unit_view(u, course)
         parts.append(view)
         content_files += files
+    pis_vista = pis_html()
+    if pis_vista:
+        parts.append(pis_vista)                                       # vista «PIS» desde canvas/pis.json (control/pis.py)
     parts += [f.read_text() for f in sorted((SRC / 'content').glob('*.html')) if f.name >= '50']   # 95-recursos
     content = '\n'.join(parts)
     content = content.replace('<!--@@UNIT_CARDS@@-->', unit_cards(course)).replace('<!--@@FACTS@@-->', facts(course))
@@ -506,7 +527,8 @@ def main() -> int:
         '/*@@FONTS@@*/': fonts_css(),
         '/*@@KATEX_CSS@@*/': katex_css(),
         '/*@@CSS@@*/': tokens + '\n' + css,
-        '<!--@@NAV@@-->': nav_html(course),
+        '<!--@@NAV@@-->': nav_html(course) + ('\n      <a href="#/pis" data-nav="pis"><span>PIS</span><small><span lang="es">Proyecto integrador</span>'
+                                               '<span lang="en">Integrating project</span></small></a>' if pis_vista else ''),
         '<!--@@CONTENT@@-->': content,
         '<!--@@BRAND_KICKER@@-->': bi(esc(kicker), esc(kicker_en)),
         '<!--@@BRAND_TITLE@@-->': bid(t),

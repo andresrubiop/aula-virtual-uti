@@ -122,6 +122,7 @@ python3 control/panel.py                   # panel de avance del docente → PAN
 python3 control/calidad.py                 # piezas del modelo socioformativo por unidad → control/CALIDAD.md (lista para el docente)
 node hub/tools/accesibilidad.mjs           # contraste, alternativas, nombres, teclado y foco (ES/EN, claro/oscuro) → control/ACCESIBILIDAD.md
 python3 control/glosario.py proponer       # glosario ES/EN: candidatos y traducciones distintas en aula, Canvas y subtítulos → control/GLOSARIO.md
+python3 control/pis.py                     # PIS según pis_rol: articulador (documento y datos obligatorios) · exportar · importar
 python3 control/respaldo.py crear --tipo antes --motivo "…"   # respaldo recuperable → respaldos/ (listar · comparar · restaurar)
 python3 canvas/generar_canvas.py           # paquete de Canvas → canvas/salida/   (--sin-videos · --solo-es)
 python3 canvas/verificar_paquete.py        # el paquete, antes de subirlo
@@ -156,6 +157,8 @@ El desarrollo puede durar varios días y sesiones. `ESTADO.md` del aula es la fu
 **Respaldos por hitos:** antes de un cambio amplio (rehacer o reorganizar una unidad, aplicar un plan de `impacto` que afecta varias entregas, cambiar la estructura de `course.json` o de `canvas/silabo.json`) ejecuta `python3 control/respaldo.py crear --tipo antes --motivo "…"`. Tras registrar la aprobación docente de una unidad, la planificación o la ficha, crea `crear --tipo aprobado --unidad UN --motivo "…"`. Para volver atrás, muestra al docente `comparar` y la vista previa de `restaurar` (limita con `--ruta`), y aplica con `--aplicar` solo con su conformidad; `restaurar --evidencia ID` vuelve a lo registrado en ESTADO.md. Nunca se restauran `fuentes/` ni, salvo pedido expreso (`--incluir-estado`), ESTADO.md: anota en él qué se restauró, desde qué respaldo y por qué, recompila y verifica. `respaldos/` es privado: no lo compartas ni lo registres como evidencia.
 
 **Calidad y accesibilidad:** al terminar cada unidad y antes de entregar, ejecuta `python3 control/calidad.py` y, tras compilar, `node hub/tools/accesibilidad.mjs`. Corrige lo que falte sin inventar contenido (lo que dependa del sílabo queda `[COMPLETAR]` y se pregunta). Muestra al docente la lista de `control/CALIDAD.md`, aplica sus observaciones y registra su conformidad como evidencia docente; no la marques por él. Un informe sin errores no aprueba la unidad ni sustituye probar con un lector de pantalla. Consulta la referencia de calidad y accesibilidad de la skill.
+
+**PIS:** si el sílabo declara PIS, `pis_rol` es obligatorio. Articulador: el documento en `fuentes/pis/` y `canvas/pis.json` (ES/EN, sin inventar) son obligatorios; la vista PIS y el módulo de Canvas salen de ahí y se comparten con `control/pis.py exportar`. Aportante: pide el paquete al docente articulador y, al recibirlo, `control/pis.py importar`; no edites lo importado. Para llevar solo el PIS a Canvas: `canvas/canvas_api.py plan|aplicar --modulo PIS`.
 
 **Glosario:** la única lista de términos es la vista Recursos → Glosario. Propón términos con `python3 control/glosario.py proponer`, agrégalos solo con la decisión del docente y ejecuta `python3 control/glosario.py` después de traducir Canvas o subtitular un video; revisa cada aviso (corrige, acepta la variante o déjalo si es una paráfrasis válida).
 

@@ -1,6 +1,6 @@
 # Problemas conocidos y correcciones
 
-Actualizado el 2026-11-20 para la versión 0.12.2 (historial en [CAMBIOS.md](aula-virtual-uti/CAMBIOS.md)). La mejora 1 corrige los tres defectos reproducidos en la revisión inicial:
+Actualizado el 2026-11-20 para la versión 0.13.0 (historial en [CAMBIOS.md](aula-virtual-uti/CAMBIOS.md)). La mejora 1 corrige los tres defectos reproducidos en la revisión inicial:
 
 1. **Caché de extracción:** `scripts/fuentes.py` reconstruye `fuentes/_texto/` y el inventario. Retira textos de archivos borrados, movidos a privado o que ya no se pueden extraer. La caché es una salida regenerable; conserva las anotaciones en otro archivo. Los originales no se modifican.
 2. **Orden y notas de PowerPoint:** utiliza `ppt/presentation.xml` y sus relaciones para el orden; cada diapositiva resuelve sus notas mediante relaciones. Los archivos huérfanos no se presentan como diapositivas del curso. Una presentación sin relaciones válidas produce un aviso de extracción fallida, sin inventar su orden.

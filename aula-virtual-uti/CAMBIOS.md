@@ -2,6 +2,10 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.13.0 · 2026-11-20
+
+- **PIS obligatorio para el articulador y compartible:** al inicio el asistente pregunta si el proyecto formativo es el articulador del PIS (`pis_rol`). Si lo es, el documento del PIS (`fuentes/pis/`) y sus datos (`canvas/pis.json`, ES/EN) son obligatorios; de ahí salen la vista **PIS** del aula y el módulo **PIS** de Canvas (proyecto, momentos, rúbrica y evidencia integradora, sin publicar). `control/pis.py exportar` lo empaqueta para los proyectos formativos que aportan, que lo importan con `control/pis.py importar`; si aún no llega, queda pendiente en el panel. `canvas_api.py --modulo PIS` lleva solo ese módulo a un curso.
+
 ## 0.12.2 · 2026-11-20
 
 - Al inicio el asistente pregunta también cómo llevar el aula a Canvas (API con token del docente o importación del `.imscc`) y el enlace del curso; lo registra en ESTADO.md y, si es la API, configura el curso y comprueba acceso y permisos en solo lectura.
