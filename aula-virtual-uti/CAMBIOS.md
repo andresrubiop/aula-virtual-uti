@@ -2,6 +2,10 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.15.1 · 2026-11-21
+
+- `generar_canvas.py --publicar-pis`: con la aprobación del docente, el módulo PIS y sus páginas salen publicados; las tareas PIS siguen sin publicar. Usado en el curso piloto (módulo PIS publicado, 0 tareas publicadas). Prueba en `tests/test_pis.py`.
+
 ## 0.15.0 · 2026-11-20
 
 - **El aula se publica en la web para funcionar en Canvas.** Canvas sirve los HTML subidos con `Content-Security-Policy: sandbox; script-src 'none'` (comprobado en el curso piloto en todas las variantes de enlace): el aula se veía estática. Nuevo `control/publicar_web.py`: con conformidad del docente publica la edición del estudiante (o la del profesor, `--edicion profesor`) en un repositorio público aparte con GitHub Pages, revisa antes (teléfonos, tokens, bloques docentes) y comprueba que se sirva; guarda la dirección en `course.json` → `publicacion`.

@@ -86,6 +86,18 @@ class Pis(unittest.TestCase):
         self.assertIn('PIS: rúbrica y evidencia integradora', items)
         self.assertEqual(sum('Interdisciplinario' in x for x in items), 2)        # las tareas PIS de la plantilla, sin duplicar
         self.py(self.aula, 'canvas/verificar_paquete.py')
+        # Con la aprobación del docente: módulo y páginas publicados; las tareas siguen sin publicar
+        self.py(self.aula, 'canvas/generar_canvas.py', '--publicar-pis')
+        titulo, estado, _ = self.modulo_pis(self.aula)
+        self.assertEqual(estado, 'active')
+        import re
+        with zipfile.ZipFile(next((self.aula / 'canvas/salida').glob('*-aula-canvas.imscc'))) as z:
+            mm = z.read('course_settings/module_meta.xml').decode('utf-8')
+        bloque = re.search(r'<title>PIS[^<]*</title>.*?</module>', mm, re.S)[0]
+        estados = dict((ti, est) for est, ti in re.findall(r'<item identifier="\w+">\s*<content_type>\w+</content_type>\s*<workflow_state>(\w+)</workflow_state>\s*<title>([^<]+)</title>', bloque))
+        self.assertEqual(estados['PIS: proyecto y proyectos formativos'], 'active')
+        self.assertTrue(all(v == 'unpublished' for k, v in estados.items() if 'Interdisciplinario' in k), estados)
+        self.py(self.aula, 'canvas/verificar_paquete.py')
 
     def test_datos_incoherentes_se_rechazan(self):
         self.articulador(self.aula)

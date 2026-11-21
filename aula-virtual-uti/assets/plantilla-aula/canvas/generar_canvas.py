@@ -26,7 +26,8 @@ Qué hace con la plantilla institucional
 Los identificadores generados son estables; el resultado de reimportar depende de Canvas y del curso.
 No se garantiza ausencia de duplicados. Conserva un export original anterior a esta herramienta.
 
-Uso:  python3 canvas/generar_canvas.py [--sin-videos] [--solo-es] [--borrador]
+Uso:  python3 canvas/generar_canvas.py [--sin-videos] [--solo-es] [--borrador] [--publicar-pis]
+      --publicar-pis: el módulo PIS y sus páginas quedan publicados (solo cuando el docente lo aprobó y lo pide; sus tareas siguen sin publicar)
       --borrador: genera aunque falten animaciones de alguna temática o la conexión con GitHub (solo para revisar; no es una entrega)
 """
 import hashlib
@@ -52,6 +53,7 @@ CURSO_ID = str(DATA['curso'].get('canvas_id') or 'ID_DEL_CURSO')
 CARPETA = 'Aula y materiales'                              # carpeta visible en Archivos del curso
 IDIOMAS = [('', 'ES')] if '--solo-es' in sys.argv else [('', 'ES'), ('.en', 'EN')]
 SIN_VIDEOS = '--sin-videos' in sys.argv
+PUBLICAR_PIS = '--publicar-pis' in sys.argv
 UNIDAD = {u['n']: u for u in COURSE['units']}
 ANIM = {a['id']: a['es'] for u in COURSE['units'] for a in u.get('anims', [])}
 PRAC = (COURSE.get('practice') or {'es': 'Práctica'})['es']
@@ -991,10 +993,10 @@ def main() -> int:
     PAGES['materiales'] = dict(id=gid('materiales'), file='materiales-del-curso', title='Materiales del curso', pub=True)
     PAGES['guia'] = dict(id=gid('guia'), file='guia-del-docente', title='Guía del docente (oculta)', pub=False)
     if PIS_DATA:
-        PAGES['pis'] = dict(id=gid('pis'), file='pis-proyecto', title='PIS: proyecto y proyectos formativos', pub=False)
+        PAGES['pis'] = dict(id=gid('pis'), file='pis-proyecto', title='PIS: proyecto y proyectos formativos', pub=PUBLICAR_PIS)
         for i, mo in enumerate(PIS_DATA['momentos'], 1):
-            PAGES[f'pis-m{i}'] = dict(id=gid(f'pis-m{i}'), file=f'pis-momento-{i}', title=f'PIS: {mo["nombre"]}', pub=False)   # «·» en un título vuelve «star» la URL de Canvas
-        PAGES['pis-rubrica'] = dict(id=gid('pis-rubrica'), file='pis-rubrica-y-evidencia', title='PIS: rúbrica y evidencia integradora', pub=False)
+            PAGES[f'pis-m{i}'] = dict(id=gid(f'pis-m{i}'), file=f'pis-momento-{i}', title=f'PIS: {mo["nombre"]}', pub=PUBLICAR_PIS)   # «·» en un título vuelve «star» la URL de Canvas
+        PAGES['pis-rubrica'] = dict(id=gid('pis-rubrica'), file='pis-rubrica-y-evidencia', title='PIS: rúbrica y evidencia integradora', pub=PUBLICAR_PIS)
     for M in momentos:
         for s in M['sesiones']:
             for kind in ('sesion', 'recursos'):
@@ -1148,12 +1150,13 @@ def main() -> int:
             mods.append(repos(m['xml'], pos, 'unpublished')); usados_mod.add(m['id']); pos += 1
     if PIS_DATA:                                 # módulo PIS completo; conserva las tareas PIS de la plantilla
         tp = next((m for m in d['modulos'] if m['titulo'].strip().lower() == 'pis'), None)
-        its = [((gid('it-pis'), 'WikiPage', 'unpublished', PAGES['pis']['title'], PAGES['pis']['id']), 0)]
-        its += [((gid(f'it-pis-m{i}'), 'WikiPage', 'unpublished', PAGES[f'pis-m{i}']['title'], PAGES[f'pis-m{i}']['id']), 1)
+        vis = 'active' if PUBLICAR_PIS else 'unpublished'
+        its = [((gid('it-pis'), 'WikiPage', vis, PAGES['pis']['title'], PAGES['pis']['id']), 0)]
+        its += [((gid(f'it-pis-m{i}'), 'WikiPage', vis, PAGES[f'pis-m{i}']['title'], PAGES[f'pis-m{i}']['id']), 1)
                 for i in range(1, len(PIS_DATA['momentos']) + 1)]
-        its += [((gid('it-pis-rubrica'), 'WikiPage', 'unpublished', PAGES['pis-rubrica']['title'], PAGES['pis-rubrica']['id']), 0)]
+        its += [((gid('it-pis-rubrica'), 'WikiPage', vis, PAGES['pis-rubrica']['title'], PAGES['pis-rubrica']['id']), 0)]
         its += [((i[0], i[1], 'unpublished', html.unescape(i[2]), i[3]), 0) for i in (tp['items'] if tp else [])]
-        mods.append(module(tp['id'] if tp else gid('mod-pis'), f'PIS: {PIS_DATA["titulo"]}', 'unpublished', pos, its))
+        mods.append(module(tp['id'] if tp else gid('mod-pis'), f'PIS: {PIS_DATA["titulo"]}', vis, pos, its))
         if tp:
             usados_mod.add(tp['id'])
         pos += 1

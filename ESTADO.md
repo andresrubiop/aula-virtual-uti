@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-21 · **Versión 0.15.1**: `generar_canvas.py --publicar-pis` publica el módulo PIS y sus páginas con la aprobación del docente (tareas sin publicar). Usado en el curso piloto.
+
 2026-11-21 · **Versión 0.15.0**: el aula se publica en GitHub Pages para funcionar dentro de Canvas (Canvas bloquea el JavaScript de los HTML subidos: `sandbox; script-src 'none'`); `canvas_api.py` corrige los enlaces de Inicio cuando una página cambia de URL. Probado en el curso real con clics.
 
 2026-11-20 · **Versión 0.14.1**: corrige `anim-e2e.mjs` (una prueba propia de otra aula fallaba con cualquier A4.1). Probado en un aula real con 16 animaciones (336 comprobaciones bien). 165/165.
