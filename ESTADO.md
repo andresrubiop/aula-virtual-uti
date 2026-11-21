@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-21 · **Versión 0.15.0**: el aula se publica en GitHub Pages para funcionar dentro de Canvas (Canvas bloquea el JavaScript de los HTML subidos: `sandbox; script-src 'none'`); `canvas_api.py` corrige los enlaces de Inicio cuando una página cambia de URL. Probado en el curso real con clics.
+
 2026-11-20 · **Versión 0.14.1**: corrige `anim-e2e.mjs` (una prueba propia de otra aula fallaba con cualquier A4.1). Probado en un aula real con 16 animaciones (336 comprobaciones bien). 165/165.
 
 2026-11-20 · **Versión 0.14.0**: GitHub obligatorio (Git y sesión de GitHub en `entorno.py`, aula como repositorio privado del docente con `control/repositorio.py`, guardado con revisión de privados y tokens; sin GitHub solo hay borrador de Canvas) y animaciones obligatorias por temática (una por sesión del sílabo, planificada, hecha y en la presentación; `calidad.py` y el generador de Canvas lo exigen). 165/165 regresiones PASS.
