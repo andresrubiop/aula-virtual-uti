@@ -157,6 +157,9 @@ def video_files(v):
     out = {}
     for lang in ('es', 'en'):
         mp4 = d / f'{v}.{lang}.mp4'
+        grabado = d / f'{v}.en.sub-es.mp4'          # inglés con subtítulos en español en la imagen (subtitulos.py quemar)
+        if lang == 'en' and grabado.exists():
+            mp4 = grabado
         if mp4.exists():
             jpg = d / f'{v}.{lang}.jpg'
             out[lang] = ((f'{CARPETA}/videos/{mp4.name}', mp4), (f'{CARPETA}/videos/{jpg.name}', jpg) if jpg.exists() else None)
@@ -293,7 +296,7 @@ def video_box(v):
             poster = f' poster="{file_ref(jpg[0], "abrir")}"' if jpg else ''
             out += (f'<p style="margin: 10px 0 6px 0;"><video style="width: 100%; max-width: 760px; border-radius: 8px; background: #000;" '
                     f'controls="controls" preload="none"{poster} src="{file_ref(mp4, "abrir")}"></video></p>'
-                    f'<p style="{P_R}">«{e(es if lang == "es" else en)}» · {"en español" if lang == "es" else "en inglés"} · '
+                    f'<p style="{P_R}">«{e(es if lang == "es" else en)}» · {"en español" if lang == "es" else ("en inglés con subtítulos en español" if ".sub-es." in mp4 else "en inglés")} · '
                     f'<a href="{file_ref(mp4)}">Abrir el video</a> · <a href="{file_ref(mp4, "bajar")}">Descargar</a></p>')
         return out
     return (f'<div style="{VIDEO_BOX}"><strong>🎬 Video {v} · {e(es)}</strong><br>'

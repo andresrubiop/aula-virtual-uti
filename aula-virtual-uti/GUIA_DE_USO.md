@@ -241,4 +241,4 @@ Publica solo los elementos aprobados y comunica al asistente el resultado. Píde
 | Canvas rechaza el token | Pudo caducar o ser revocado: crea otro y pégalo de nuevo en el chat. |
 | La skill se actualizó | Pide «actualiza las herramientas de mi aula a la versión instalada» (sección 3). |
 
-Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.15.1 el 2026-11-21. Uso libre con atribución: [CC BY 4.0](LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).
+Instrucciones contrastadas con documentación oficial el 2026-11-13 y actualizadas para la versión 0.15.2 el 2026-11-21. Uso libre con atribución: [CC BY 4.0](LICENCIA.md). La guía no sustituye las políticas de acceso de tu institución. Para límites técnicos de esta versión consulta [problemas conocidos del proyecto](https://github.com/andresrubiop/aula-virtual-uti/blob/main/KNOWN_ISSUES.md).

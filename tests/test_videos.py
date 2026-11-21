@@ -64,6 +64,26 @@ class Videos(unittest.TestCase):
         if lista:
             self.assertIn('es: subtítulos listos', lista)
 
+    def test_canvas_usa_el_video_con_subtitulos_grabados(self):
+        u = self.aula / 'videos/unidad-1'; u.mkdir(parents=True, exist_ok=True)
+        (u / 'V1.1.en.mp4').write_bytes(b'mp4 ficticio'); (u / 'V1.1.en.sub-es.mp4').write_bytes(b'mp4 con subtitulos')
+        self.run_py('canvas/generar_canvas.py', '--borrador')
+        mat = (self.aula / 'canvas/salida/pegar/materiales-del-curso.html').read_text(encoding='utf-8')
+        self.assertIn('V1.1.en.sub-es.mp4', mat)
+        self.assertNotIn('V1.1.en.mp4', mat)
+
+    @unittest.skipUnless(shutil.which('ffmpeg'), 'requiere ffmpeg')
+    def test_quemar_subtitulos(self):
+        u = self.aula / 'videos/unidad-1'; u.mkdir(parents=True, exist_ok=True)
+        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', 'color=c=white:s=320x180:d=2', '-f', 'lavfi',
+                        '-i', 'anullsrc=r=44100:cl=mono', '-t', '2', '-c:v', 'libx264', '-c:a', 'aac', str(u / 'V1.1.en.mp4')], check=True)
+        (u / 'V1.1.en.es.vtt').write_text('WEBVTT\n\n1\n00:00:00.000 --> 00:00:02.000\nHola\n', encoding='utf-8')
+        self.run_py('hub/tools/subtitulos.py', 'quemar', 'V1.1')
+        out = u / 'V1.1.en.sub-es.mp4'
+        self.assertTrue(out.exists() and out.stat().st_size > 1000)
+        r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'stream=codec_type', '-of', 'csv=p=0', str(out)], capture_output=True, text=True)
+        self.assertEqual(sorted(r.stdout.split()), ['audio', 'video'])
+
     def test_traduccion_incompleta_rechazada(self):
         sub = self.aula / 'videos/subtitulos'; sub.mkdir(parents=True)
         (sub / 'V1.1.json').write_text(json.dumps([[3, 4, 'One.'], [5, 6, 'Two.']]))

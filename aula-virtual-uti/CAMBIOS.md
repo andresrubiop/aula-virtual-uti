@@ -2,6 +2,10 @@
 
 La versión instalada figura en `SKILL.md` (`metadata.version`) y la muestra `python3 scripts/entorno.py`. Cada aula guarda en `control/VERSION_SKILL` la versión con la que se creó o actualizó. Para pasar un aula existente a la versión instalada: `python3 <skill>/scripts/actualizar_aula.py <aula>` (ver la guía de uso, sección 3).
 
+## 0.15.2 · 2026-11-21
+
+- **Subtítulos en español en Canvas.** Canvas no deja añadir pistas de subtítulos sin permiso de edición de archivos (`can_add_captions: false`, comprobado en el curso piloto) y su editor quita el `crossorigin` que necesitan los `<track>`. Nuevo `hub/tools/subtitulos.py quemar V#.#`: graba los subtítulos en la imagen (`V#.#.en.sub-es.mp4`), y `generar_canvas.py` usa ese video para Canvas con su rótulo. Usado en el curso piloto (V1.1). Pruebas en `tests/test_videos.py`.
+
 ## 0.15.1 · 2026-11-21
 
 - `generar_canvas.py --publicar-pis`: con la aprobación del docente, el módulo PIS y sus páginas salen publicados; las tareas PIS siguen sin publicar. Usado en el curso piloto (módulo PIS publicado, 0 tareas publicadas). Prueba en `tests/test_pis.py`.

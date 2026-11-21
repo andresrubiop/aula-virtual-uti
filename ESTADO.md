@@ -1,5 +1,7 @@
 # Estado público
 
+2026-11-21 · **Versión 0.15.2**: subtítulos en español grabados en el video para Canvas (`subtitulos.py quemar`), porque Canvas no deja añadir pistas sin permiso de edición de archivos. Usado en el curso piloto.
+
 2026-11-21 · **Versión 0.15.1**: `generar_canvas.py --publicar-pis` publica el módulo PIS y sus páginas con la aprobación del docente (tareas sin publicar). Usado en el curso piloto.
 
 2026-11-21 · **Versión 0.15.0**: el aula se publica en GitHub Pages para funcionar dentro de Canvas (Canvas bloquea el JavaScript de los HTML subidos: `sandbox; script-src 'none'`); `canvas_api.py` corrige los enlaces de Inicio cuando una página cambia de URL. Probado en el curso real con clics.

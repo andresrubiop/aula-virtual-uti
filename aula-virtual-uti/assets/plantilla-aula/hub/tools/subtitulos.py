@@ -18,6 +18,10 @@ registra en videos/videos.js y el reproductor ofrece todos los idiomas (por omis
         videos/bruto/, sin portada): suma los 3 s de la portada y descarta lo que cae en los tramos silenciados
   python3 hub/tools/subtitulos.py vtt [V3.1 …]     escribe los .vtt (todos los idiomas que tengan traducción completa)
   python3 hub/tools/subtitulos.py ver V3.1         lista las frases «N|texto» (para traducir)
+  python3 hub/tools/subtitulos.py quemar V3.1 [--idioma es]
+        videos/unidad-N/V3.1.en.sub-es.mp4: el video con los subtítulos grabados en la imagen (ffmpeg). Es el que usa
+        canvas/generar_canvas.py: Canvas no deja añadir pistas de subtítulos sin permiso de edición de archivos y su
+        editor quita el atributo crossorigin que necesitan los <track>. Siempre visibles, no se pueden desactivar.
 """
 import json
 import re
@@ -144,6 +148,26 @@ def vtt(videos) -> None:
     print(f'  → {hechos} archivos .vtt y {len(videos)} .subs.js')
 
 
+def quemar(video: str, lang: str = 'es') -> Path:
+    import shutil
+    import subprocess
+    d = ROOT / 'videos' / f'unidad-{video[1:].split(".")[0]}'
+    mp4, sub, out = d / f'{video}.en.mp4', d / f'{video}.en.{lang}.vtt', d / f'{video}.en.sub-{lang}.mp4'
+    for f in (mp4, sub):
+        if not f.exists():
+            sys.exit(f'Falta {f.relative_to(ROOT)} (python3 hub/tools/video_cards.py y python3 hub/tools/subtitulos.py vtt {video}).')
+    if not shutil.which('ffmpeg'):
+        sys.exit('Hace falta ffmpeg.')
+    estilo = 'FontName=DejaVu Sans,FontSize=17,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BorderStyle=1,Outline=2,Shadow=0,MarginV=22'
+    r = subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', mp4.name, '-vf', f"subtitles={sub.name}:force_style='{estilo}'",
+                        '-c:v', 'libx264', '-preset', 'medium', '-crf', '22', '-pix_fmt', 'yuv420p', '-c:a', 'copy',
+                        '-movflags', '+faststart', out.name], cwd=d, capture_output=True, text=True)
+    if r.returncode:
+        sys.exit('ffmpeg falló: ' + r.stderr[-600:])
+    print(f'→ {out.relative_to(ROOT)} ({out.stat().st_size / 1e6:.1f} MB)')
+    return out
+
+
 def main() -> int:
     if len(sys.argv) < 2:
         sys.exit(__doc__)
@@ -156,6 +180,8 @@ def main() -> int:
     elif cmd == 'vtt':
         vids = sys.argv[2:] or sorted(p.stem for p in SUB.glob('V*.json'))
         vtt(vids)
+    elif cmd == 'quemar':
+        quemar(sys.argv[2], sys.argv[sys.argv.index('--idioma') + 1] if '--idioma' in sys.argv else 'es')
     elif cmd == 'ver':
         for k, c in enumerate(json.loads((SUB / f'{sys.argv[2]}.json').read_text()), 1):
             print(f'{k}|{c[2]}')
